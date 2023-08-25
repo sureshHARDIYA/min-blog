@@ -10,7 +10,7 @@ export default siteConfig({
 
   // basic site info (required)
   name: 'S.K. Mukhiya',
-  domain: 'nextjs-notion-starter-kit.transitivebullsh.it',
+  domain: 'skmukhiya-min-blog.netlify.app',
   author: 'Suresh Kumar Mukhiya, PhD',
 
   // open graph metadata (optional)
