@@ -1,18 +1,9 @@
 import * as React from 'react'
 import { NextRequest } from 'next/server'
-
 import { ImageResponse } from '@vercel/og'
 
 import { api, apiHost, rootNotionPageId } from '@/lib/config'
 import { NotionPageInfo } from '@/lib/types'
-
-const interRegularFontP = fetch(
-  new URL('../../public/fonts/Inter-Regular.ttf', import.meta.url)
-).then((res) => res.arrayBuffer())
-
-const interBoldFontP = fetch(
-  new URL('../../public/fonts/Inter-SemiBold.ttf', import.meta.url)
-).then((res) => res.arrayBuffer())
 
 export const config = {
   runtime: 'experimental-edge'
@@ -37,11 +28,6 @@ export default async function OGImage(req: NextRequest) {
   }
   const pageInfo: NotionPageInfo = await pageInfoRes.json()
   console.log(pageInfo)
-
-  const [interRegularFont, interBoldFont] = await Promise.all([
-    interRegularFontP,
-    interBoldFontP
-  ])
 
   return new ImageResponse(
     (
@@ -122,58 +108,13 @@ export default async function OGImage(req: NextRequest) {
             >
               {pageInfo.title}
             </div>
-
-            {pageInfo.detail && (
-              <div style={{ fontSize: 32, opacity: 0.6 }}>
-                {pageInfo.detail}
-              </div>
-            )}
           </div>
         </div>
-
-        {pageInfo.authorImage && (
-          <div
-            style={{
-              position: 'absolute',
-              top: 47,
-              left: 104,
-              height: 128,
-              width: 128,
-              display: 'flex',
-              borderRadius: '50%',
-              border: '4px solid #fff',
-              zIndex: '5'
-            }}
-          >
-            <img
-              src={pageInfo.authorImage}
-              style={{
-                width: '100%',
-                height: '100%'
-                // transform: 'scale(1.04)'
-              }}
-            />
-          </div>
-        )}
       </div>
     ),
     {
       width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: 'Inter',
-          data: interRegularFont,
-          style: 'normal',
-          weight: 400
-        },
-        {
-          name: 'Inter',
-          data: interBoldFont,
-          style: 'normal',
-          weight: 700
-        }
-      ]
+      height: 630
     }
   )
 }
