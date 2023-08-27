@@ -58,6 +58,10 @@ export default siteConfig({
       pageId: '8ecfefc49de4451380ea235367e18864'
     },
     {
+      title: 'Books',
+      pageId: '3292af549f564f5bb5a83ab56d1bae62'
+    },
+    {
       title: 'Contact',
       pageId: '472072a3e04b498a9ae12fc6df3382df'
     }
