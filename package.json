@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "@fisch0920/use-dark-mode": "^2.4.0",
-    "@keyvhq/core": "^1.6.9",
-    "@keyvhq/redis": "^1.6.10",
+    "@keyvhq/core": "^1.6.26",
+    "@keyvhq/redis": "^1.6.28",
     "@react-icons/all-files": "^4.1.0",
-    "@vercel/og": "^0.0.19",
+    "@vercel/og": "^0.5.11",
     "classnames": "^2.3.1",
     "date-fns": "^2.30.0",
     "expiry-map": "^2.0.0",

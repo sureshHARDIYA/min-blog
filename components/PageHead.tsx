@@ -1,8 +1,8 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import * as config from '@/lib/config'
 import * as types from '@/lib/types'
+import * as config from '@/lib/config'
 import { getSocialImageUrl } from '@/lib/get-social-image-url'
 
 export const PageHead: React.FC<
@@ -78,7 +78,6 @@ export const PageHead: React.FC<
         href={rssFeedUrl}
         title={site?.name}
       />
-
       <meta property='og:title' content={title} />
       <meta name='twitter:title' content={title} />
       <title>{title}</title>

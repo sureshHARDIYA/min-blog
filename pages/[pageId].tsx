@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { GetStaticProps } from 'next'
 
-import { NotionPage } from '@/components/NotionPage'
 import { domain, isDev } from '@/lib/config'
 import { getSiteMap } from '@/lib/get-site-map'
-import { resolveNotionPage } from '@/lib/resolve-notion-page'
 import { PageProps, Params } from '@/lib/types'
+import { NotionPage } from '@/components/NotionPage'
+import { resolveNotionPage } from '@/lib/resolve-notion-page'
 
 export const getStaticProps: GetStaticProps<PageProps, Params> = async (
   context
@@ -45,7 +45,6 @@ export async function getStaticPaths() {
     fallback: true
   }
 
-  console.log(staticPaths.paths)
   return staticPaths
 }
 

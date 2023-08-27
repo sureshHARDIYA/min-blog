@@ -1,12 +1,12 @@
 // global styles shared across the entire site
 import * as React from 'react'
-import type { AppProps } from 'next/app'
+import posthog from 'posthog-js'
 import { useRouter } from 'next/router'
+import type { AppProps } from 'next/app'
 
 import * as Fathom from 'fathom-client'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
-import posthog from 'posthog-js'
 // used for code syntax highlighting (optional)
 import 'prismjs/themes/prism-coy.css'
 // core styles shared by all of react-notion-x (required)
