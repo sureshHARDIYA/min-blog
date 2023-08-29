@@ -382,3 +382,7 @@
 .notion-block-260baa77f1e1428b97fb14ac99c7c385 {
   display: none;
 }
+@media (min-width: 1300px) and (min-height: 300px)
+.notion-page-content-has-aside .notion-page-content-inner {
+    text-align: justify;
+}
