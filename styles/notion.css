@@ -8,7 +8,7 @@
  */
 
 .notion {
-  --notion-max-width: 1200px;
+  --notion-max-width: 900px;
   --notion-header-height: 54px;
 }
 
@@ -46,6 +46,7 @@
 .notion-header .notion-nav-header {
   max-width: 1100px;
   margin: 0 auto;
+  overflow-x: auto;
 }
 
 .notion-nav-header-rhs {
@@ -63,7 +64,7 @@
 }
 
 .notion-gallery-grid .notion-page-title-text {
-  font-size: 2em;
+  font-size: 1.5em;
   white-space: unset;
 }
 
@@ -73,18 +74,16 @@
 }
 
 .notion-gallery-grid .notion-property-text {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .notion-collection-card {
   border-radius: 16px;
   box-shadow: none;
-  background: #f7f7f7;
 }
 
 .notion-collection-card-cover img {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-radius: 16px;
 }
 
 .notion-collection-card {
@@ -92,8 +91,8 @@
 }
 
 .notion-collection-card-cover {
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-radius: 16px;
+  box-shadow: 2px 2px 8px 4px rgba(15, 15, 15, 0.1);
 }
 
 .notion-collection-card-cover {
@@ -191,10 +190,8 @@
   padding: 0;
   min-height: 23px;
 }
-
-.notion-page-cover-wrapper span {
-  max-width: 1200px !important;
-  border-radius: 24px;
+.notion-page-cover-wrapper {
+  box-shadow: 2px 2px 8px 4px rgba(15, 15, 15, 0.1);
 }
 
 @media only screen and (max-width: 1200px) {
@@ -360,7 +357,7 @@
 .dark-mode .notion-header {
   background: transparent;
   box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
-  backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(20px);
 }
 
 /* Workaround for Firefox not supporting backdrop-filter yet */
@@ -382,7 +379,19 @@
 .notion-block-260baa77f1e1428b97fb14ac99c7c385 {
   display: none;
 }
-@media (min-width: 1300px) and (min-height: 300px)
-.notion-page-content-has-aside .notion-page-content-inner {
-    text-align: justify;
+
+.notion-search .searchBar {
+  box-shadow: var(--fg-color-0) 0px 1px 0px;
+}
+
+.notion-search .noResults {
+  color: var(--fg-color-3);
+}
+
+.notion-search .noResultsDetail {
+  color: var(--fg-color-2);
+}
+
+.notion-equation.notion-equation-block{
+  align-items: center;
 }
