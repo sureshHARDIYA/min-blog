@@ -14,7 +14,7 @@ export default siteConfig({
   author: 'Suresh Kumar Mukhiya, PhD',
 
   // open graph metadata (optional)
-  description: 'Example Next.js Notion Starter Kit Site',
+  description: 'Suresh Kumar Mukhiya, PhD - Blog',
 
   // social usernames (optional)
   twitter: 'dr_code_skm',
@@ -50,7 +50,7 @@ export default siteConfig({
 
   // whether to use the default notion navigation style or a custom one with links to
   // important pages
-  navigationStyle: 'custom',
+  navigationStyle: 'default',
   // navigationStyle: 'custom',
   navigationLinks: [
     {
