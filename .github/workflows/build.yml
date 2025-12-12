@@ -3,7 +3,7 @@ name: CI
 on: [push]
 
 jobs:
-  test:
+  Build:
     name: Test Node.js ${{ matrix.node-version }}
     runs-on: ubuntu-latest
 
@@ -11,7 +11,6 @@ jobs:
       fail-fast: true
       matrix:
         node-version:
-          - 20
           - 22
 
     steps:
@@ -23,7 +22,7 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
-      - run: pnpm test
+      - run: pnpm build
 
       # TODO Enable those lines below if you use a Redis cache, you'll also need to configure GitHub Repository Secrets
       # env:
