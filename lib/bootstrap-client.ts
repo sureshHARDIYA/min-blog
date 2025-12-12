@@ -1,3 +1,3 @@
 export function bootstrap() {
-  console.log("S.K. Mukhiya, PhD");
+  console.log('S.K. Mukhiya, PhD')
 }

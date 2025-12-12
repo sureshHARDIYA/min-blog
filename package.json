@@ -73,5 +73,11 @@
   "prettier": "@fisch0920/config/prettier",
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --ignore-unknown --write",
+      "eslint --fix"
+    ]
   }
 }
