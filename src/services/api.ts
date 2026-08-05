@@ -452,7 +452,13 @@ export async function submitInquiry(data: ContactFormData): Promise<ContactRespo
   });
 
   if (!response.ok) {
-    throw new Error('Unable to send inquiry right now. Please try direct email instead.');
+    const result = await response.json().catch(() => null);
+    const message =
+      result?.error ||
+      result?.errors?.map((error: { message?: string }) => error.message).filter(Boolean).join(' ') ||
+      'Unable to send inquiry right now. Please try direct email instead.';
+
+    throw new Error(message);
   }
 
   return {
