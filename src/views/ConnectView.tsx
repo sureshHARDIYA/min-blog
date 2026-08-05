@@ -7,8 +7,10 @@ import { useTheme } from '../context/ThemeContext';
 
 export const ConnectView: React.FC = () => {
   const [showFormModal, setShowFormModal] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const { t } = useLanguage();
   const { theme } = useTheme();
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
@@ -24,6 +26,7 @@ export const ConnectView: React.FC = () => {
   const mutation = useMutation<ContactResponse, Error, ContactFormData>({
     mutationFn: submitInquiry,
     onSuccess: () => {
+      setSubmitError(null);
       setFormData({
         name: '',
         email: '',
@@ -34,9 +37,37 @@ export const ConnectView: React.FC = () => {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const getRecaptchaToken = () => {
+    if (!recaptchaSiteKey) {
+      return Promise.resolve(undefined);
+    }
+
+    return new Promise<string>((resolve, reject) => {
+      if (!window.grecaptcha) {
+        reject(new Error('reCAPTCHA is still loading. Please try again in a moment.'));
+        return;
+      }
+
+      window.grecaptcha.ready(() => {
+        window.grecaptcha
+          ?.execute(recaptchaSiteKey, { action: 'submit' })
+          .then(resolve)
+          .catch(() => reject(new Error('reCAPTCHA verification failed. Please try again.')));
+      });
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    setSubmitError(null);
+
+    try {
+      const recaptchaToken = await getRecaptchaToken();
+      mutation.mutate({ ...formData, recaptchaToken });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'reCAPTCHA verification failed. Please try again.';
+      setSubmitError(message);
+    }
   };
 
   return (
@@ -241,6 +272,7 @@ export const ConnectView: React.FC = () => {
             <button
               onClick={() => {
                 setShowFormModal(false);
+                setSubmitError(null);
                 mutation.reset();
               }}
               className={`absolute top-4 right-4 p-1 cursor-pointer ${
@@ -284,6 +316,7 @@ export const ConnectView: React.FC = () => {
                 <button
                   onClick={() => {
                     setShowFormModal(false);
+                    setSubmitError(null);
                     mutation.reset();
                   }}
                   className={`mt-4 w-full py-2.5 font-code text-xs font-bold uppercase tracking-widest cursor-pointer ${
@@ -297,9 +330,9 @@ export const ConnectView: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                {mutation.isError && (
+                {(submitError || mutation.isError) && (
                   <div className="bg-red-500/10 border border-red-500/40 text-red-500 p-3 text-xs font-code">
-                    {mutation.error?.message || 'Failed to submit inquiry.'}
+                    {submitError || mutation.error?.message || 'Failed to submit inquiry.'}
                   </div>
                 )}
                 <div>

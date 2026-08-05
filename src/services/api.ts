@@ -447,6 +447,7 @@ export async function submitInquiry(data: ContactFormData): Promise<ContactRespo
       company: data.company,
       scope: data.scope,
       message: data.message,
+      'g-recaptcha-response': data.recaptchaToken,
       _subject: `New portfolio inquiry${data.company ? ` from ${data.company}` : ''}`,
     }),
   });

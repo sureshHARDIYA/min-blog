@@ -1,6 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
+
+const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 export const metadata: Metadata = {
   title: 'S.K. Mukhiya',
@@ -34,6 +37,12 @@ export default function RootLayout({
       </head>
       <body className="bg-[#0C0C0C] text-[#F5F5F5] antialiased">
         {children}
+        {recaptchaSiteKey && (
+          <Script
+            src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

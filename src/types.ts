@@ -54,6 +54,7 @@ export interface ContactFormData {
   company?: string;
   scope: string;
   message: string;
+  recaptchaToken?: string;
 }
 
 export interface ContactResponse {
