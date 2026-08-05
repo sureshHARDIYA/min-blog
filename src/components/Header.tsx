@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavTab } from '../types';
+import { NAV_TAB_PATHS, NavTab } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
@@ -22,10 +22,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   const handleNavClick = (tab: NavTab) => {
+    const nextPath = NAV_TAB_PATHS[tab];
+
+    if (window.location.pathname !== nextPath || window.location.hash) {
+      window.history.pushState({}, document.title, nextPath);
+    }
+
     if (window.location.hash) {
-      window.history.pushState('', document.title, window.location.pathname + window.location.search);
       window.dispatchEvent(new Event('hashchange'));
     }
+
     setActiveTab(tab);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -179,5 +185,3 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     </header>
   );
 };
-
-

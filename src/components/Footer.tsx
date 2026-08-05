@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = () => {
         ? 'bg-slate-100 border-slate-300 text-slate-800'
         : 'bg-[#0C0C0C] border-white/10 text-[#F5F5F5]'
     }`}>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-6 py-10 max-w-[1120px] mx-auto items-start">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 px-6 py-10 max-w-[1120px] mx-auto items-start">
         <div className="col-span-1 md:col-span-2 space-y-3">
           <span className={`font-black text-sm tracking-widest block uppercase ${
             theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
@@ -50,13 +50,13 @@ export const Footer: React.FC<FooterProps> = () => {
           </div>
         </div>
 
-        <div className="col-span-1">
+        <div className="col-span-1 md:col-span-2">
           <span className={`font-code text-[10px] uppercase tracking-[0.2em] block mb-3 font-bold ${
             theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
           }`}>
             {t.footer.networks}
           </span>
-          <nav className="flex flex-col gap-2 font-body-md text-xs">
+          <nav className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-xs">
             <a
               href="https://github.com/sureshHARDIYA"
               target="_blank"
@@ -94,6 +94,19 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>YouTube</span>
+              <span className="material-symbols-outlined text-xs">north_east</span>
+            </a>
+            <a
+              href="https://scholar.google.com/citations?hl=en&view_op=list_works&gmla=AO4B3jvPGtKOD6tjKzHR0aCqvorVLxPTdXJDM7pAW7KaOMZPxdpE4NGA-i2H_e94T1bRGO8BV4X3AilXRUBb-1RQoXbl&user=9-fxxeMAAAAJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+                theme === 'light'
+                  ? 'text-slate-700 hover:text-[#008822]'
+                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
+              }`}
+            >
+              <span>Google Scholar</span>
               <span className="material-symbols-outlined text-xs">north_east</span>
             </a>
             <a

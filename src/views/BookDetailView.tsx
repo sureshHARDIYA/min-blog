@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { PublishedBook } from '../types';
+import { getBookSlug, PublishedBook } from '../types';
 import { getBookMarkdown } from '../content/books';
 import { useTheme } from '../context/ThemeContext';
 
@@ -44,7 +44,7 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
           <span className={`font-code text-xs uppercase tracking-widest hidden sm:inline ${
             theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/60'
           }`}>
-            Book Route // <strong className={theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}>{book.id}</strong>
+            Book Route // <strong className={theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}>{getBookSlug(book.id)}</strong>
           </span>
         </div>
 

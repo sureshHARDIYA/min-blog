@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBooks, fetchResearchPapers } from '../services/api';
-import { PublishedBook, ResearchPaper } from '../types';
+import { getBookIdFromSlug, getBookSlug, PublishedBook, ResearchPaper } from '../types';
 import { BookDetailView } from './BookDetailView';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -25,9 +25,15 @@ export const ResearchView: React.FC = () => {
     queryFn: fetchResearchPapers,
   });
 
-  // Handle hash-based routing for book details (e.g. #book/book-1)
+  // Handle book detail routing, including legacy hash links (e.g. /research#book/book-1).
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleBookRouteChange = () => {
+      const bookPathMatch = window.location.pathname.match(/^\/research\/book\/([^/]+)\/?$/);
+      if (bookPathMatch?.[1]) {
+        setSelectedBookId(getBookIdFromSlug(bookPathMatch[1]));
+        return;
+      }
+
       const hash = window.location.hash;
       if (hash.startsWith('#book/')) {
         const id = hash.replace('#book/', '');
@@ -37,21 +43,25 @@ export const ResearchView: React.FC = () => {
       }
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleBookRouteChange();
+    window.addEventListener('hashchange', handleBookRouteChange);
+    window.addEventListener('popstate', handleBookRouteChange);
+    return () => {
+      window.removeEventListener('hashchange', handleBookRouteChange);
+      window.removeEventListener('popstate', handleBookRouteChange);
+    };
   }, []);
 
   const openBookPage = (bookId: string) => {
     setSelectedBookId(bookId);
-    window.location.hash = `book/${bookId}`;
+    window.history.pushState({}, document.title, `/research/book/${getBookSlug(bookId)}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const closeBookPage = () => {
     setSelectedBookId(null);
-    if (window.location.hash) {
-      window.history.pushState('', document.title, window.location.pathname + window.location.search);
+    if (window.location.pathname !== '/research' || window.location.hash) {
+      window.history.pushState({}, document.title, '/research');
       window.dispatchEvent(new Event('hashchange'));
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -176,6 +186,19 @@ export const ResearchView: React.FC = () => {
             </div>
 
             <div className="md:col-span-4 flex flex-col gap-3">
+              <a
+                href="https://hdl.handle.net/11250/2778982"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full py-3 px-4 font-code text-xs font-bold uppercase tracking-widest border transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                  theme === 'light'
+                    ? 'bg-slate-900 text-white border-slate-900 hover:bg-[#008822] hover:border-[#008822]'
+                    : 'bg-[#F5F5F5] text-[#0C0C0C] border-[#F5F5F5] hover:bg-[#00FF41] hover:border-[#00FF41]'
+                }`}
+              >
+                <span>{t.research.openThesis}</span>
+                <span className="material-symbols-outlined text-base">north_east</span>
+              </a>
               <button
                 onClick={() => setShowDissertationModal(true)}
                 className={`w-full py-3 px-4 font-code text-xs font-bold uppercase tracking-widest border transition-all cursor-pointer flex items-center justify-center gap-2 ${
@@ -552,6 +575,19 @@ export const ResearchView: React.FC = () => {
             >
               {t.modal.closeDissertation}
             </button>
+            <a
+              href="https://hdl.handle.net/11250/2778982"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`mt-3 w-full font-bold py-3 font-code text-xs uppercase tracking-widest transition-colors cursor-pointer inline-flex items-center justify-center gap-2 border ${
+                theme === 'light'
+                  ? 'bg-white text-slate-900 border-slate-300 hover:border-[#008822] hover:text-[#008822]'
+                  : 'bg-[#0C0C0C] text-[#F5F5F5] border-white/20 hover:border-[#00FF41] hover:text-[#00FF41]'
+              }`}
+            >
+              <span>{t.research.openThesis}</span>
+              <span className="material-symbols-outlined text-sm">north_east</span>
+            </a>
           </div>
         </div>
       )}
