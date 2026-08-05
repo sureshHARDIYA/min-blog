@@ -119,6 +119,7 @@ export const translations = {
       networks: 'NETWORKS',
       contact: 'LOCATION & CONTACT',
       downloadCV: 'DOWNLOAD CV',
+      myTalks: 'My talks',
     }
   },
   no: {
@@ -226,6 +227,7 @@ export const translations = {
       networks: 'NETTVERK',
       contact: 'LOKASJON & KONTAKT',
       downloadCV: 'LAST NED CV',
+      myTalks: 'Mine foredrag',
     }
   },
   ne: {
@@ -333,6 +335,7 @@ export const translations = {
       networks: 'सञ्जालहरू',
       contact: 'स्थान र सम्पर्क',
       downloadCV: 'सीभी डाउनलोड गर्नुहोस्',
+      myTalks: 'मेरा प्रस्तुतिहरू',
     }
   }
 };
