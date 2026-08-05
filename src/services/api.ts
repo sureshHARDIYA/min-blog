@@ -424,14 +424,41 @@ export async function fetchTechStack(): Promise<TechCategory[]> {
 }
 
 export async function submitInquiry(data: ContactFormData): Promise<ContactResponse> {
-  await delay(600);
   if (!data.name || !data.email || !data.message) {
     throw new Error('Please fill in all required fields.');
   }
+
+  const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
+  if (!endpoint) {
+    throw new Error('Formspree endpoint is missing. Add NEXT_PUBLIC_FORMSPREE_ENDPOINT to your environment.');
+  }
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      _replyto: data.email,
+      company: data.company,
+      scope: data.scope,
+      message: data.message,
+      _subject: `New portfolio inquiry${data.company ? ` from ${data.company}` : ''}`,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Unable to send inquiry right now. Please try direct email instead.');
+  }
+
   return {
     success: true,
-    referenceId: `REF-${Math.floor(100000 + Math.random() * 900000)}`,
-    message: 'Your inquiry has been successfully dispatched to Dr. Suresh Mukhiya.',
+    referenceId: `FS-${Date.now()}`,
+    message: 'Your inquiry has been sent successfully. I will reply as soon as possible.',
     timestamp: new Date().toISOString(),
   };
 }

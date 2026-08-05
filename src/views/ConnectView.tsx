@@ -18,6 +18,9 @@ export const ConnectView: React.FC = () => {
     message: '',
   });
 
+  const directEmailHref =
+    'mailto:itsmeskm99@gmail.com?subject=Strategic%20collaboration%20inquiry&body=Hi%20Suresh%2C%0A%0AI%27d%20like%20to%20discuss%20a%20strategic%20collaboration.%0A%0A';
+
   const mutation = useMutation<ContactResponse, Error, ContactFormData>({
     mutationFn: submitInquiry,
     onSuccess: () => {
@@ -180,7 +183,7 @@ export const ConnectView: React.FC = () => {
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
               <a
-                href="mailto:itsmeskm99@gmail.com"
+                href={directEmailHref}
                 className={`inline-flex items-center gap-2 border px-6 py-3 font-code text-xs uppercase tracking-widest transition-colors ${
                   theme === 'light'
                     ? 'border-slate-300 text-slate-800 hover:border-[#008822] hover:text-[#008822]'
@@ -217,7 +220,7 @@ export const ConnectView: React.FC = () => {
             {t.connect.directLine}
           </span>
           <a
-            href="mailto:itsmeskm99@gmail.com"
+            href={directEmailHref}
             className={`font-code text-sm hover:underline underline-offset-4 ${
               theme === 'light' ? 'text-slate-900 hover:text-[#008822]' : 'text-[#F5F5F5] hover:text-[#00FF41]'
             }`}

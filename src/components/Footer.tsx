@@ -106,7 +106,7 @@ export const Footer: React.FC<FooterProps> = () => {
             <span className={`text-xs font-code ${
               theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/50'
             }`}>
-              Oslo &amp; Bergen, Norway
+              Bergen, Norway
             </span>
           </nav>
         </div>
