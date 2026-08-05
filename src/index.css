@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0C0C0C;
+    color: #F5F5F5;
+  }
+}
+
+.font-display {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.font-headline-lg {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.font-headline-md {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.font-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-body-md {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-body-lg {
+  font-family: 'Inter', sans-serif;
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgba(245, 245, 245, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.blueprint-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.marker-line {
+  position: relative;
+}
+
+.marker-line::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 2px;
+  background-color: #00FF41;
+}
+
+.text-stroke-white {
+  -webkit-text-stroke: 1.5px #F5F5F5;
+}
+
+.text-stroke-green {
+  -webkit-text-stroke: 1.5px #00FF41;
+}
+
+/* Custom scrollbar for dark aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0C0C0C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00FF41;
+}
+
