@@ -80,8 +80,10 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({ setActiveTab
             theme === 'light' ? 'border-slate-300 bg-slate-100' : 'border-white/10 bg-[#141414]'
           }`}>
             <img
-              src="https://lh3.googleusercontent.com/aida/AP1WRLtba6qE67ljhIczkJbVK4PF4VqGpeuita3H1bR1taPynDHsjOM3Nvdn9mcOJfemYVbVw7uXhiQggRL3lDfQJsJpXd1W3arMOSih7jB8BJMj_9LhpBIqwU7iGpDITejSNknr1mI47u_QgyPHeSUf2kfOl0h9QP_l6_aTSi4Zr_IyW30o4fIrJVqjSDYlvh4hjxwwEuXlJkqqwniW1PrqGvIGhuX_1Yt9qSm8Q1iD9cnPg3k6EL5GyE88ktg"
+              src="/suresh-portrait.png"
               alt="Suresh Kumar Mukhiya, PhD"
+              loading="eager"
+              decoding="async"
               className="object-cover w-full h-full grayscale opacity-85 contrast-125 group-hover:scale-105 transition-transform duration-700"
             />
             <div className={`absolute inset-0 border m-2 pointer-events-none ${
