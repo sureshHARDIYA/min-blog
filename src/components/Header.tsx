@@ -115,6 +115,19 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   ? 'text-slate-600 hover:text-slate-900'
                   : 'text-[#F5F5F5]/60 hover:text-[#F5F5F5]'
               }`}
+              href="/security"
+            >
+              Security
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: EASE_OUT_EXPO }}
+              className={`relative pb-1 transition-colors duration-200 ${
+                theme === 'light'
+                  ? 'text-slate-600 hover:text-slate-900'
+                  : 'text-[#F5F5F5]/60 hover:text-[#F5F5F5]'
+              }`}
               href="/blogs"
             >
               Blogs
@@ -210,6 +223,20 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     </button>
                   )
                 })}
+                <a
+                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${
+                    theme === 'light'
+                      ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                      : 'text-[#F5F5F5]/70 hover:bg-white/5 hover:text-[#F5F5F5]'
+                  }`}
+                  href="/security"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>Security</span>
+                  <span className="material-symbols-outlined text-sm">
+                    shield
+                  </span>
+                </a>
                 <a
                   className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${
                     theme === 'light'
