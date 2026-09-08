@@ -284,9 +284,7 @@ export default function SecurityPage() {
               >
                 OWASP Application Security Verification Standard
               </a>
-              . ASVS turns security expectations into testable requirements for web applications
-              and APIs. It supports clearer scope, stronger engineering acceptance criteria and
-              evidence-based assurance.
+              {'. ASVS turns security expectations into testable requirements for web applications and APIs. It supports clearer scope, stronger engineering acceptance criteria and evidence-based assurance.'}
             </p>
             <p className="mt-5 text-lg leading-8 text-white/75">
               The OWASP Top 10 is valuable for awareness. ASVS is the more useful foundation when a
