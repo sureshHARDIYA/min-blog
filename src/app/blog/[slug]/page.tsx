@@ -44,7 +44,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <main className="min-h-screen bg-[#0C0C0C] px-6 py-20 text-[#F5F5F5]">
       <article className="mx-auto max-w-3xl">
-        <Link className="text-sm text-cyan-400 hover:underline" href="/blog">
+        <Link className="text-sm text-cyan-400 hover:underline" href="/blogs">
           ← All posts
         </Link>
 
