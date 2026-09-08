@@ -10,6 +10,7 @@ const routes = [
   ...Object.values(BOOK_ROUTE_SLUGS).map((slug) => `/research/book/${slug}`),
   '/stack',
   '/connect',
+  '/briefs/appsec-2026-09-07',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
