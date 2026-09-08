@@ -1,0 +1,32 @@
+# Suresh Kumar Mukhiya, PhD
+
+> Suresh Kumar Mukhiya is a Tech Lead and secure software architect based in Bergen, Norway. His professional focus includes application security, secure software architecture, API security, DevSecOps, software supply-chain security, cloud security, and AI-assisted development security.
+
+## Primary pages
+
+- [Application Security](https://skmukhiya.com.np/security): Security capabilities, verification approach, technology focus, and contact information.
+- [Architecture](https://skmukhiya.com.np/): Professional profile and architecture focus.
+- [Technology Stack](https://skmukhiya.com.np/stack): Technologies used across applications, cloud, data, and security.
+- [Research](https://skmukhiya.com.np/research): Publications, books, and doctoral research.
+- [Career Trajectory](https://skmukhiya.com.np/trajectory): Professional experience.
+- [AppSec Blog](https://skmukhiya.com.np/blogs): Application-security and software-supply-chain briefs.
+- [Contact](https://skmukhiya.com.np/connect): Contact and collaboration.
+
+## Security focus
+
+- Secure architecture and threat modelling
+- API security, OAuth 2.0, OpenID Connect, and Microsoft Entra ID
+- Secure SDLC and OWASP ASVS security requirements
+- SBOM, dependency governance, and software supply-chain security
+- Security-focused review for Rust, Python, FastAPI, React, Next.js, PostgreSQL, and Microsoft SQL Server
+- Azure cloud and platform security
+- Security for AI-assisted development and agentic systems
+
+## Location and identity
+
+- Name: Suresh Kumar Mukhiya
+- Qualification: PhD
+- Location: Bergen, Norway
+- GitHub: https://github.com/sureshHARDIYA
+- LinkedIn: https://www.linkedin.com/in/sureshhardiya/
+- Google Scholar: https://scholar.google.com/citations?user=9-fxxeMAAAAJ

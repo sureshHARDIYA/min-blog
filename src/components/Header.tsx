@@ -14,6 +14,14 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
   const { theme, toggleTheme } = useTheme()
+  const desktopPageLinkClass =
+    theme === 'light'
+      ? 'text-slate-600 hover:text-slate-900'
+      : 'text-[#F5F5F5]/60 hover:text-[#F5F5F5]'
+  const mobilePageLinkClass =
+    theme === 'light'
+      ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+      : 'text-[#F5F5F5]/70 hover:bg-white/5 hover:text-[#F5F5F5]'
 
   const navItems: { id: NavTab; label: string }[] = [
     { id: 'architecture', label: t.nav.architecture },
@@ -110,11 +118,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.45, ease: EASE_OUT_EXPO }}
-              className={`relative pb-1 transition-colors duration-200 ${
-                theme === 'light'
-                  ? 'text-slate-600 hover:text-slate-900'
-                  : 'text-[#F5F5F5]/60 hover:text-[#F5F5F5]'
-              }`}
+              className={`relative pb-1 transition-colors duration-200 ${desktopPageLinkClass}`}
+              href="/security"
+            >
+              Security
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.45, ease: EASE_OUT_EXPO }}
+              className={`relative pb-1 transition-colors duration-200 ${desktopPageLinkClass}`}
               href="/blogs"
             >
               Blogs
@@ -211,11 +224,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   )
                 })}
                 <a
-                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${
-                    theme === 'light'
-                      ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                      : 'text-[#F5F5F5]/70 hover:bg-white/5 hover:text-[#F5F5F5]'
-                  }`}
+                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${mobilePageLinkClass}`}
+                  href="/security"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>Security</span>
+                  <span className="material-symbols-outlined text-sm">
+                    shield
+                  </span>
+                </a>
+                <a
+                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${mobilePageLinkClass}`}
                   href="/blogs"
                   onClick={() => setMobileMenuOpen(false)}
                 >

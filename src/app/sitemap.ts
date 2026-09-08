@@ -11,6 +11,7 @@ const staticRoutes = [
   '/research',
   ...Object.values(BOOK_ROUTE_SLUGS).map((slug) => `/research/book/${slug}`),
   '/stack',
+  '/security',
   '/connect',
   '/blogs',
 ];
