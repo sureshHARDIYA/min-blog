@@ -5,6 +5,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getNavTabFromPath, NavTab } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import {
+  LatestPostBanner,
+  LatestPostSummary,
+} from './components/LatestPostBanner';
 import { ArchitectureView } from './views/ArchitectureView';
 import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
@@ -47,9 +51,13 @@ const queryClient = new QueryClient({
 
 interface AppProps {
   initialTab?: NavTab;
+  latestPost?: LatestPostSummary;
 }
 
-const MainLayout: React.FC<AppProps> = ({ initialTab = 'architecture' }) => {
+const MainLayout: React.FC<AppProps> = ({
+  initialTab = 'architecture',
+  latestPost,
+}) => {
   const [activeTab, setActiveTab] = useState<NavTab>(initialTab);
   const { theme } = useTheme();
 
@@ -97,6 +105,9 @@ const MainLayout: React.FC<AppProps> = ({ initialTab = 'architecture' }) => {
     }`}>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="flex-grow pt-16 md:pt-20">
+        {activeTab === 'architecture' && latestPost ? (
+          <LatestPostBanner post={latestPost} />
+        ) : null}
         {renderCurrentView()}
       </main>
       <Footer setActiveTab={setActiveTab} />
@@ -104,12 +115,15 @@ const MainLayout: React.FC<AppProps> = ({ initialTab = 'architecture' }) => {
   );
 };
 
-export default function App({ initialTab = 'architecture' }: AppProps) {
+export default function App({
+  initialTab = 'architecture',
+  latestPost,
+}: AppProps) {
   return (
     <ThemeProvider>
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
-          <MainLayout initialTab={initialTab} />
+          <MainLayout initialTab={initialTab} latestPost={latestPost} />
         </QueryClientProvider>
       </LanguageProvider>
     </ThemeProvider>

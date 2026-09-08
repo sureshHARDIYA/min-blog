@@ -1,19 +1,26 @@
 import type { MetadataRoute } from 'next';
+
+import { getAllPosts } from '../lib/blog';
 import { BOOK_ROUTE_SLUGS } from '../types';
 
 const siteUrl = 'https://skmukhiya.com.np';
 
-const routes = [
+const staticRoutes = [
   '/',
   '/trajectory',
   '/research',
   ...Object.values(BOOK_ROUTE_SLUGS).map((slug) => `/research/book/${slug}`),
   '/stack',
   '/connect',
-  '/briefs/appsec-2026-09-07',
+  '/blogs',
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts();
+  const routes = [
+    ...staticRoutes,
+    ...posts.map((post) => `/blog/${post.slug}`),
+  ];
   const lastModified = new Date();
 
   return routes.map((route) => ({
