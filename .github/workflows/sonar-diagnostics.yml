@@ -1,0 +1,23 @@
+name: Sonar diagnostics
+
+on:
+  push:
+    branches:
+      - fix/sonar-reliability
+
+permissions:
+  contents: read
+
+jobs:
+  issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch open reliability issues
+        run: |
+          curl --fail --silent --show-error --get \
+            --data-urlencode "componentKeys=sureshHARDIYA_min-blog" \
+            --data-urlencode "branch=main" \
+            --data-urlencode "issueStatuses=OPEN,CONFIRMED" \
+            --data-urlencode "impactSoftwareQualities=RELIABILITY" \
+            "https://sonarcloud.io/api/issues/search" \
+          | jq -r '.issues[] | [.key, .rule, .component, (.line // 0), .message] | @tsv'
