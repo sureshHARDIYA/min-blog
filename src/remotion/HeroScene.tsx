@@ -262,7 +262,7 @@ export const HeroScene: React.FC<HeroSceneProps> = ({
           <div style={{ color: fg, fontWeight: 700 }}>
             <span style={{ color: accent }}>&gt; </span>
             {name}{' '}
-            <span style={{ color: dim, fontWeight: 400 }}>// {title}</span>
+            <span style={{ color: dim, fontWeight: 400 }}>{'// '}{title}</span>
             {cursorOn ? <span style={{ color: accent }}>▌</span> : null}
           </div>
         ) : null}
