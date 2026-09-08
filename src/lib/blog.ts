@@ -5,6 +5,7 @@ import path from 'node:path';
 
 const BLOG_DIRECTORY = path.join(process.cwd(), 'src', 'content', 'blog');
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const FRONTMATTER_BOUNDARY = '---\n';
 
 export interface BlogPost {
   slug: string;
@@ -14,25 +15,50 @@ export interface BlogPost {
   content: string;
 }
 
-const parseFrontmatter = (source: string) => {
-  const match = source.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+const removeMatchingQuotes = (value: string) => {
+  const first = value.at(0);
+  const last = value.at(-1);
 
-  if (!match) {
+  if (value.length >= 2 && first === last && (first === '"' || first === "'")) {
+    return value.slice(1, -1);
+  }
+
+  return value;
+};
+
+const parseFrontmatter = (source: string) => {
+  if (!source.startsWith(FRONTMATTER_BOUNDARY)) {
     throw new Error('Blog post is missing YAML-style frontmatter.');
   }
 
-  const metadata = Object.fromEntries(
-    match[1]
-      .split('\n')
-      .map((line) => line.match(/^([a-zA-Z][\w-]*):\s*(.*)$/))
-      .filter((entry): entry is RegExpMatchArray => Boolean(entry))
-      .map((entry) => [
-        entry[1],
-        entry[2].trim().replace(/^(['"])(.*)\1$/, '$2'),
-      ]),
-  );
+  const metadataStart = FRONTMATTER_BOUNDARY.length;
+  const metadataEnd = source.indexOf(`\n${FRONTMATTER_BOUNDARY}`, metadataStart);
 
-  return { metadata, content: match[2].trim() };
+  if (metadataEnd === -1) {
+    throw new Error('Blog post is missing a closing frontmatter boundary.');
+  }
+
+  const metadata: Record<string, string> = {};
+
+  for (const line of source.slice(metadataStart, metadataEnd).split('\n')) {
+    const separator = line.indexOf(':');
+
+    if (separator <= 0) {
+      continue;
+    }
+
+    const key = line.slice(0, separator).trim();
+    const value = line.slice(separator + 1).trim();
+
+    if (key) {
+      metadata[key] = removeMatchingQuotes(value);
+    }
+  }
+
+  return {
+    metadata,
+    content: source.slice(metadataEnd + FRONTMATTER_BOUNDARY.length + 1).trim(),
+  };
 };
 
 export async function getPost(slug: string): Promise<BlogPost | null> {
