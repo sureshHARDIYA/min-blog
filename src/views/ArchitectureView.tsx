@@ -6,6 +6,8 @@ import { useLanguage } from '../i18n/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
 import { HeroPlayer } from '../components/HeroPlayer'
 import { CyclingText } from '../components/CyclingText'
+import { GitHubTechnologyMap } from '../components/GitHubTechnologyMap'
+import { SlowCarousel } from '../components/SlowCarousel'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import {
   EASE_OUT_EXPO,
@@ -34,8 +36,17 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
 
   return (
     <div className='dot-grid min-h-[calc(100vh-80px)]'>
-      <div className='pt-24 pb-16 flex flex-col gap-16 max-w-[1120px] mx-auto px-6 w-full'>
-        {/* Hero Section */}
+      <div className='pt-24 pb-16 flex flex-col gap-12 max-w-[1120px] mx-auto px-6 w-full'>
+        {/* Hero and engineering evidence carousel */}
+        <SlowCarousel
+          ariaLabel='Professional introduction and engineering evidence'
+          initialIndex={1}
+          intervalMs={12000}
+          slides={[
+            {
+              id: 'introduction',
+              label: 'Professional introduction',
+              content: (
         <section className='grid grid-cols-1 md:grid-cols-12 gap-10 items-center mt-6'>
           <Stagger
             onMount
@@ -143,6 +154,15 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
           </Reveal>
         </section>
 
+              )
+            },
+            {
+              id: 'github-evidence',
+              label: 'GitHub engineering evidence',
+              content: <GitHubTechnologyMap compact />
+            }
+          ]}
+        />
         {/* Current Focus Section */}
         <section
           className={`grid grid-cols-1 md:grid-cols-12 gap-10 border-t pt-12 ${
