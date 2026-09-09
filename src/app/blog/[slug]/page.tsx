@@ -31,6 +31,16 @@ const MARKDOWN_COMPONENTS: Components = {
   blockquote: ({ children }) => <blockquote>{children}</blockquote>
 }
 
+const TWO_COLUMN_SECTIONS = new Set(['Security depth across the screen'])
+
+function markdownSections(markdown: string) {
+  return markdown.split(/(?=^## )/m).filter(Boolean)
+}
+
+function sectionTitle(markdown: string) {
+  return /^## (.+)$/m.exec(markdown)?.[1]?.trim() ?? ''
+}
+
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   return posts.map(({ slug }) => ({ slug }))
@@ -83,9 +93,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         <div className='blog-prose mt-12 text-lg leading-8 text-white/80'>
-          <ReactMarkdown components={MARKDOWN_COMPONENTS}>
-            {post.content}
-          </ReactMarkdown>
+          {markdownSections(post.content).map((section) => {
+            const title = sectionTitle(section)
+            return (
+              <section
+                className={
+                  TWO_COLUMN_SECTIONS.has(title)
+                    ? 'blog-two-column-section'
+                    : undefined
+                }
+                key={title || 'introduction'}
+              >
+                <ReactMarkdown components={MARKDOWN_COMPONENTS}>
+                  {section}
+                </ReactMarkdown>
+              </section>
+            )
+          })}
         </div>
       </article>
     </main>
