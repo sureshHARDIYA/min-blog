@@ -11,16 +11,20 @@ export interface CarouselSlide {
 
 interface SlowCarouselProps {
   ariaLabel: string
+  initialIndex?: number
   intervalMs?: number
   slides: CarouselSlide[]
 }
 
 export const SlowCarousel: React.FC<SlowCarouselProps> = ({
   ariaLabel,
+  initialIndex = 0,
   intervalMs = 12000,
   slides
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(() =>
+    Math.min(Math.max(initialIndex, 0), Math.max(slides.length - 1, 0))
+  )
   const [paused, setPaused] = useState(false)
   const reducedMotion = useReducedMotion()
 
