@@ -1,13 +1,34 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { type Components } from 'react-markdown'
 
 import { BlogCode, BlogList, BlogListItem } from '../../../components/BlogCode'
 import { getAllPosts, getPost } from '../../../lib/blog'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
+}
+
+const MARKDOWN_COMPONENTS: Components = {
+  h2: ({ children }) => <h2>{children}</h2>,
+  h3: ({ children }) => <h3>{children}</h3>,
+  p: ({ children }) => <p>{children}</p>,
+  ol: ({ children }) => <ol>{children}</ol>,
+  ul: BlogList,
+  li: BlogListItem,
+  pre: ({ children }) => <>{children}</>,
+  code: BlogCode,
+  a: ({ children, href }) => (
+    <a
+      href={href}
+      rel='noreferrer'
+      target={href?.startsWith('http') ? '_blank' : undefined}
+    >
+      {children}
+    </a>
+  ),
+  blockquote: ({ children }) => <blockquote>{children}</blockquote>
 }
 
 export async function generateStaticParams() {
@@ -62,28 +83,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         <div className='blog-prose mt-12 text-lg leading-8 text-white/80'>
-          <ReactMarkdown
-            components={{
-              h2: ({ children }) => <h2>{children}</h2>,
-              h3: ({ children }) => <h3>{children}</h3>,
-              p: ({ children }) => <p>{children}</p>,
-              ol: ({ children }) => <ol>{children}</ol>,
-              ul: BlogList,
-              li: BlogListItem,
-              pre: ({ children }) => <>{children}</>,
-              code: BlogCode,
-              a: ({ children, href }) => (
-                <a
-                  href={href}
-                  rel='noreferrer'
-                  target={href?.startsWith('http') ? '_blank' : undefined}
-                >
-                  {children}
-                </a>
-              ),
-              blockquote: ({ children }) => <blockquote>{children}</blockquote>
-            }}
-          >
+          <ReactMarkdown components={MARKDOWN_COMPONENTS}>
             {post.content}
           </ReactMarkdown>
         </div>
