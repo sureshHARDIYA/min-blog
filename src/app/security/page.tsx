@@ -8,44 +8,44 @@ const capabilities = [
   {
     title: 'Secure architecture and threat modelling',
     description:
-      'Identify assets, trust boundaries, abuse cases and security controls before implementation. Translate threats into architecture decisions teams can act on.',
-    evidence: 'STRIDE · attack paths · trust boundaries · security ADRs',
+      'I start with the assets, people and trust boundaries that matter. The useful output is not a perfect diagram; it is a short list of risks and decisions the team can act on.',
+    focus: 'STRIDE · attack paths · trust boundaries · security ADRs',
   },
   {
     title: 'API security, OAuth 2.0, OIDC and Entra ID',
     description:
-      'Design authentication and authorization for browser, service-to-service, Power Platform and partner integrations without confusing identity with access control.',
-    evidence: 'OAuth 2.0 · OIDC · Microsoft Entra ID · APIM · Zero Trust',
+      'Signing in and being allowed to perform an action are different problems. I design both, including tenant and resource-level checks that are easy to miss in APIs.',
+    focus: 'OAuth 2.0 · OIDC · Microsoft Entra ID · APIM · Zero Trust',
   },
   {
     title: 'Secure SDLC and security requirements',
     description:
-      'Make security part of planning, design, pull requests, delivery and operations through testable requirements and proportionate assurance.',
-    evidence: 'OWASP ASVS · abuse cases · acceptance criteria · security gates',
+      'I prefer a few clear requirements in a story and pipeline over a large policy nobody reads. OWASP ASVS gives those requirements a testable foundation.',
+    focus: 'OWASP ASVS · abuse cases · acceptance criteria · security gates',
   },
   {
     title: 'Software supply-chain security',
     description:
-      'Connect dependency and SBOM findings to deployed services, runtime exposure, ownership and explicit remediation decisions.',
-    evidence: 'CycloneDX · Dependency-Track · provenance · CI/CD hardening',
+      'An SBOM is only useful when a finding can be connected to a deployed service, an owner and a decision. That connection is where I put most of the effort.',
+    focus: 'CycloneDX · Dependency-Track · provenance · CI/CD hardening',
   },
   {
     title: 'Security-focused code review',
     description:
-      'Review authorization, input handling, data access, file processing, secrets, error paths and dependency changes in modern application stacks.',
-    evidence: 'Rust · Python/FastAPI · React/Next.js · PostgreSQL · MS SQL',
+      'I pay particular attention to authorization, data access, file handling, error paths and the assumptions hidden between frontend and backend code.',
+    focus: 'Rust · Python/FastAPI · React/Next.js · PostgreSQL · MS SQL',
   },
   {
     title: 'Cloud and platform security',
     description:
-      'Design practical cloud controls around identity, private connectivity, secrets, observability, workload isolation and incident readiness.',
-    evidence: 'Azure · Key Vault · WAF · private endpoints · security telemetry',
+      'My focus is the path an identity, request or secret takes through the system: who can reach it, what they can do and what evidence remains afterwards.',
+    focus: 'Azure · Key Vault · WAF · private endpoints · security telemetry',
   },
   {
     title: 'AI-assisted development security',
     description:
-      'Establish boundaries for coding agents and AI-enabled applications, including tool permissions, data exposure, prompt injection and human review.',
-    evidence: 'least privilege · tool isolation · audit trails · review policy',
+      'Coding agents make it cheaper to create code and easier to create risk at scale. I work on practical boundaries for tool access, data, review and auditability.',
+    focus: 'least privilege · tool isolation · audit trails · review policy',
   },
 ];
 
@@ -53,124 +53,60 @@ const workflow = [
   {
     number: '01',
     title: 'Understand',
-    text: 'Clarify the system, business constraints, sensitive assets, actors and realistic threat scenarios.',
+    text: 'Start with the system, its sensitive assets and the ways it could realistically fail or be abused.',
   },
   {
     number: '02',
-    title: 'Design',
-    text: 'Select proportional controls and document decisions, ownership, trade-offs and verification criteria.',
+    title: 'Decide',
+    text: 'Choose proportionate controls and write down ownership, trade-offs and the reasons behind them.',
   },
   {
     number: '03',
     title: 'Verify',
-    text: 'Use ASVS-aligned requirements, automated checks, focused testing and evidence-based review.',
+    text: 'Combine ASVS requirements, automated checks and focused human testing. No single tool is enough.',
   },
   {
     number: '04',
-    title: 'Improve',
-    text: 'Turn findings, incidents and dependency intelligence into owned engineering work and reusable controls.',
+    title: 'Learn',
+    text: 'Use findings and incidents to improve the shared patterns, not only the application where they appeared.',
   },
 ];
 
-const profileJsonLd = {
+const pageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
+  '@id': `${pageUrl}#profile`,
   name: 'Application Security and Secure Software Architecture',
   url: pageUrl,
   description:
-    'Application security, secure software architecture and DevSecOps expertise in Bergen, Norway.',
-  mainEntity: {
-    '@type': 'Person',
-    name: 'Suresh Kumar Mukhiya',
-    honorificSuffix: 'PhD',
-    url: siteUrl,
-    jobTitle: 'Tech Lead and Secure Software Architect',
-    homeLocation: {
-      '@type': 'Place',
-      name: 'Bergen, Norway',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Bergen',
-        addressCountry: 'NO',
-      },
-    },
-    knowsAbout: capabilities.map(({ title }) => title),
-    sameAs: [
-      'https://github.com/sureshHARDIYA',
-      'https://www.linkedin.com/in/sureshhardiya/',
-      'https://scholar.google.com/citations?user=9-fxxeMAAAAJ',
-    ],
-  },
-};
-
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: siteUrl,
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Application Security',
-      item: pageUrl,
-    },
-  ],
+    'How Suresh Kumar Mukhiya approaches application security, secure software architecture and DevSecOps.',
+  inLanguage: 'en',
+  isPartOf: { '@id': `${siteUrl}/#website` },
+  mainEntity: { '@id': `${siteUrl}/#person` },
 };
 
 export const metadata: Metadata = {
-  title: 'Application Security Expert in Norway',
+  title: 'Application Security and Secure Software Architecture',
   description:
-    'Suresh Kumar Mukhiya is a Bergen-based specialist in application security, secure software architecture, API security, DevSecOps and supply-chain security.',
-  keywords: [
-    'application security expert Norway',
-    'cybersecurity expert Norway',
-    'application security Bergen',
-    'secure software architect Norway',
-    'AppSec consultant Norway',
-    'DevSecOps Norway',
-    'API security architect',
-    'software supply chain security',
-    'OWASP ASVS',
-    'Microsoft Entra ID security',
-    'Rust security',
-    'Python application security',
-    'React security',
-    'Azure security architecture',
-    'applikasjonssikkerhet Norge',
-    'sikker programvarearkitektur',
-  ],
+    'How Suresh Kumar Mukhiya approaches secure APIs, threat modelling, DevSecOps and software-supply-chain risk from Bergen, Norway.',
   authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
   alternates: {
-    canonical: '/security',
+    canonical: pageUrl,
   },
   openGraph: {
     type: 'profile',
     url: pageUrl,
-    title: 'Application Security & Secure Software Architecture',
+    title: 'Application Security and Secure Software Architecture',
     description:
-      'Application security, API security, DevSecOps and secure cloud architecture expertise in Bergen, Norway.',
+      'Practical notes on secure APIs, threat modelling, DevSecOps and software-supply-chain risk.',
     siteName: 'Suresh Kumar Mukhiya, PhD',
     locale: 'en_NO',
-    images: [
-      {
-        url: '/favicon-192x192.png',
-        width: 192,
-        height: 192,
-        alt: 'Suresh Kumar Mukhiya, application security and software architecture',
-      },
-    ],
   },
   twitter: {
     card: 'summary',
-    title: 'Application Security & Secure Software Architecture',
+    title: 'Application Security and Secure Software Architecture',
     description:
-      'Application security, API security, DevSecOps and secure cloud architecture expertise in Norway.',
-    images: ['/favicon-192x192.png'],
+      'Practical notes on secure APIs, threat modelling, DevSecOps and software-supply-chain risk.',
   },
 };
 
@@ -178,11 +114,9 @@ export default function SecurityPage() {
   return (
     <main className="min-h-screen bg-[#0C0C0C] text-[#F5F5F5]">
       <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
-        type="application/ld+json"
-      />
-      <script
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(pageJsonLd).replaceAll('<', '\\u003c'),
+        }}
         type="application/ld+json"
       />
 
@@ -211,7 +145,7 @@ export default function SecurityPage() {
       <section className="border-b border-white/10 px-6 py-20 md:py-28">
         <div className="mx-auto max-w-[1120px]">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-[#00FF41]">
-            Application security specialist · Bergen, Norway
+            Application security · Bergen, Norway
           </p>
           <h1 className="mt-6 max-w-5xl text-5xl font-black leading-[0.95] tracking-tighter md:text-7xl">
             Application Security &amp; Secure Software Architecture
@@ -226,13 +160,13 @@ export default function SecurityPage() {
               className="bg-[#00FF41] px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-[#0C0C0C] hover:bg-white"
               href="mailto:itsmeskm99@gmail.com?subject=Application%20security%20collaboration"
             >
-              Discuss security work
+              Discuss a security problem
             </a>
             <Link
               className="border border-white/20 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest hover:border-[#00FF41] hover:text-[#00FF41]"
               href="/blogs"
             >
-              Read AppSec briefs
+              Read my field notes
             </Link>
           </div>
         </div>
@@ -241,10 +175,10 @@ export default function SecurityPage() {
       <section className="px-6 py-20" id="capabilities">
         <div className="mx-auto max-w-[1120px]">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]">
-            Security capabilities
+            Where I work
           </p>
           <h2 className="mt-3 max-w-3xl text-3xl font-black tracking-tight md:text-5xl">
-            Security that engineering teams can implement and verify
+            Security close to the engineering work
           </h2>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {capabilities.map((capability) => (
@@ -255,7 +189,7 @@ export default function SecurityPage() {
                 <h3 className="text-xl font-bold">{capability.title}</h3>
                 <p className="mt-4 leading-7 text-white/70">{capability.description}</p>
                 <p className="mt-5 font-mono text-xs leading-5 text-[#00FF41]">
-                  {capability.evidence}
+                  {capability.focus}
                 </p>
               </article>
             ))}
@@ -267,15 +201,15 @@ export default function SecurityPage() {
         <div className="mx-auto grid max-w-[1120px] gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]">
-              Verification standard
+              Verification
             </p>
             <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
-              Beyond awareness checklists
+              Requirements need evidence
             </h2>
           </div>
           <div className="lg:col-span-7">
             <p className="text-lg leading-8 text-white/75">
-              My application-security verification work is grounded in the{' '}
+              I use the{' '}
               <a
                 className="font-semibold text-[#00FF41] hover:underline"
                 href="https://owasp.org/www-project-application-security-verification-standard/"
@@ -283,12 +217,14 @@ export default function SecurityPage() {
                 target="_blank"
               >
                 OWASP Application Security Verification Standard
-              </a>
-              {'. ASVS turns security expectations into testable requirements for web applications and APIs. It supports clearer scope, stronger engineering acceptance criteria and evidence-based assurance.'}
+              </a>{' '}
+              to turn broad security goals into requirements a team can test. Some controls belong
+              in CI; others need architecture review, code review or a deliberately awkward abuse
+              test.
             </p>
             <p className="mt-5 text-lg leading-8 text-white/75">
-              The OWASP Top 10 is valuable for awareness. ASVS is the more useful foundation when a
-              team needs to specify what must be secure and verify whether the controls work.
+              The OWASP Top 10 is useful for explaining common risks. ASVS is what I reach for when
+              a team needs acceptance criteria and evidence that a control actually works.
             </p>
           </div>
         </div>
@@ -300,7 +236,7 @@ export default function SecurityPage() {
             Working method
           </p>
           <h2 className="mt-3 text-3xl font-black tracking-tight md:text-5xl">
-            From business risk to engineering evidence
+            From a real risk to something we can verify
           </h2>
           <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-4">
             {workflow.map((step) => (
@@ -315,33 +251,19 @@ export default function SecurityPage() {
       </section>
 
       <section className="border-t border-white/10 px-6 py-20">
-        <div className="mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-2">
-          <div>
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]">
-              Local and international
-            </p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight">
-              Application security expertise in Norway
-            </h2>
-            <p className="mt-5 leading-7 text-white/70">
-              Based in Bergen, I combine software engineering, technical leadership and academic
-              research to make security decisions understandable and actionable across product,
-              development and platform teams.
-            </p>
-          </div>
-          <div lang="no">
-            <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]">
-              Applikasjonssikkerhet i Norge
-            </p>
-            <h2 className="mt-3 text-3xl font-black tracking-tight">
-              Sikker programvarearkitektur i Bergen
-            </h2>
-            <p className="mt-5 leading-7 text-white/70">
-              Jeg hjelper utviklingsteam med sikker API-arkitektur, trusselmodellering,
-              programvareforsyningskjeder, DevSecOps og praktiske sikkerhetskrav for moderne
-              skybaserte løsninger.
-            </p>
-          </div>
+        <div className="mx-auto max-w-[860px]">
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]">
+            A practical perspective
+          </p>
+          <h2 className="mt-3 text-3xl font-black tracking-tight">
+            I work at the boundary between architecture and delivery
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-white/70">
+            My background spans hands-on software development, technical leadership and academic
+            research. I am most useful when a security question crosses those boundaries: an Entra
+            design that also has to work in an API, a dependency policy developers can live with,
+            or an architecture decision that needs evidence rather than reassurance.
+          </p>
         </div>
       </section>
 
@@ -349,10 +271,10 @@ export default function SecurityPage() {
         <div className="mx-auto flex max-w-[1120px] flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em]">
-              Secure systems are designed, verified and improved
+              Have a difficult security decision?
             </p>
             <h2 className="mt-3 max-w-2xl text-3xl font-black tracking-tight md:text-4xl">
-              Need an engineering-led security perspective?
+              Tell me what you are building and where the uncertainty is.
             </h2>
           </div>
           <a
