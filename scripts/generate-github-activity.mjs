@@ -8,6 +8,15 @@ const maxRepositories = 12;
 const apiBase = 'https://api.github.com';
 const outputPath = path.join(process.cwd(), 'src', 'generated', 'github-activity.json');
 const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000).toISOString();
+const weekMs = 7 * 24 * 60 * 60 * 1000;
+const activityWeeks = Array.from({ length: 13 }, (_, index) => {
+  const start = new Date(Date.now() - (12 - index) * weekMs);
+  return {
+    start: start.toISOString().slice(0, 10),
+    label: new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' }).format(start),
+    commits: 0,
+  };
+});
 
 const headers = {
   Accept: 'application/vnd.github+json',
@@ -98,9 +107,10 @@ function detectTechnologies({ repository, languages, manifests, commits }, techn
   }
 }
 
-const repositories = await github(
-  `/users/${username}/repos?type=owner&sort=pushed&direction=desc&per_page=100`,
-);
+const [profile, repositories] = await Promise.all([
+  github(`/users/${username}`),
+  github(`/users/${username}/repos?type=owner&sort=pushed&direction=desc&per_page=100`),
+]);
 
 const selected = repositories
   .filter(
@@ -138,6 +148,14 @@ for (const repository of selected) {
     technologies,
   );
 
+  for (const commit of commits) {
+    const commitDate = new Date(commit.commit?.author?.date || commit.commit?.committer?.date);
+    const weeksAgo = Math.floor((Date.now() - commitDate.getTime()) / weekMs);
+    if (weeksAgo >= 0 && weeksAgo < activityWeeks.length) {
+      activityWeeks[activityWeeks.length - 1 - weeksAgo].commits += 1;
+    }
+  }
+
   repositoryActivity.push({
     name: repository.name,
     url: repository.html_url,
@@ -152,10 +170,18 @@ const totalLanguageBytes = [...languageTotals.values()].reduce((sum, bytes) => s
 const output = {
   generatedAt: new Date().toISOString(),
   username,
+  profile: {
+    name: profile.name || username,
+    avatarUrl: profile.avatar_url,
+    profileUrl: profile.html_url,
+    publicRepositories: profile.public_repos,
+    joinedAt: profile.created_at,
+  },
   publicOnly: true,
   windowDays,
   repositoriesAnalyzed: selected.length,
   recentCommits: repositoryActivity.reduce((sum, repository) => sum + repository.recentCommits, 0),
+  activityWeeks,
   technologies: [...technologies.values()]
     .map((technology) => ({
       name: technology.name,
