@@ -35,6 +35,8 @@ Imagine a business application used by account managers and security administrat
 - see live assessment progress; and
 - ask an AI assistant to summarize the organization.
 
+Call the fictional customer in this example **Northwind**.
+
 The first design puts everything on `/customers/:id`. Here is the Northwind screen as it appeared at the end of the design sprint:
 
 ![The Northwind customer workspace combines overview, evidence, risk, access, and AI tools on one screen.](/blog-images/ui-ux-depth/01-customer-workspace.svg)
@@ -73,7 +75,7 @@ The problem is not the number of `useState` calls by itself. The problem is that
 
 Can the selected member be `null` while the role drawer is open? What happens if a customer update arrives while the edit modal contains a draft? Does closing the upload modal cancel the upload, hide it, or merely detach the progress indicator? If an access token expires during a long-running assessment, does the UI say the assessment failed even though the Rust worker completed it? If the user changes customer routes while the AI response is streaming, which customer receives the final text?
 
-Twelve booleans do not describe twelve conditions. In the worst case they describe thousands of combinations, most of which were never designed. The UI can enter states the product team never drew and the test suite never names.
+Thirteen independent variables, five of them booleans, do not describe thirteen conditions. Together they permit thousands of combinations, most of which were never designed. The UI can enter states the product team never drew and the test suite never names.
 
 Props add another kind of coupling:
 
@@ -109,37 +111,27 @@ A system can therefore have:
 - low complexity and unnecessary depth: abstractions and services created before the problem needs them; or
 - low complexity and appropriate depth: plain code with a clear owner and few moving parts.
 
-The goal is not maximum architecture. It is enough depth for the consequences of failure and the expected rate of change.
+The goal is enough architecture for the consequences of failure and the expected rate of change.
 
 ![A balance showing user effort falling as system coordination rises.](/blog-images/ui-ux-depth/02-complexity-transfer.svg)
 
 *Figure 2: Unless scope is removed, simplification usually transfers effort from the user to the system.*
 
+### Price the mock-up before approving it
+
+A quick design comparison makes the hidden work harder to ignore:
+
+- **Inline role dropdown** — hidden work: optimistic state, rollback, row-level pending feedback, keyboard behavior, stale-version detection, and duplicate-submit protection. Security: server-side authorization despite hidden options, plus audit of every accepted change.
+- **Confirmation modal** — hidden work: focus trapping and restoration, escape behavior, background inertness, draft ownership, submission errors, and changes to the underlying record while the dialog is open. Security: consequence text, justification, step-up when required, and protection against accidental confirmation.
+- **Dedicated route** — hidden work: routing, loading and recovery, deep links, browser history, and resumable multi-step state. Security: policy evaluation, approval status, durable audit history, and a clear boundary for high-consequence operations.
+
+This gives delivery teams something concrete to estimate while a mock-up is still cheap to change.
+
 Removing a required field is genuine simplification. Hiding twelve required fields behind an accordion is presentation. Automatically deriving ten fields is simplification for the user and additional responsibility for the system. These are different moves and should be estimated differently.
 
 ## Good design begins with jobs and consequences
 
-Consider three alternatives for changing a member's role.
-
-### Design A: an inline dropdown
-
-The access tab shows a role dropdown in every row. This is fast for frequent, low-risk changes. It is a bad choice if changing a role has tenant-wide consequences, requires step-up authentication, or needs an explanation for audit.
-
-Technical cost includes optimistic state, rollback, per-row pending status, keyboard behavior, stale version detection, and protection against double submission. Security cost includes ensuring that hiding prohibited options is not mistaken for authorization.
-
-### Design B: a confirmation modal
-
-A modal can present the consequences and request a reason. It keeps context and adds deliberate friction. It also creates focus management, escape behavior, background inertness, draft state, error display, and the possibility that the underlying record changes while the dialog is open.
-
-The modal is good design when the task is short, self-contained, reversible or clearly confirmable, and does not need a shareable location.
-
-### Design C: a dedicated route
-
-`/customers/:id/access/:memberId` can support richer explanation, policy evaluation, audit history, approval status, and a stable URL. It adds navigation but reduces overlay coordination and gives browser history useful meaning.
-
-The route is good design when the action is complex, must survive refresh, needs deep linking, has multiple validation stages, or deserves its own authorization and telemetry boundary.
-
-There is no universal winner. A mature decision connects interaction design to domain risk.
+Consider the same role change in three forms. An inline dropdown is efficient for frequent, low-risk work. A confirmation dialog fits a short, self-contained decision that benefits from deliberate friction. A dedicated `/customers/:id/access/:memberId` route earns its navigation when the task is consequential, multi-step, resumable, or worth linking to.
 
 For Northwind, we kept the ordinary `Viewer` to `Editor` change in a confirmation dialog, but moved `Owner` grants to a dedicated route. The latter needs a justification, step-up authentication, approval status, audit history, and a location that survives refresh. The extra navigation is not a UX failure; it communicates that the action has weight.
 
@@ -147,7 +139,7 @@ The rule that emerged was practical. Use inline controls for frequent, low-conse
 
 ## Refactoring the React state model
 
-The first useful refactoring is not to introduce a global store. It is to name the state.
+The first useful refactoring names the state before choosing a global store or another library.
 
 Separate four categories:
 
@@ -206,6 +198,8 @@ Context is useful for stable cross-cutting dependencies such as the current tena
 
 Do not claim that a prop causes harmful re-rendering without measuring. Use the React profiler and production telemetry. First correct ownership and remove redundant Effects. Then stabilize expensive boundaries where evidence justifies it.
 
+React Compiler can now apply most component and value memoization automatically. That makes the order even clearer: repair ownership first, measure second, and hand-memoize only the remaining hot paths.
+
 The maintainability win usually arrives before the performance win: smaller dependency surfaces, fewer cascading effects, and tests that can describe one workflow without mounting the entire workspace.
 
 ## The API must not inherit the screen
@@ -226,7 +220,7 @@ async def workspace(customer_id: UUID, user=Depends(current_user)):
 
 This endpoint optimizes one network waterfall, but it also couples latency, availability, authorization, and release cadence. Does the whole workspace fail when the AI provider times out? May every user allowed to view the customer also enumerate its members? Is the response cacheable when four resources have different sensitivity and freshness? Can an attacker use repeated page loads to trigger expensive AI work?
 
-The endpoint is not wrong because it aggregates. It is shallow because it has no explicit policy for partial failure or data exposure.
+Aggregation is reasonable here only after the endpoint defines its policy for partial failure and data exposure.
 
 ### A deeper FastAPI boundary
 
@@ -247,12 +241,19 @@ async def overview(
 )
 async def change_role(
     customer_id: UUID,
+    response: Response,
     command: RoleChange,
     idempotency_key: Annotated[str, Header()],
     principal: Principal = Security(require_scopes, scopes=["role.assign"]),
     service: AccessService = Depends(get_access_service),
 ) -> AcceptedCommand:
-    return await service.submit(customer_id, command, principal, idempotency_key)
+    accepted = await service.submit(
+        customer_id, command, principal, idempotency_key
+    )
+    response.headers["Location"] = (
+        f"/customers/{customer_id}/role-changes/{accepted.command_id}"
+    )
+    return accepted
 ```
 
 This design makes several decisions visible:
@@ -261,7 +262,7 @@ This design makes several decisions visible:
 - tenant authorization is checked on the server;
 - a consequential role change is a command, not a mutation hidden inside a generic workspace save;
 - retries are expected and controlled through an idempotency key; and
-- asynchronous completion is part of the contract.
+- asynchronous completion is part of the contract, including a `Location` header for polling the accepted command.
 
 The React UI may still present the action in a modal. The API no longer mistakes the modal for the domain boundary.
 
@@ -285,6 +286,8 @@ await accessApi.requestRoleChange({
 
 The FastAPI service compares `basedOnVersion` with the current membership version. Because the record is now version 18, it returns `409 Conflict` with a safe summary of the current state. The dialog does not simply say “Save failed.” It changes to a named `stale` state: *Ravi's access changed while you were reviewing it. He is now Billing Administrator. Review the latest access before trying again.*
 
+For a plain resource update, HTTP already has this vocabulary: send an `ETag` with the membership response, require `If-Match` on the update, and return `412 Precondition Failed` when the version no longer matches. Keeping `basedOnVersion` in the body is also reasonable here because this endpoint accepts a domain command rather than replacing the membership resource directly.
+
 That small interaction requires agreement across layers. TypeScript preserves the reviewed version. The API performs the concurrency check. The audit record distinguishes an attempted stale command from a denied command. The UX gives the user enough information to make a new decision without pretending that an automatic retry would be harmless.
 
 The idempotency key solves a different problem. If Anna submits once and loses the response, pressing Retry returns the outcome of the first command rather than granting the role twice or creating two approval requests. Optimistic concurrency protects against somebody else's change; idempotency protects against repetition of Anna's own command. They are related, but they are not interchangeable.
@@ -298,6 +301,8 @@ Three mistakes frequently hide behind polished UX:
 1. **Authorizing in the component.** Disabling the “Admin” option based on a client-side claim improves UX; it does not protect the API.
 2. **Confusing ID tokens and access tokens.** The ID token supports client sign-in; the API must validate the access token intended for it.
 3. **Treating roles as universal.** An application role may permit `role.assign`, while tenant membership, resource ownership, separation-of-duties rules, or approval policy still deny the command.
+
+The FastAPI `Security(require_scopes, scopes=["role.assign"])` dependency must understand which kind of token it received. Delegated permissions for a user token are carried in the space-delimited `scp` claim; application permissions assigned as app roles are carried in `roles`. Checking one claim for every caller either rejects legitimate workloads or creates an authorization gap.
 
 ![The authorization path from React through Entra ID to FastAPI policy enforcement and the Rust assessment service.](/blog-images/ui-ux-depth/04-authorization-path.svg)
 
@@ -342,6 +347,8 @@ pub async fn submit_assessment(
 ```
 
 The worker consumes a durable command, applies time and memory budgets, writes the result and outbox record transactionally, and publishes from the outbox. The UI polls or subscribes using a command ID. This is more machinery than an awaited HTTP call. It is justified only when the workflow needs durable execution and independent scaling.
+
+That durable command ID also turns access-token expiry into a re-authentication problem rather than a lost-work problem: after signing in again, the client can query the same operation and recover its outcome.
 
 Do not create a microservice because the screen has a panel. Create one when a capability needs an independent boundary for ownership, scaling, security, deployment, or failure isolation—and when the organization can operate it.
 
@@ -394,9 +401,35 @@ type PanelResult<T> =
 
 Naming these states lets designers specify them, engineers test them, and telemetry count them. Reliability improves when failure stops being an exception to the design language.
 
+### Concrete failure: the stream outlives the route
+
+Return to the question raised by the original screen. A user asks the assistant to summarize Northwind, then navigates to Contoso while the response is still streaming. If the stream writes into a route-level `aiSummary`, Northwind's answer can appear on Contoso's page.
+
+Tie both cancellation and acceptance to the customer that started the request:
+
+```tsx
+useEffect(() => {
+  const controller = new AbortController();
+  const requestedFor = customerId;
+
+  streamSummary(customerId, { signal: controller.signal }).then((response) => {
+    if (response.customerId === requestedFor) {
+      setSummaries((current) => ({
+        ...current,
+        [response.customerId]: response.text,
+      }));
+    }
+  });
+
+  return () => controller.abort();
+}, [customerId]);
+```
+
+The `AbortController` stops work the old view no longer needs. Tagging the response with `customerId` provides a second boundary for the race in which cancellation arrives after a final chunk: the result is stored under Northwind and the current screen reads only `summaries[customerId]`. In production, the completion handler should also ignore `AbortError`, surface other failures, and use a customer-keyed query cache rather than a hand-built object.
+
 ## Security depth across the screen
 
-The one-page workspace expands the attack surface because it loads and coordinates more capabilities at once. The response should not be fear; it should be explicit controls.
+The one-page workspace expands the attack surface because it loads and coordinates more capabilities at once. The appropriate response is a set of explicit controls.
 
 ### Data minimization
 
@@ -442,7 +475,7 @@ requestPrivilegedRoleChange({
 
 The second API makes consequence, intent, and concurrency visible. It gives reviewers something concrete to challenge. Can `Owner` be granted? Is justification required? What happens if the membership version changed? A generic save function hides those questions inside a bag of fields.
 
-Good abstraction is not the removal of domain language. It is the concentration of domain rules behind a clear interface.
+Good abstraction concentrates domain rules behind a clear interface without erasing their language.
 
 Tests should follow those boundaries:
 
@@ -459,48 +492,13 @@ An enormous end-to-end suite cannot compensate for unmodeled state. It discovers
 
 AI-assisted development changes the economics of producing code. It does not change the economics of understanding consequences.
 
-A model can create a convincing dashboard in minutes. It can also introduce four state libraries, invent endpoints that mirror component names, decode tokens without enforcing audience, trust client-supplied tenant IDs, retry non-idempotent commands, and add a microservice for every card. The result may look coherent because local syntax is coherent.
+A model can create a convincing dashboard in minutes. It can also introduce four state libraries, invent endpoints that mirror component names, decode tokens without enforcing audience, trust client-supplied tenant IDs, and retry non-idempotent commands. The result may look coherent because local syntax is coherent.
 
 > Vibe coding lowers the cost of generating a path through the system. It can raise the cost of proving that all paths are safe.
 
 This matters especially for the single-page simplification pattern. AI is good at completing the visible happy path: open drawer, submit form, show toast. The hidden state space—two tabs open, token expiry, stale entity version, retry after commit, out-of-order stream, denied cross-tenant request—is mostly absent from the prompt and therefore absent from the generated design.
 
-### A poor AI instruction
-
-```text
-Build a modern customer dashboard. Put everything on one page.
-Use React, FastAPI, Rust microservices and Entra ID.
-Make it clean and production-ready.
-```
-
-The instruction lists technologies and aesthetics but no invariants, trust boundaries, failure semantics, or quality evidence. “Production-ready” is decoration.
-
-### A stronger architectural instruction
-
-```text
-Implement the role-change workflow only.
-
-Invariants:
-- The API, not the React client, enforces tenant and resource authorization.
-- Only principals with role.assign may submit.
-- Owner grants require step-up authentication and approval.
-- Commands are idempotent and reject stale membership versions.
-- Access tokens and personal data must not enter logs.
-
-States:
-closed, editing, awaiting-step-up, submitting, awaiting-approval,
-completed, denied, retryable-failure.
-
-Produce:
-- a TypeScript discriminated union and accessible modal/route decision;
-- an OpenAPI contract and FastAPI policy dependency;
-- a Rust command handler with resource limits and outbox semantics;
-- tests for cross-tenant access, duplicate submission, stale version,
-  token expiry, keyboard focus, and lost responses;
-- assumptions and unresolved decisions. Do not invent requirements.
-```
-
-This prompt still does not replace architecture. It makes architectural intent reviewable and constrains generation.
+Prompt quality still matters. “Build a modern, production-ready customer dashboard” describes aesthetics but says nothing about invariants, trust boundaries, failure semantics, or evidence. A useful implementation prompt scopes one workflow, names its valid states, states who authorizes it, defines retry and stale-data behavior, prohibits tokens and personal data in logs, and asks for assumptions instead of invented requirements. Those constraints make the result reviewable; they do not make the model the architect.
 
 ### Treat generated code as untrusted contribution
 
@@ -536,38 +534,6 @@ For this scenario, the tests should be concrete enough to fail:
 - deleting evidence removes it from future retrieval according to the retention policy.
 
 “We defend against prompt injection” is not a testable requirement. These examples are. They also reconnect AI safety to the same architectural ideas used elsewhere in the article: explicit trust boundaries, narrow capabilities, durable audit, and a UI that represents consequential states honestly.
-
-## A practical refactoring sequence
-
-Large screens rarely tolerate a rewrite. Refactor by exposing one responsibility at a time.
-
-### Step 1: inventory interaction states
-
-Write down every overlay, background request, subscription, permission decision, draft, and destructive action. Add empty, loading, stale, forbidden, failed, retrying, and completed states. If the list surprises the design team, that is useful information.
-
-### Step 2: choose route, server, UI, and workflow owners
-
-Move shareable state into the URL. Keep remote resources in a server-state abstraction. Keep ephemeral details local. Represent multi-stage workflows with reducers or state machines. Do not begin by choosing a library.
-
-### Step 3: extract a vertical capability
-
-Access management is a good candidate because it has distinct authorization and audit requirements. Give it a component boundary, API contract, policy tests, and telemetry. Leave its visual placement unchanged initially.
-
-### Step 4: define failure semantics
-
-Decide which panels degrade independently, which fail closed, which actions are durable, and which retries are safe. Add correlation IDs and structured outcomes before adding more animations.
-
-### Step 5: split interactions where the job warrants it
-
-Move long, consequential, refresh-worthy workflows to routes. Keep brief contextual actions in dialogs. Use inline editing for frequent low-risk changes. Measure task completion and support incidents rather than defending a design fashion.
-
-### Step 6: enforce security at service boundaries
-
-Validate Entra tokens correctly, map claims to application policy, enforce tenant and resource access, constrain inputs, make commands idempotent, and produce intentional audit records.
-
-### Step 7: optimize after measurement
-
-Profile rendering, trace API latency, inspect payloads, and measure retries. Optimize expensive boundaries rather than scattering memoization, caches, and loading skeletons from intuition.
 
 ## Architecture review checklist
 
@@ -622,7 +588,7 @@ The best UI often feels inevitable. That feeling is produced by careful decision
 
 Architects, however, must know.
 
-We should not use architecture to veto ambitious interaction design. “That modal creates state” is not an argument against the modal. It is an argument for funding and modeling the state. Nor should we turn every workflow into a separate page or every panel into a microservice. Navigation and distribution both have costs.
+Architecture should not veto ambitious interaction design. “That modal creates state” is a reason to fund and model the state, not a reason to reject the modal. Moving every workflow to a separate page creates a different cost in navigation and interrupted context.
 
 The responsible position is to preserve the user's simplicity while refusing to hide the system's complexity from the people building and operating it.
 
@@ -636,21 +602,6 @@ UI/UX simplification always has a cost. Good architecture does not eliminate tha
 
 That is technical depth: not more technology, but more truth in the design.
 
-## TODOs for the customer workspace
-
-- [ ] Replace independent role-dialog booleans with a discriminated workflow state.
-- [ ] Put selected tab and member ID in the route where deep linking is useful.
-- [ ] Separate customer overview, evidence, risk, access, and AI query ownership.
-- [ ] Define a partial-failure policy for every panel.
-- [ ] Introduce purpose-specific FastAPI read models and command endpoints.
-- [ ] Validate Entra access tokens at the API and add tenant/resource policy checks.
-- [ ] Make role changes idempotent, version-aware, step-up capable, and auditable.
-- [ ] Move durable assessments to a bounded Rust worker workflow with resource limits.
-- [ ] Add cross-tenant, stale-version, duplicate-command, token-expiry, and lost-response tests.
-- [ ] Threat-model the AI assistant's data access, prompt-injection exposure, actions, and retention.
-- [ ] Profile the React screen and API waterfall using production-like data.
-- [ ] Record the modal-versus-route decisions and revisit them with user evidence.
-
 ## Further reading
 
 - [Martin Fowler — Refactoring code that accesses external services](https://martinfowler.com/articles/refactoring-external-service.html)
@@ -658,7 +609,9 @@ That is technical depth: not more technology, but more truth in the design.
 - [React — Choosing the State Structure](https://react.dev/learn/choosing-the-state-structure)
 - [React — You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
 - [Microsoft identity platform — OAuth 2.0 authorization code flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow)
+- [Microsoft identity platform — Verify scopes and app roles in a protected API](https://learn.microsoft.com/en-us/entra/identity-platform/scenario-protected-web-api-verification-scope-app-roles)
 - [FastAPI — Dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/)
 - [FastAPI — OAuth2 scopes](https://fastapi.tiangolo.com/advanced/security/oauth2-scopes/)
 - [Axum — State extractor](https://docs.rs/axum/latest/axum/extract/struct.State.html)
 - [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/)
+- [OWASP — LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
