@@ -126,6 +126,7 @@ const selected = repositories
 const technologies = new Map();
 const languageTotals = new Map();
 const activityGroups = new Map();
+let analyzedRepositories = 0;
 
 for (const repository of selected) {
   const fullName = repository.full_name;
@@ -141,6 +142,7 @@ for (const repository of selected) {
   if (!languagesResult && !commitsResult) continue;
   const languages = languagesResult || {};
   const commits = commitsResult || [];
+  analyzedRepositories += 1;
 
   for (const [language, bytes] of Object.entries(languages)) {
     languageTotals.set(language, (languageTotals.get(language) || 0) + bytes);
@@ -193,7 +195,7 @@ const output = {
   },
   publicOnly: false,
   windowDays,
-  repositoriesAnalyzed: selected.length,
+  repositoriesAnalyzed: analyzedRepositories,
   recentCommits: [...activityGroups.values()].reduce((sum, group) => sum + group.recentCommits, 0),
   activityWeeks,
   technologies: [...technologies.values()]
@@ -232,4 +234,4 @@ const output = {
 await mkdir(path.dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
 
-console.log(`Wrote public GitHub activity for ${selected.length} repositories.`);
+console.log(`Wrote privacy-safe GitHub activity for ${analyzedRepositories} repositories.`);
