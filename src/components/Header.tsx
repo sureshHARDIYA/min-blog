@@ -14,6 +14,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { t } = useLanguage()
   const { theme, toggleTheme } = useTheme()
+  const careerStartYear = 2010
+  const careerYears = new Date().getFullYear() - careerStartYear
   const desktopPageLinkClass =
     theme === 'light'
       ? 'text-slate-600 hover:text-slate-900'
@@ -61,17 +63,26 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       <div className='flex justify-between items-center px-6 py-4 max-w-[1120px] mx-auto'>
         <button
           onClick={() => handleNavClick('architecture')}
-          className={`font-black text-lg md:text-xl tracking-tighter uppercase text-left transition-colors cursor-pointer flex items-center gap-2 ${
+          className={`font-black text-lg md:text-xl tracking-tighter uppercase text-left transition-colors cursor-pointer flex flex-col items-start ${
             theme === 'light'
               ? 'text-slate-900 hover:text-[#008822]'
               : 'text-[#F5F5F5] hover:text-[#00FF41]'
           }`}
         >
-          <span>Suresh K. Mukhiya</span>
+          <span className='flex items-center gap-2'>
+            <span>Suresh K. Mukhiya</span>
+            <span
+              className={`font-mono text-xs font-normal ${theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}`}
+            >
+              .PhD
+            </span>
+          </span>
           <span
-            className={`font-mono text-xs font-normal ${theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}`}
+            className={`mt-0.5 font-code text-[8px] font-medium tracking-[0.16em] md:text-[9px] ${
+              theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/45'
+            }`}
           >
-            .PhD
+            ENGINEERING SINCE {careerStartYear} · {careerYears} YEARS
           </span>
         </button>
 
