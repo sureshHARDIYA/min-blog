@@ -35,21 +35,11 @@ Imagine a business application used by account managers and security administrat
 - see live assessment progress; and
 - ask an AI assistant to summarize the organization.
 
-The first design puts everything on `/customers/:id`.
+The first design puts everything on `/customers/:id`. Here is the Northwind screen as it appeared at the end of the design sprint:
 
-```text
-Figure 1 — The apparently simple workspace
+![The Northwind customer workspace combines overview, evidence, risk, access, and AI tools on one screen.](/blog-images/ui-ux-depth/01-customer-workspace.svg)
 
-+-------------------------------------------------------------+
-| Customer: Northwind                    [Edit] [Invite] [...] |
-+----------------------+--------------------------------------+
-| Overview | Evidence  | Risk | Access                        |
-+----------------------+--------------------------------------+
-| Profile, score, tasks, activity, AI summary                 |
-|                                                             |
-| [Upload modal] [Role drawer] [Delete dialog] [AI panel]     |
-+-------------------------------------------------------------+
-```
+*Figure 1: The apparently simple workspace. The dashed outlines show the workflows hidden behind the calm surface.*
 
 It is attractive because the user stays in context. It is also one React route coordinating at least five resources, several permission levels, local drafts, server state, streaming updates, and destructive actions.
 
@@ -121,15 +111,9 @@ A system can therefore have:
 
 The goal is not maximum architecture. It is enough depth for the consequences of failure and the expected rate of change.
 
-```text
-Figure 2 — Simplification moves cost; it does not erase it
+![A balance showing user effort falling as system coordination rises.](/blog-images/ui-ux-depth/02-complexity-transfer.svg)
 
-User effort  ----------\
-                       >  product design decision
-System coordination --/
-
-Less user effort usually means more orchestration, unless scope is removed.
-```
+*Figure 2: Unless scope is removed, simplification usually transfers effort from the user to the system.*
 
 Removing a required field is genuine simplification. Hiding twelve required fields behind an accordion is presentation. Automatically deriving ten fields is simplification for the user and additional responsibility for the system. These are different moves and should be estimated differently.
 
@@ -157,17 +141,9 @@ The route is good design when the action is complex, must survive refresh, needs
 
 There is no universal winner. A mature decision connects interaction design to domain risk.
 
-| Question | Inline | Modal or drawer | Dedicated route |
-| --- | --- | --- | --- |
-| Frequency | Very high | Medium | Low or deliberate |
-| Task length | One action | Short sequence | Multi-step |
-| Consequence | Low | Medium | High |
-| Deep link | No | Usually no | Yes |
-| Refresh recovery | Weak | Requires work | Natural |
-| Audit explanation | Cramped | Possible | Strong |
-| State isolation | Low | Medium | High |
+For Northwind, we kept the ordinary `Viewer` to `Editor` change in a confirmation dialog, but moved `Owner` grants to a dedicated route. The latter needs a justification, step-up authentication, approval status, audit history, and a location that survives refresh. The extra navigation is not a UX failure; it communicates that the action has weight.
 
-Even if the current renderer does not style this table, its argument matters: **interaction topology is architecture**.
+The rule that emerged was practical. Use inline controls for frequent, low-consequence changes; dialogs for short and self-contained decisions; and routes for work that is long, consequential, resumable, or worth linking to. **Interaction topology is architecture.**
 
 ## Refactoring the React state model
 
@@ -218,16 +194,9 @@ The compiler now participates in reliability. Adding `awaitingStepUp` creates us
 
 A good component boundary often follows a business capability rather than a rectangle in the mock-up.
 
-```text
-Figure 3 — Capability ownership inside one route
+![A component map that gives each Northwind capability its own state and data boundary.](/blog-images/ui-ux-depth/03-capability-boundaries.svg)
 
-CustomerWorkspace (route and composition)
-  |-- CustomerSummary (customer query)
-  |-- EvidencePanel (uploads and evidence query)
-  |-- RiskAssessment (command plus progress subscription)
-  |-- AccessPanel (members, roles, policy decisions)
-  `-- AiAssistant (conversation scoped to customer ID)
-```
+*Figure 3: One page does not require one state container. The route composes capabilities; it does not own their internal workflows.*
 
 Each feature may render on the same page without sharing one parent-owned bag of mutable data. The workspace owns composition. The access feature owns role-change workflow. The evidence feature owns upload progress. Shared identity context exposes stable claims and token acquisition behavior, not a token copied through props.
 
@@ -306,16 +275,9 @@ Three mistakes frequently hide behind polished UX:
 2. **Confusing ID tokens and access tokens.** The ID token supports client sign-in; the API must validate the access token intended for it.
 3. **Treating roles as universal.** An application role may permit `role.assign`, while tenant membership, resource ownership, separation-of-duties rules, or approval policy still deny the command.
 
-```text
-Figure 4 — The authorization path
+![The authorization path from React through Entra ID to FastAPI policy enforcement and the Rust assessment service.](/blog-images/ui-ux-depth/04-authorization-path.svg)
 
-React SPA -- access token --> API gateway / FastAPI
-                                  |
-                                  +-- validate issuer, audience, signature, time
-                                  +-- require scope or app role
-                                  +-- enforce tenant/resource policy
-                                  `-- record decision and audit context
-```
+*Figure 4: The browser carries evidence of identity; the service makes the authorization decision.*
 
 Keep token acquisition in a narrow client adapter. Keep authorization at each protected service boundary. Propagate a correlation ID, not a mutable client assertion that “the button was enabled.”
 
