@@ -2,9 +2,13 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const username = process.env.GITHUB_ACTIVITY_USER || 'sureshHARDIYA';
-const token = process.env.GITHUB_TOKEN;
+const token = process.env.GH_ACTIVITY_TOKEN;
+
+if (!token) {
+  throw new Error('GH_ACTIVITY_TOKEN is required to refresh GitHub activity.');
+}
 const windowDays = 90;
-const maxRepositories = 12;
+const maxRepositories = 40;
 const apiBase = 'https://api.github.com';
 const outputPath = path.join(process.cwd(), 'src', 'generated', 'github-activity.json');
 const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000).toISOString();
@@ -109,19 +113,19 @@ function detectTechnologies({ repository, languages, manifests, commits }, techn
 
 const [profile, repositories] = await Promise.all([
   github(`/users/${username}`),
-  github(`/users/${username}/repos?type=owner&sort=pushed&direction=desc&per_page=100`),
+  github('/user/repos?affiliation=owner,collaborator,organization_member&visibility=all&sort=pushed&direction=desc&per_page=100'),
 ]);
 
 const selected = repositories
   .filter(
     (repository) =>
-      !repository.private && !repository.fork && !repository.archived && repository.size > 0,
+      !repository.fork && !repository.archived && repository.size > 0,
   )
   .slice(0, maxRepositories);
 
 const technologies = new Map();
 const languageTotals = new Map();
-const repositoryActivity = [];
+const activityGroups = new Map();
 
 for (const repository of selected) {
   const fullName = repository.full_name;
@@ -156,19 +160,25 @@ for (const repository of selected) {
     }
   }
 
-  repositoryActivity.push({
-    name: repository.name,
-    url: repository.html_url,
-    description: repository.description,
-    pushedAt: repository.pushed_at,
-    recentCommits: commits.length,
-    languages: Object.keys(languages).slice(0, 4),
-  });
+  const scope = repository.owner?.login === username
+    ? (repository.private ? 'Private personal work' : 'Public personal work')
+    : 'Organization work';
+  const currentGroup = activityGroups.get(scope) || {
+    name: scope,
+    recentCommits: 0,
+    repositories: 0,
+    languages: new Set(),
+  };
+  currentGroup.recentCommits += commits.length;
+  currentGroup.repositories += 1;
+  for (const language of Object.keys(languages)) currentGroup.languages.add(language);
+  activityGroups.set(scope, currentGroup);
 }
 
 const totalLanguageBytes = [...languageTotals.values()].reduce((sum, bytes) => sum + bytes, 0);
+const outputGeneratedAt = new Date().toISOString();
 const output = {
-  generatedAt: new Date().toISOString(),
+  generatedAt: outputGeneratedAt,
   username,
   profile: {
     name: profile.name || username,
@@ -177,10 +187,10 @@ const output = {
     publicRepositories: profile.public_repos,
     joinedAt: profile.created_at,
   },
-  publicOnly: true,
+  publicOnly: false,
   windowDays,
   repositoriesAnalyzed: selected.length,
-  recentCommits: repositoryActivity.reduce((sum, repository) => sum + repository.recentCommits, 0),
+  recentCommits: [...activityGroups.values()].reduce((sum, group) => sum + group.recentCommits, 0),
   activityWeeks,
   technologies: [...technologies.values()]
     .map((technology) => ({
@@ -202,9 +212,17 @@ const output = {
     }))
     .sort((left, right) => right.percentage - left.percentage)
     .slice(0, 8),
-  repositories: repositoryActivity,
+  repositories: [...activityGroups.values()].map((group) => ({
+    name: group.name,
+    url: profile.html_url,
+    description: null,
+    pushedAt: outputGeneratedAt,
+    recentCommits: group.recentCommits,
+    repositoryCount: group.repositories,
+    languages: [...group.languages].slice(0, 4),
+  })),
   methodology:
-    'Public, non-fork, non-archived repositories ordered by recent push activity. Technology size reflects repository presence and recent commits, not proficiency.',
+    'Authorized, non-fork, non-archived repositories ordered by recent push activity. Private and organization work is published only as aggregate counts; repository names, descriptions, URLs, source, branches, file paths and commit messages are excluded. Technology size reflects repository presence and recent commits, not proficiency.',
 };
 
 await mkdir(path.dirname(outputPath), { recursive: true });
