@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-09-09T00:00:00.000Z",
+  "username": "sureshHARDIYA",
+  "publicOnly": true,
+  "windowDays": 90,
+  "repositoriesAnalyzed": 1,
+  "recentCommits": 0,
+  "technologies": [
+    { "name": "TypeScript", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
+    { "name": "React", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
+    { "name": "Next.js", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
+    { "name": "Tailwind CSS", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
+    { "name": "Node.js", "category": "Platform", "repositories": 1, "recentCommits": 0 }
+  ],
+  "languages": [
+    { "name": "TypeScript", "percentage": 100 }
+  ],
+  "repositories": [
+    {
+      "name": "min-blog",
+      "url": "https://github.com/sureshHARDIYA/min-blog",
+      "description": "Personal website and technical writing",
+      "pushedAt": "2026-09-09T00:00:00.000Z",
+      "recentCommits": 0,
+      "languages": ["TypeScript"]
+    }
+  ],
+  "methodology": "Initial public snapshot. The scheduled workflow replaces this with public, non-fork, non-archived repositories ordered by recent push activity. Technology size reflects repository presence and recent commits, not proficiency."
+}
