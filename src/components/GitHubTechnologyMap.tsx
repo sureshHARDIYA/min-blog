@@ -55,7 +55,7 @@ function DonutChart({ title, items }: Readonly<{ title: string; items: ChartItem
   );
 }
 
-function ActivityLine() {
+function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
   const width = 720;
   const height = 150;
   const chart = activity.activityWeeks;
@@ -76,7 +76,7 @@ function ActivityLine() {
       </div>
       <svg
         aria-label="Weekly aggregate commit activity"
-        className="mt-4 h-44 w-full overflow-visible"
+        className={`${compact ? 'h-32' : 'h-44'} mt-4 w-full overflow-visible`}
         preserveAspectRatio="none"
         role="img"
         viewBox={`0 0 ${width} ${height}`}
@@ -115,7 +115,11 @@ function ActivityLine() {
   );
 }
 
-export const GitHubTechnologyMap: React.FC = () => {
+interface GitHubTechnologyMapProps {
+  compact?: boolean;
+}
+
+export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compact = false }) => {
   const { theme } = useTheme();
   const generatedDate = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'medium',
@@ -138,8 +142,9 @@ export const GitHubTechnologyMap: React.FC = () => {
   return (
     <section
       aria-labelledby="github-activity-title"
-      className={`mb-14 border p-6 md:p-8 ${theme === 'light' ? '[--chart-center:#fff] border-slate-200 bg-white text-slate-900 shadow-xl' : '[--chart-center:#101510] border-white/10 bg-[#101510] text-[#F5F5F5]'}`}
+      className={`${compact ? 'mb-0 p-5 md:p-6' : 'mb-14 p-6 md:p-8'} border ${theme === 'light' ? '[--chart-center:#fff] border-slate-200 bg-white text-slate-900 shadow-xl' : '[--chart-center:#101510] border-white/10 bg-[#101510] text-[#F5F5F5]'}`}
     >
+      <h2 className="sr-only" id="github-activity-title">GitHub engineering activity</h2>
       <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
         <div className="flex items-center gap-4">
           <img
@@ -162,16 +167,16 @@ export const GitHubTechnologyMap: React.FC = () => {
             <p className="mt-2 font-code text-[10px] opacity-50">ON GITHUB SINCE {joinedYear}</p>
           </div>
         </div>
-        <ActivityLine />
+        <ActivityLine compact={compact} />
       </header>
 
-      <div className="grid gap-8 border-b border-current/10 py-8 md:grid-cols-3">
+      <div className={`grid gap-8 ${compact ? 'pt-7' : 'border-b border-current/10 py-8'} md:grid-cols-3`}>
         <DonutChart items={languageItems} title="Code by language" />
         <DonutChart items={technologyItems} title="Repositories by technology" />
         <DonutChart items={commitItems} title="Recent commits by scope" />
       </div>
 
-      <div className="grid gap-8 pt-8 lg:grid-cols-[1fr_280px]">
+      {!compact ? <div className="grid gap-8 pt-8 lg:grid-cols-[1fr_280px]">
         <div>
           <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">Activity coverage</h3>
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
@@ -226,7 +231,7 @@ export const GitHubTechnologyMap: React.FC = () => {
             source, branches, paths and commit messages are excluded. Activity is not a proficiency score.
           </p>
         </aside>
-      </div>
+      </div> : null}
     </section>
   );
 };
