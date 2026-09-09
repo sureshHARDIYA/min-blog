@@ -4,6 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+const googleAnalyticsId = 'G-BYWD5740TT';
 const siteUrl = 'https://skmukhiya.com.np';
 const personId = `${siteUrl}/#person`;
 const websiteId = `${siteUrl}/#website`;
@@ -139,6 +140,18 @@ export default function RootLayout({
       </head>
       <body className="bg-[#0C0C0C] text-[#F5F5F5] antialiased">
         {children}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${googleAnalyticsId}');
+          `}
+        </Script>
         <Script
           id="person-json-ld"
           type="application/ld+json"
