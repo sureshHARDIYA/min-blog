@@ -2,6 +2,12 @@ name: Refresh public technology map
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/github-technology-map
+    paths:
+      - scripts/generate-github-activity.mjs
+      - .github/workflows/refresh-github-activity.yml
   schedule:
     - cron: '17 5 * * 1'
 
@@ -32,6 +38,7 @@ jobs:
         run: node scripts/generate-github-activity.mjs
 
       - name: Commit updated snapshot
+        if: github.actor != 'github-actions[bot]'
         run: |
           if git diff --quiet -- src/generated/github-activity.json; then
             echo "Technology map is already current."
