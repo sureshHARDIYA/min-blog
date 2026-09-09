@@ -1,51 +1,239 @@
 {
-  "generatedAt": "2026-09-09T00:00:00.000Z",
+  "generatedAt": "2026-09-09T15:22:15.301Z",
   "username": "sureshHARDIYA",
   "profile": {
-    "name": "Suresh Kumar Mukhiya",
+    "name": "Suresh KUMAR Mukhiya",
     "avatarUrl": "https://avatars.githubusercontent.com/u/2022919?v=4",
     "profileUrl": "https://github.com/sureshHARDIYA",
-    "publicRepositories": 0,
-    "joinedAt": "2012-07-23T00:00:00.000Z"
+    "publicRepositories": 91,
+    "joinedAt": "2012-07-22T18:08:21Z"
   },
-  "publicOnly": true,
+  "publicOnly": false,
   "windowDays": 90,
-  "repositoriesAnalyzed": 1,
-  "recentCommits": 0,
+  "repositoriesAnalyzed": 40,
+  "recentCommits": 200,
   "activityWeeks": [
-    { "start": "2026-06-17", "label": "17 Jun", "commits": 0 },
-    { "start": "2026-06-24", "label": "24 Jun", "commits": 0 },
-    { "start": "2026-07-01", "label": "1 Jul", "commits": 0 },
-    { "start": "2026-07-08", "label": "8 Jul", "commits": 0 },
-    { "start": "2026-07-15", "label": "15 Jul", "commits": 0 },
-    { "start": "2026-07-22", "label": "22 Jul", "commits": 0 },
-    { "start": "2026-07-29", "label": "29 Jul", "commits": 0 },
-    { "start": "2026-08-05", "label": "5 Aug", "commits": 0 },
-    { "start": "2026-08-12", "label": "12 Aug", "commits": 0 },
-    { "start": "2026-08-19", "label": "19 Aug", "commits": 0 },
-    { "start": "2026-08-26", "label": "26 Aug", "commits": 0 },
-    { "start": "2026-09-02", "label": "2 Sep", "commits": 0 },
-    { "start": "2026-09-09", "label": "9 Sep", "commits": 0 }
+    {
+      "start": "2026-06-17",
+      "label": "17 Jun",
+      "commits": 0
+    },
+    {
+      "start": "2026-06-24",
+      "label": "24 Jun",
+      "commits": 0
+    },
+    {
+      "start": "2026-07-01",
+      "label": "1 Jul",
+      "commits": 18
+    },
+    {
+      "start": "2026-07-08",
+      "label": "8 Jul",
+      "commits": 0
+    },
+    {
+      "start": "2026-07-15",
+      "label": "15 Jul",
+      "commits": 5
+    },
+    {
+      "start": "2026-07-22",
+      "label": "22 Jul",
+      "commits": 0
+    },
+    {
+      "start": "2026-07-29",
+      "label": "29 Jul",
+      "commits": 0
+    },
+    {
+      "start": "2026-08-05",
+      "label": "5 Aug",
+      "commits": 3
+    },
+    {
+      "start": "2026-08-12",
+      "label": "12 Aug",
+      "commits": 93
+    },
+    {
+      "start": "2026-08-19",
+      "label": "19 Aug",
+      "commits": 36
+    },
+    {
+      "start": "2026-08-26",
+      "label": "26 Aug",
+      "commits": 3
+    },
+    {
+      "start": "2026-09-02",
+      "label": "2 Sept",
+      "commits": 2
+    },
+    {
+      "start": "2026-09-09",
+      "label": "9 Sept",
+      "commits": 40
+    }
   ],
   "technologies": [
-    { "name": "TypeScript", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
-    { "name": "React", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
-    { "name": "Next.js", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
-    { "name": "Tailwind CSS", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
-    { "name": "Node.js", "category": "Platform", "repositories": 1, "recentCommits": 0 }
+    {
+      "name": "JavaScript",
+      "category": "Frontend",
+      "repositories": 28,
+      "recentCommits": 93
+    },
+    {
+      "name": "Node.js",
+      "category": "Platform",
+      "repositories": 28,
+      "recentCommits": 69
+    },
+    {
+      "name": "TypeScript",
+      "category": "Frontend",
+      "repositories": 25,
+      "recentCommits": 69
+    },
+    {
+      "name": "CSS",
+      "category": "Frontend",
+      "repositories": 23,
+      "recentCommits": 72
+    },
+    {
+      "name": "React",
+      "category": "Frontend",
+      "repositories": 23,
+      "recentCommits": 69
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "Frontend",
+      "repositories": 18,
+      "recentCommits": 64
+    },
+    {
+      "name": "HTML",
+      "category": "Frontend",
+      "repositories": 15,
+      "recentCommits": 72
+    },
+    {
+      "name": "Next.js",
+      "category": "Frontend",
+      "repositories": 12,
+      "recentCommits": 50
+    },
+    {
+      "name": "Shell",
+      "category": "Platform",
+      "repositories": 8,
+      "recentCommits": 131
+    },
+    {
+      "name": "Python",
+      "category": "Backend",
+      "repositories": 5,
+      "recentCommits": 126
+    },
+    {
+      "name": "Dockerfile",
+      "category": "Platform",
+      "repositories": 3,
+      "recentCommits": 0
+    },
+    {
+      "name": "Pandas",
+      "category": "Data & AI",
+      "repositories": 1,
+      "recentCommits": 6
+    },
+    {
+      "name": "scikit-learn",
+      "category": "Data & AI",
+      "repositories": 1,
+      "recentCommits": 6
+    },
+    {
+      "name": "Django",
+      "category": "Backend",
+      "repositories": 1,
+      "recentCommits": 0
+    },
+    {
+      "name": "PHP",
+      "category": "Backend",
+      "repositories": 1,
+      "recentCommits": 0
+    }
   ],
   "languages": [
-    { "name": "TypeScript", "percentage": 100 }
+    {
+      "name": "TypeScript",
+      "percentage": 47.8
+    },
+    {
+      "name": "JavaScript",
+      "percentage": 40.3
+    },
+    {
+      "name": "TeX",
+      "percentage": 4.8
+    },
+    {
+      "name": "Python",
+      "percentage": 3.7
+    },
+    {
+      "name": "PLpgSQL",
+      "percentage": 0.7
+    },
+    {
+      "name": "C#",
+      "percentage": 0.7
+    },
+    {
+      "name": "Shell",
+      "percentage": 0.6
+    },
+    {
+      "name": "CSS",
+      "percentage": 0.5
+    }
   ],
   "repositories": [
     {
-      "name": "min-blog",
-      "url": "https://github.com/sureshHARDIYA/min-blog",
-      "description": "Personal website and technical writing",
-      "pushedAt": "2026-09-09T00:00:00.000Z",
-      "recentCommits": 0,
-      "languages": ["TypeScript"]
+      "name": "Public personal work",
+      "url": "https://github.com/sureshHARDIYA",
+      "description": null,
+      "pushedAt": "2026-09-09T15:22:15.301Z",
+      "recentCommits": 57,
+      "repositoryCount": 15,
+      "languages": [
+        "TypeScript",
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ]
+    },
+    {
+      "name": "Private personal work",
+      "url": "https://github.com/sureshHARDIYA",
+      "description": null,
+      "pushedAt": "2026-09-09T15:22:15.301Z",
+      "recentCommits": 143,
+      "repositoryCount": 24,
+      "languages": [
+        "Shell",
+        "Python",
+        "JavaScript",
+        "HTML"
+      ]
     }
   ],
-  "methodology": "Initial public snapshot. The scheduled workflow replaces this with public, non-fork, non-archived repositories ordered by recent push activity. Technology size reflects repository presence and recent commits, not proficiency."
+  "methodology": "Authorized, non-fork, non-archived repositories ordered by recent push activity. Private and organization work is published only as aggregate counts; repository names, descriptions, URLs, source, branches, file paths and commit messages are excluded. Technology size reflects repository presence and recent commits, not proficiency."
 }
