@@ -87,18 +87,18 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/favicon-192x192.png',
-        width: 192,
-        height: 192,
+        url: '/social-preview',
+        width: 1200,
+        height: 630,
         alt: 'Suresh Kumar Mukhiya, PhD',
       },
     ],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/favicon-192x192.png'],
+    images: ['/social-preview'],
   },
   robots: {
     index: true,
