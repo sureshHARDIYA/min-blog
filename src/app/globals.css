@@ -300,6 +300,13 @@
   .blog-two-column-section > h2 {
     column-span: all;
   }
+  .blog-two-column-section > h2 + p {
+    max-width: 64rem;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+    margin-left: auto;
+    column-span: all;
+  }
   .blog-two-column-section > h3 {
     break-after: avoid;
   }
