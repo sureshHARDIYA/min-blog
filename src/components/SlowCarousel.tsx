@@ -49,10 +49,8 @@ export const SlowCarousel: React.FC<SlowCarouselProps> = ({
         if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false)
       }}
       onFocus={() => setPaused(true)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
-      <div className='min-h-[580px] lg:min-h-[620px]'>
+      <div>
         <AnimatePresence initial={false} mode='wait'>
           <motion.div
             animate={{ opacity: 1, x: 0 }}
