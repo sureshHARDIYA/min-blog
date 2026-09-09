@@ -72,10 +72,10 @@ function ActivityLine() {
     <div>
       <div className="flex items-end justify-between gap-4">
         <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">Commits over the last 90 days</h3>
-        <span className="font-code text-[10px] opacity-50">PUBLIC REPOSITORIES</span>
+        <span className="font-code text-[10px] opacity-50">AUTHORIZED REPOSITORIES</span>
       </div>
       <svg
-        aria-label="Weekly public commit activity"
+        aria-label="Weekly aggregate commit activity"
         className="mt-4 h-44 w-full overflow-visible"
         preserveAspectRatio="none"
         role="img"
@@ -168,12 +168,12 @@ export const GitHubTechnologyMap: React.FC = () => {
       <div className="grid gap-8 border-b border-current/10 py-8 md:grid-cols-3">
         <DonutChart items={languageItems} title="Code by language" />
         <DonutChart items={technologyItems} title="Repositories by technology" />
-        <DonutChart items={commitItems} title="Recent commits by repository" />
+        <DonutChart items={commitItems} title="Recent commits by scope" />
       </div>
 
       <div className="grid gap-8 pt-8 lg:grid-cols-[1fr_280px]">
         <div>
-          <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">Recently pushed repositories</h3>
+          <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">Activity coverage</h3>
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {activity.repositories.slice(0, 8).map((repository) => (
               <a
@@ -192,7 +192,7 @@ export const GitHubTechnologyMap: React.FC = () => {
                 <span
                   className={`shrink-0 font-code text-xs opacity-50 group-hover:opacity-100 ${theme === 'light' ? 'group-hover:text-[#008822]' : 'group-hover:text-[#00FF41]'}`}
                 >
-                  {repository.recentCommits} ↗
+                  {repository.recentCommits} commits ↗
                 </span>
               </a>
             ))}
@@ -207,9 +207,9 @@ export const GitHubTechnologyMap: React.FC = () => {
           </p>
           <dl className="mt-4 space-y-4">
             <div>
-              <dt className="font-code text-[10px] opacity-45">PUBLIC REPOSITORIES</dt>
+              <dt className="font-code text-[10px] opacity-45">AUTHORIZED REPOSITORIES</dt>
               <dd className="mt-1 text-2xl font-black">
-                {activity.profile.publicRepositories || activity.repositoriesAnalyzed}
+                {activity.repositoriesAnalyzed}
               </dd>
             </div>
             <div>
@@ -222,8 +222,8 @@ export const GitHubTechnologyMap: React.FC = () => {
             </div>
           </dl>
           <p className="mt-6 text-xs leading-5 opacity-50">
-            Public, original repositories only. The charts describe visible activity, not skill level. Private work,
-            commit messages and source contents are excluded.
+            Private and organization work is represented only by aggregate totals. Repository names, descriptions,
+            source, branches, paths and commit messages are excluded. Activity is not a proficiency score.
           </p>
         </aside>
       </div>
