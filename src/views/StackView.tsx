@@ -17,11 +17,7 @@ export const StackView: React.FC = () => {
 
   return (
     <div className="mx-auto min-h-[calc(100vh-80px)] w-full max-w-[1120px] px-6 pb-16 pt-[100px]">
-      <header
-        className={`mb-12 border-b pb-8 ${
-          theme === 'light' ? 'border-slate-300' : 'border-white/10'
-        }`}
-      >
+      <header className={`mb-12 border-b pb-8 ${theme === 'light' ? 'border-slate-300' : 'border-white/10'}`}>
         <span
           className={`mb-1 block font-mono text-xs font-bold uppercase tracking-[0.25em] ${
             theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
@@ -65,55 +61,53 @@ export const StackView: React.FC = () => {
             Technologies used across projects and roles
           </h2>
           <p className={`mt-2 ${theme === 'light' ? 'text-slate-600' : 'text-white/55'}`}>
-            This section includes professional experience that cannot be inferred from public GitHub
-            activity alone.
+            This section includes professional experience that cannot be inferred from public GitHub activity alone.
           </p>
         </div>
 
         {isStackLoading ? (
           <div
             className={`h-64 animate-pulse border ${
-              theme === 'light'
-                ? 'border-slate-300 bg-slate-200'
-                : 'border-white/10 bg-[#141414]'
+              theme === 'light' ? 'border-slate-300 bg-slate-200' : 'border-white/10 bg-[#141414]'
             }`}
           />
         ) : (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
             <div className="flex flex-col gap-3 md:col-span-4">
-              {categories?.map((category, index) => (
-                <button
-                  className={`cursor-pointer border p-5 text-left transition-all ${
-                    activeCategory === index
-                      ? theme === 'light'
-                        ? 'border-[#008822] bg-[#008822] font-bold text-white shadow-lg'
-                        : 'border-[#00FF41] bg-[#00FF41] font-bold text-[#0C0C0C] shadow-lg'
-                      : theme === 'light'
-                        ? 'border-slate-200 bg-white text-slate-800 hover:border-slate-400'
-                        : 'border-white/10 bg-[#141414] text-[#F5F5F5] hover:border-white/30'
-                  }`}
-                  key={category.category}
-                  onClick={() => setActiveCategory(index)}
-                  type="button"
-                >
-                  <div
-                    className={`mb-1 font-code text-[10px] uppercase tracking-widest ${
-                      activeCategory === index
-                        ? theme === 'light'
-                          ? 'font-bold text-white/80'
-                          : 'font-bold text-[#0C0C0C]/70'
-                        : theme === 'light'
-                          ? 'text-[#008822]'
-                          : 'text-[#00FF41]'
-                    }`}
+              {categories?.map((category, index) => {
+                const isActive = activeCategory === index;
+                const isLight = theme === 'light';
+                let buttonColor: string;
+                let areaColor: string;
+
+                if (isActive && isLight) {
+                  buttonColor = 'border-[#008822] bg-[#008822] font-bold text-white shadow-lg';
+                  areaColor = 'font-bold text-white/80';
+                } else if (isActive) {
+                  buttonColor = 'border-[#00FF41] bg-[#00FF41] font-bold text-[#0C0C0C] shadow-lg';
+                  areaColor = 'font-bold text-[#0C0C0C]/70';
+                } else if (isLight) {
+                  buttonColor = 'border-slate-200 bg-white text-slate-800 hover:border-slate-400';
+                  areaColor = 'text-[#008822]';
+                } else {
+                  buttonColor = 'border-white/10 bg-[#141414] text-[#F5F5F5] hover:border-white/30';
+                  areaColor = 'text-[#00FF41]';
+                }
+
+                return (
+                  <button
+                    className={`cursor-pointer border p-5 text-left transition-all ${buttonColor}`}
+                    key={category.category}
+                    onClick={() => setActiveCategory(index)}
+                    type="button"
                   >
-                    AREA 0{index + 1}
-                  </div>
-                  <h3 className="text-xl font-black uppercase leading-tight tracking-tight">
-                    {category.category}
-                  </h3>
-                </button>
-              ))}
+                    <div className={`mb-1 font-code text-[10px] uppercase tracking-widest ${areaColor}`}>
+                      AREA 0{index + 1}
+                    </div>
+                    <h3 className="text-xl font-black uppercase leading-tight tracking-tight">{category.category}</h3>
+                  </button>
+                );
+              })}
             </div>
 
             <div
@@ -125,19 +119,11 @@ export const StackView: React.FC = () => {
             >
               {categories && categories[activeCategory] && (
                 <div>
-                  <div
-                    className={`mb-6 border-b pb-4 ${
-                      theme === 'light' ? 'border-slate-200' : 'border-white/10'
-                    }`}
-                  >
+                  <div className={`mb-6 border-b pb-4 ${theme === 'light' ? 'border-slate-200' : 'border-white/10'}`}>
                     <h3 className="mb-2 text-2xl font-black uppercase tracking-tight">
                       {categories[activeCategory].category}
                     </h3>
-                    <p
-                      className={`text-sm font-light ${
-                        theme === 'light' ? 'text-slate-600' : 'text-[#F5F5F5]/70'
-                      }`}
-                    >
+                    <p className={`text-sm font-light ${theme === 'light' ? 'text-slate-600' : 'text-[#F5F5F5]/70'}`}>
                       {categories[activeCategory].description}
                     </p>
                   </div>
@@ -169,9 +155,7 @@ export const StackView: React.FC = () => {
 
                         <div
                           className={`h-2 w-full overflow-hidden border ${
-                            theme === 'light'
-                              ? 'border-slate-300 bg-slate-100'
-                              : 'border-white/10 bg-[#0C0C0C]'
+                            theme === 'light' ? 'border-slate-300 bg-slate-100' : 'border-white/10 bg-[#0C0C0C]'
                           }`}
                         >
                           <div
