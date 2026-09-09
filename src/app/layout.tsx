@@ -5,17 +5,21 @@ import './globals.css';
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 const siteUrl = 'https://skmukhiya.com.np';
-const siteTitle = 'Suresh Kumar Mukhiya, PhD | System Architect, Cybersecurity & AI';
-const siteDescription = 'Portfolio of Suresh Kumar Mukhiya, PhD: system architecture, cybersecurity, AI, adaptive systems, software engineering research, publications, talks, and technical leadership in Norway.';
+const personId = `${siteUrl}/#person`;
+const websiteId = `${siteUrl}/#website`;
+const siteTitle = 'Suresh Kumar Mukhiya, PhD | Tech Lead and Software Architect';
+const siteDescription =
+  'Writing and project work from Suresh Kumar Mukhiya, a Tech Lead in Bergen working across software architecture, application security, cloud systems and AI.';
 
 const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': personId,
   name: 'Suresh Kumar Mukhiya',
   honorificSuffix: 'PhD',
   url: siteUrl,
   image: `${siteUrl}/favicon-192x192.png`,
-  jobTitle: 'Tech Lead and System Architect',
+  jobTitle: 'Tech Lead',
   worksFor: {
     '@type': 'Organization',
     name: 'Lerøy Seafood Group',
@@ -33,40 +37,33 @@ const personJsonLd = {
     },
   ],
   knowsAbout: [
-    'System Architecture',
-    'Cybersecurity',
+    'Software Architecture',
     'Application Security',
-    'Secure Software Architecture',
     'API Security',
-    'Software Supply Chain Security',
     'DevSecOps',
+    'Software Supply Chain Security',
+    'Cloud Architecture',
     'Artificial Intelligence',
     'Adaptive Systems',
-    'Software Engineering',
-    'Distributed Systems',
-    'Health Informatics',
   ],
   sameAs: [
     'https://github.com/sureshHARDIYA',
-    'https://github.com/sureshHARDIYA/phd-resources',
     'https://www.linkedin.com/in/sureshhardiya/',
-    'https://www.youtube.com/@SureshKUMARMukhiya',
     'https://scholar.google.com/citations?user=9-fxxeMAAAAJ',
-    'https://hdl.handle.net/11250/2778982',
-    'https://skm-presents.netlify.app/',
+    'https://www.youtube.com/@SureshKUMARMukhiya',
   ],
 };
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': websiteId,
   name: 'Suresh Kumar Mukhiya, PhD',
   url: siteUrl,
   description: siteDescription,
-  inLanguage: ['en', 'no', 'ne'],
+  inLanguage: 'en',
   author: {
-    '@type': 'Person',
-    name: 'Suresh Kumar Mukhiya',
+    '@id': personId,
   },
 };
 
@@ -77,23 +74,6 @@ export const metadata: Metadata = {
     template: '%s | Suresh Kumar Mukhiya, PhD',
   },
   description: siteDescription,
-  keywords: [
-    'Suresh Kumar Mukhiya',
-    'Suresh Mukhiya',
-    'system architect Norway',
-    'cybersecurity',
-    'application security expert Norway',
-    'application security Bergen',
-    'secure software architect Norway',
-    'API security',
-    'DevSecOps',
-    'software supply chain security',
-    'AI engineering',
-    'adaptive systems',
-    'software engineering PhD',
-    'HVL PhD thesis',
-    'Internet-Delivered Psychological Treatments',
-  ],
   authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
   creator: 'Suresh Kumar Mukhiya',
   publisher: 'Suresh Kumar Mukhiya',

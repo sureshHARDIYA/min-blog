@@ -10,6 +10,8 @@ interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
 
+const siteUrl = 'https://skmukhiya.com.np'
+
 const MARKDOWN_COMPONENTS: Components = {
   h2: ({ children }) => <h2>{children}</h2>,
   h3: ({ children }) => <h3>{children}</h3>,
@@ -41,6 +43,10 @@ function sectionTitle(markdown: string) {
   return /^## (.+)$/m.exec(markdown)?.[1]?.trim() ?? ''
 }
 
+function serializeJsonLd(value: object) {
+  return JSON.stringify(value).replaceAll('<', '\\u003c')
+}
+
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   return posts.map(({ slug }) => ({ slug }))
@@ -53,10 +59,26 @@ export async function generateMetadata({
   const post = await getPost(slug)
   if (!post) return {}
 
+  const url = `${siteUrl}/blog/${post.slug}`
+
   return {
-    title: `${post.title} | Suresh Kumar Mukhiya`,
+    title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` }
+    authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      url,
+      title: post.title,
+      description: post.description,
+      publishedTime: post.date,
+      authors: [siteUrl]
+    },
+    twitter: {
+      card: 'summary',
+      title: post.title,
+      description: post.description
+    }
   }
 }
 
@@ -65,8 +87,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getPost(slug)
   if (!post) notFound()
 
+  const url = `${siteUrl}/blog/${post.slug}`
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: url,
+    author: { '@id': `${siteUrl}/#person` },
+    isPartOf: { '@id': `${siteUrl}/#website` }
+  }
+
   return (
     <main className='min-h-screen bg-[#0C0C0C] px-5 py-16 text-[#F5F5F5] sm:px-8 lg:px-12 lg:py-20'>
+      <script
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
+        type='application/ld+json'
+      />
       <article className='mx-auto max-w-6xl'>
         <div className='mx-auto max-w-5xl'>
           <Link className='text-sm text-cyan-400 hover:underline' href='/blogs'>
