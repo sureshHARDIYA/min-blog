@@ -1,4 +1,4 @@
-name: Refresh public technology map
+name: Refresh GitHub technology map
 
 on:
   workflow_dispatch:
@@ -31,9 +31,9 @@ jobs:
         with:
           node-version: 22
 
-      - name: Generate sanitized public activity
+      - name: Generate privacy-safe aggregate activity
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_ACTIVITY_TOKEN: ${{ secrets.GH_ACTIVITY_TOKEN }}
           GITHUB_ACTIVITY_USER: sureshHARDIYA
         run: node scripts/generate-github-activity.mjs
 
