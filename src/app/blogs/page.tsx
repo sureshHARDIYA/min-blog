@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { getAllPosts } from '../../lib/blog';
 
 export const metadata: Metadata = {
-  title: 'Blogs | Suresh Kumar Mukhiya',
-  description: 'Application security, software architecture, and engineering leadership notes.',
+  title: 'Blog',
+  description:
+    'Field notes on application security, software architecture, supply-chain risk and engineering leadership.',
   alternates: {
     canonical: '/blogs',
   },
@@ -20,9 +21,10 @@ export default async function BlogsPage() {
         <Link className="text-sm text-cyan-400 hover:underline" href="/">
           ← Suresh Kumar Mukhiya
         </Link>
-        <h1 className="mt-10 text-5xl font-bold tracking-tight">Blogs</h1>
+        <h1 className="mt-10 text-5xl font-bold tracking-tight">Field notes</h1>
         <p className="mt-4 text-lg text-white/65">
-          Application security, software supply chain, and engineering leadership.
+          What I am learning from architecture decisions, security reviews and the less tidy
+          parts of building software.
         </p>
 
         <div className="mt-12 divide-y divide-white/10">
