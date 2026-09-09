@@ -10,43 +10,80 @@ interface ChartItem {
   value: number;
 }
 
-function DonutChart({ title, items }: Readonly<{ title: string; items: ChartItem[] }>) {
+function DonutChart({
+  title,
+  items,
+  valueSuffix,
+}: Readonly<{ title: string; items: ChartItem[]; valueSuffix: string }>) {
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const visibleItems = items.filter(({ value }) => value > 0).slice(0, 8);
   const total = visibleItems.reduce((sum, item) => sum + item.value, 0);
   let cursor = 0;
-  const gradient = visibleItems
-    .map((item, index) => {
-      const start = cursor;
-      cursor += total ? (item.value / total) * 100 : 0;
-      return `${CHART_COLORS[index]} ${start}% ${cursor}%`;
-    })
-    .join(', ');
+  const segments = visibleItems.map((item, index) => {
+    const percentage = total ? (item.value / total) * 100 : 0;
+    const segment = { ...item, color: CHART_COLORS[index], offset: cursor, percentage };
+    cursor += percentage;
+    return segment;
+  });
+  const hovered = hoveredIndex === null ? null : segments[hoveredIndex];
 
   return (
     <article className="min-w-0">
       <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">{title}</h3>
       <div className="mt-5 grid grid-cols-[minmax(110px,150px)_1fr] items-center gap-5">
-        <figure
-          aria-label={`${title} donut chart`}
-          className="aspect-square w-full rounded-full"
-          style={{
-            background: total
-              ? `radial-gradient(circle, var(--chart-center) 0 44%, transparent 45%), conic-gradient(${gradient})`
-              : 'rgba(148, 163, 184, 0.2)',
-          }}
-        />
+        <figure className="relative aspect-square w-full" aria-label={`${title} donut chart`}>
+          <svg className="h-full w-full -rotate-90" role="img" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" fill="none" r="15.9" stroke="currentColor" strokeOpacity="0.12" strokeWidth="8" />
+            {segments.map((segment, index) => (
+              <circle
+                aria-label={`${segment.label}: ${segment.value} ${valueSuffix}`}
+                className="cursor-help transition-[stroke-width,opacity] duration-200 hover:opacity-80 focus:opacity-80"
+                cx="21"
+                cy="21"
+                fill="none"
+                key={segment.label}
+                onBlur={() => setHoveredIndex(null)}
+                onFocus={() => setHoveredIndex(index)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                pathLength="100"
+                r="15.9"
+                role="img"
+                stroke={segment.color}
+                strokeDasharray={`${segment.percentage} ${100 - segment.percentage}`}
+                strokeDashoffset={-segment.offset}
+                strokeWidth={hoveredIndex === index ? 10 : 8}
+                tabIndex={0}
+              >
+                <title>{segment.label}: {segment.value} {valueSuffix}</title>
+              </circle>
+            ))}
+          </svg>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-5 text-center font-code">
+            {hovered ? (
+              <>
+                <span className="max-w-full truncate text-[9px] opacity-60">{hovered.label}</span>
+                <strong className="text-sm">{hovered.value} {valueSuffix}</strong>
+              </>
+            ) : (
+              <span className="text-[9px] uppercase opacity-40">Hover</span>
+            )}
+          </div>
+        </figure>
         <ul className="min-w-0 space-y-2 font-code text-[10px]">
-          {visibleItems.map((item, index) => (
-            <li className="flex min-w-0 items-center gap-2" key={item.label}>
-              <span
-                aria-hidden="true"
-                className="h-2.5 w-2.5 shrink-0"
-                style={{ backgroundColor: CHART_COLORS[index] }}
-              />
-              <span className="min-w-0 flex-1 truncate">{item.label}</span>
-              <span className="tabular-nums opacity-55">
-                {total ? `${Math.round((item.value / total) * 100)}%` : '0%'}
-              </span>
+          {segments.map((segment, index) => (
+            <li
+              className="flex min-w-0 cursor-help items-center gap-2 rounded-sm outline-none transition-opacity hover:opacity-80 focus-visible:ring-1 focus-visible:ring-[#00FF41]"
+              key={segment.label}
+              onBlur={() => setHoveredIndex(null)}
+              onFocus={() => setHoveredIndex(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              tabIndex={0}
+            >
+              <span aria-hidden="true" className="h-2.5 w-2.5 shrink-0" style={{ backgroundColor: segment.color }} />
+              <span className="min-w-0 flex-1 truncate">{segment.label}</span>
+              <span className="tabular-nums opacity-55">{segment.value} {valueSuffix}</span>
             </li>
           ))}
         </ul>
@@ -171,9 +208,9 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
       </header>
 
       <div className={`grid gap-8 ${compact ? 'pt-7' : 'border-b border-current/10 py-8'} md:grid-cols-3`}>
-        <DonutChart items={languageItems} title="Code by language" />
-        <DonutChart items={technologyItems} title="Repositories by technology" />
-        <DonutChart items={commitItems} title="Recent commits by scope" />
+        <DonutChart items={languageItems} title="Code by language" valueSuffix="%" />
+        <DonutChart items={technologyItems} title="Repositories by technology" valueSuffix="repos" />
+        <DonutChart items={commitItems} title="Recent commits by scope" valueSuffix="commits" />
       </div>
 
       {!compact ? <div className="grid gap-8 pt-8 lg:grid-cols-[1fr_280px]">
