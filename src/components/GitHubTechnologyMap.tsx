@@ -93,10 +93,12 @@ function DonutChart({
 }
 
 function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const width = 720;
   const height = 150;
   const chart = activity.activityWeeks;
   const max = Math.max(...chart.map(({ commits }) => commits), 1);
+  const hoveredWeek = hoveredIndex === null ? null : chart[hoveredIndex];
   const points = chart
     .map(({ commits }, index) => {
       const x = (index / Math.max(chart.length - 1, 1)) * width;
@@ -109,7 +111,9 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
     <div>
       <div className="flex items-end justify-between gap-4">
         <h3 className="font-code text-xs font-bold uppercase tracking-[0.15em]">Commits over the last 90 days</h3>
-        <span className="font-code text-[10px] opacity-50">AUTHORIZED REPOSITORIES</span>
+        <span className="font-code text-[10px] opacity-60">
+          {hoveredWeek ? `${hoveredWeek.label}: ${hoveredWeek.commits} commits` : 'HOVER A POINT FOR DETAILS'}
+        </span>
       </div>
       <svg
         aria-label="Weekly aggregate commit activity"
@@ -140,7 +144,26 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
         {chart.map(({ commits, start }, index) => {
           const x = (index / Math.max(chart.length - 1, 1)) * width;
           const y = height - (commits / max) * (height - 20) - 10;
-          return <circle cx={x} cy={y} fill="#0C0C0C" key={start} r="4" stroke="#00FF41" />;
+          return (
+            <circle
+              aria-label={`${chart[index].label}: ${commits} commits`}
+              className="cursor-help outline-none transition-[r,fill] focus:fill-[#00FF41] hover:fill-[#00FF41]"
+              cx={x}
+              cy={y}
+              fill="#0C0C0C"
+              key={start}
+              onBlur={() => setHoveredIndex(null)}
+              onFocus={() => setHoveredIndex(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              r={hoveredIndex === index ? 6 : 4}
+              role="img"
+              stroke="#00FF41"
+              tabIndex={0}
+            >
+              <title>{chart[index].label}: {commits} commits</title>
+            </circle>
+          );
         })}
       </svg>
       <div className="flex justify-between font-code text-[9px] opacity-45">
@@ -163,6 +186,8 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
     timeZone: 'UTC',
   }).format(new Date(activity.generatedAt));
   const joinedYear = new Date(activity.profile.joinedAt).getUTCFullYear();
+  const careerStartYear = 2010;
+  const careerYears = new Date().getFullYear() - careerStartYear;
   const languageItems = activity.languages.map((language) => ({
     label: language.name,
     value: language.percentage,
@@ -201,7 +226,10 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
             >
               @{activity.username} ↗
             </a>
-            <p className="mt-2 font-code text-[10px] opacity-50">ON GITHUB SINCE {joinedYear}</p>
+            <p className="mt-2 font-code text-[10px] font-bold text-[#00FF41]">
+              ENGINEERING SINCE {careerStartYear} · {careerYears} YEARS
+            </p>
+            <p className="mt-1 font-code text-[10px] opacity-50">ON GITHUB SINCE {joinedYear}</p>
           </div>
         </div>
         <ActivityLine compact={compact} />
