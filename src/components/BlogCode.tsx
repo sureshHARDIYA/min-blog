@@ -126,8 +126,60 @@ const LANGUAGE_ALIASES: Record<string, string> = {
   tsx: 'javascript'
 }
 
-const TOKEN_PATTERN =
-  /(\/\*[\s\S]*?\*\/|\/\/[^\n]*|#[^\n]*|`(?:\\.|[^`])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b\d+(?:\.\d+)?\b|\b[A-Za-z_$][\w$]*\b)/g
+interface Token {
+  end: number
+  value: string
+}
+
+function quotedToken(code: string, start: number, quote: string): Token {
+  let end = start + 1
+  while (end < code.length) {
+    if (code[end] === '\\') end += 2
+    else if (code[end] === quote) {
+      end += 1
+      break
+    } else end += 1
+  }
+  return { end, value: code.slice(start, end) }
+}
+
+function lineToken(code: string, start: number): Token {
+  const newline = code.indexOf('\n', start)
+  const end = newline === -1 ? code.length : newline
+  return { end, value: code.slice(start, end) }
+}
+
+function blockCommentToken(code: string, start: number): Token {
+  const closing = code.indexOf('*/', start + 2)
+  const end = closing === -1 ? code.length : closing + 2
+  return { end, value: code.slice(start, end) }
+}
+
+function wordToken(code: string, start: number): Token {
+  let end = start + 1
+  while (end < code.length && /[\w$]/.test(code[end])) end += 1
+  return { end, value: code.slice(start, end) }
+}
+
+function numberToken(code: string, start: number): Token {
+  let end = start + 1
+  while (end < code.length && /[\d.]/.test(code[end])) end += 1
+  return { end, value: code.slice(start, end) }
+}
+
+function nextToken(code: string, start: number): Token {
+  const character = code[start]
+  if (code.startsWith('//', start) || character === '#') {
+    return lineToken(code, start)
+  }
+  if (code.startsWith('/*', start)) return blockCommentToken(code, start)
+  if (character === '`' || character === '"' || character === "'") {
+    return quotedToken(code, start, character)
+  }
+  if (/\d/.test(character)) return numberToken(code, start)
+  if (/[A-Za-z_$]/.test(character)) return wordToken(code, start)
+  return { end: start + 1, value: character }
+}
 
 function tokenClass(token: string, language: string) {
   if (
@@ -148,24 +200,20 @@ function highlight(code: string, language: string) {
   const output: ReactNode[] = []
   let cursor = 0
 
-  for (const match of code.matchAll(TOKEN_PATTERN)) {
-    const index = match.index ?? 0
-    if (index > cursor) output.push(code.slice(cursor, index))
-    const token = match[0]
-    const className = tokenClass(token, language)
+  while (cursor < code.length) {
+    const token = nextToken(code, cursor)
+    const className = tokenClass(token.value, language)
     output.push(
       className ? (
-        <span className={className} key={`${index}-${token}`}>
-          {token}
+        <span className={className} key={`${cursor}-${token.value}`}>
+          {token.value}
         </span>
       ) : (
-        token
+        token.value
       )
     )
-    cursor = index + token.length
+    cursor = token.end
   }
-
-  if (cursor < code.length) output.push(code.slice(cursor))
   return output
 }
 
@@ -186,7 +234,7 @@ export function BlogCode({
   return (
     <figure className='blog-code-block'>
       <figcaption>{languageName ?? 'text'}</figcaption>
-      <pre tabIndex={0}>
+      <pre>
         <code>{highlight(code, language)}</code>
       </pre>
     </figure>
