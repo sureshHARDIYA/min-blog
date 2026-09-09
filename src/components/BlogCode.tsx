@@ -5,6 +5,8 @@ import {
   type ReactNode
 } from 'react'
 
+import { CodeCopyButton } from './CodeCopyButton'
+
 const KEYWORDS: Record<string, ReadonlySet<string>> = {
   javascript: new Set([
     'async',
@@ -217,6 +219,17 @@ function highlight(code: string, language: string) {
   return output
 }
 
+function numberedLines(code: string) {
+  let number = 0
+  let offset = 0
+  return code.split('\n').map((content) => {
+    number += 1
+    const line = { content, id: `line-${offset}-${content}`, number }
+    offset += content.length + 1
+    return line
+  })
+}
+
 export function BlogCode({
   children,
   className
@@ -233,9 +246,23 @@ export function BlogCode({
 
   return (
     <figure className='blog-code-block'>
-      <figcaption>{languageName ?? 'text'}</figcaption>
+      <figcaption>
+        <span>{languageName ?? 'text'}</span>
+        <CodeCopyButton code={code} />
+      </figcaption>
       <pre>
-        <code>{highlight(code, language)}</code>
+        <code>
+          {numberedLines(code).map((line) => (
+            <span className='blog-code-line' key={line.id}>
+              <span aria-hidden='true' className='blog-line-number'>
+                {line.number}
+              </span>
+              <span className='blog-line-content'>
+                {highlight(line.content, language)}
+              </span>
+            </span>
+          ))}
+        </code>
       </pre>
     </figure>
   )
