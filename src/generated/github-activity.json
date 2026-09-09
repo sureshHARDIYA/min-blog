@@ -1,10 +1,32 @@
 {
   "generatedAt": "2026-09-09T00:00:00.000Z",
   "username": "sureshHARDIYA",
+  "profile": {
+    "name": "Suresh Kumar Mukhiya",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/2022919?v=4",
+    "profileUrl": "https://github.com/sureshHARDIYA",
+    "publicRepositories": 0,
+    "joinedAt": "2012-07-23T00:00:00.000Z"
+  },
   "publicOnly": true,
   "windowDays": 90,
   "repositoriesAnalyzed": 1,
   "recentCommits": 0,
+  "activityWeeks": [
+    { "start": "2026-06-17", "label": "17 Jun", "commits": 0 },
+    { "start": "2026-06-24", "label": "24 Jun", "commits": 0 },
+    { "start": "2026-07-01", "label": "1 Jul", "commits": 0 },
+    { "start": "2026-07-08", "label": "8 Jul", "commits": 0 },
+    { "start": "2026-07-15", "label": "15 Jul", "commits": 0 },
+    { "start": "2026-07-22", "label": "22 Jul", "commits": 0 },
+    { "start": "2026-07-29", "label": "29 Jul", "commits": 0 },
+    { "start": "2026-08-05", "label": "5 Aug", "commits": 0 },
+    { "start": "2026-08-12", "label": "12 Aug", "commits": 0 },
+    { "start": "2026-08-19", "label": "19 Aug", "commits": 0 },
+    { "start": "2026-08-26", "label": "26 Aug", "commits": 0 },
+    { "start": "2026-09-02", "label": "2 Sep", "commits": 0 },
+    { "start": "2026-09-09", "label": "9 Sep", "commits": 0 }
+  ],
   "technologies": [
     { "name": "TypeScript", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
     { "name": "React", "category": "Frontend", "repositories": 1, "recentCommits": 0 },
