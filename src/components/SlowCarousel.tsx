@@ -63,7 +63,7 @@ export const SlowCarousel: React.FC<SlowCarouselProps> = ({
             exit={reducedMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
             initial={reducedMotion ? { opacity: 0 } : { opacity: 0, x: 20 }}
             key={activeSlide.id}
-            transition={{ duration: reducedMotion ? 0.15 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: reducedMotion ? 0.15 : 0.6, ease: 'easeInOut' }}
           >
             {activeSlide.content}
           </motion.div>
