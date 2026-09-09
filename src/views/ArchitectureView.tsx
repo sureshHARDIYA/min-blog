@@ -36,10 +36,11 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
 
   return (
     <div className='dot-grid min-h-[calc(100vh-80px)]'>
-      <div className='pt-24 pb-16 flex flex-col gap-16 max-w-[1120px] mx-auto px-6 w-full'>
+      <div className='pt-24 pb-16 flex flex-col gap-12 max-w-[1120px] mx-auto px-6 w-full'>
         {/* Hero and engineering evidence carousel */}
         <SlowCarousel
           ariaLabel='Professional introduction and engineering evidence'
+          initialIndex={1}
           intervalMs={12000}
           slides={[
             {
