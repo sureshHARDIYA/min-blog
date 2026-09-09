@@ -186,8 +186,6 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
     timeZone: 'UTC',
   }).format(new Date(activity.generatedAt));
   const joinedYear = new Date(activity.profile.joinedAt).getUTCFullYear();
-  const careerStartYear = 2010;
-  const careerYears = new Date().getFullYear() - careerStartYear;
   const languageItems = activity.languages.map((language) => ({
     label: language.name,
     value: language.percentage,
@@ -226,10 +224,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
             >
               @{activity.username} ↗
             </a>
-            <p className="mt-2 font-code text-[10px] font-bold text-[#00FF41]">
-              ENGINEERING SINCE {careerStartYear} · {careerYears} YEARS
-            </p>
-            <p className="mt-1 font-code text-[10px] opacity-50">ON GITHUB SINCE {joinedYear}</p>
+            <p className="mt-2 font-code text-[10px] opacity-50">ON GITHUB SINCE {joinedYear}</p>
           </div>
         </div>
         <ActivityLine compact={compact} />
