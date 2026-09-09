@@ -32,7 +32,7 @@ const headers = {
 async function github(pathname, { optional = false } = {}) {
   const response = await fetch(`${apiBase}${pathname}`, { headers });
 
-  if (optional && response.status === 404) return null;
+  if (optional && (response.status === 403 || response.status === 404)) return null;
   if (!response.ok) {
     throw new Error(`GitHub API ${response.status} for ${pathname}`);
   }
@@ -129,14 +129,18 @@ const activityGroups = new Map();
 
 for (const repository of selected) {
   const fullName = repository.full_name;
-  const [languages, commits, packageJson, pyproject, requirements, cargo] = await Promise.all([
-    github(`/repos/${fullName}/languages`),
-    github(`/repos/${fullName}/commits?author=${username}&since=${cutoff}&per_page=100`),
+  const [languagesResult, commitsResult, packageJson, pyproject, requirements, cargo] = await Promise.all([
+    github(`/repos/${fullName}/languages`, { optional: true }),
+    github(`/repos/${fullName}/commits?author=${username}&since=${cutoff}&per_page=100`, { optional: true }),
     repositoryFile(fullName, 'package.json'),
     repositoryFile(fullName, 'pyproject.toml'),
     repositoryFile(fullName, 'requirements.txt'),
     repositoryFile(fullName, 'Cargo.toml'),
   ]);
+
+  if (!languagesResult && !commitsResult) continue;
+  const languages = languagesResult || {};
+  const commits = commitsResult || [];
 
   for (const [language, bytes] of Object.entries(languages)) {
     languageTotals.set(language, (languageTotals.get(language) || 0) + bytes);
