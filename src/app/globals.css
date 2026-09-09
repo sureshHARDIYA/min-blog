@@ -164,11 +164,11 @@
 }
 
 .blog-inline-code {
-  border: 1px solid rgba(34, 211, 238, 0.18);
+  border: 1px solid #31515b;
   border-radius: 0.35rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: #171c24;
   padding: 0.12rem 0.38rem;
-  color: #a5f3fc;
+  color: #cffafe;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.86em;
 }
@@ -198,10 +198,6 @@
   font-size: 0.9rem;
   line-height: 1.75;
   tab-size: 2;
-}
-.blog-code-block pre:focus-visible {
-  outline: 2px solid #22d3ee;
-  outline-offset: -2px;
 }
 .blog-token-comment {
   color: #7c8b9f;
