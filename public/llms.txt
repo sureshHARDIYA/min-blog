@@ -1,32 +1,27 @@
 # Suresh Kumar Mukhiya, PhD
 
-> Suresh Kumar Mukhiya is a Tech Lead and secure software architect based in Bergen, Norway. His professional focus includes application security, secure software architecture, API security, DevSecOps, software supply-chain security, cloud security, and AI-assisted development security.
+Suresh Kumar Mukhiya is a Tech Lead in Bergen, Norway. He writes about software architecture, application security and the practical work of building and operating software.
 
-## Primary pages
+## Start here
 
-- [Application Security](https://skmukhiya.com.np/security): Security capabilities, verification approach, technology focus, and contact information.
-- [Architecture](https://skmukhiya.com.np/): Professional profile and architecture focus.
-- [Technology Stack](https://skmukhiya.com.np/stack): Technologies used across applications, cloud, data, and security.
-- [Research](https://skmukhiya.com.np/research): Publications, books, and doctoral research.
-- [Career Trajectory](https://skmukhiya.com.np/trajectory): Professional experience.
-- [AppSec Blog](https://skmukhiya.com.np/blogs): Application-security and software-supply-chain briefs.
-- [Contact](https://skmukhiya.com.np/connect): Contact and collaboration.
+- [Application security](https://skmukhiya.com.np/security)
+- [Blog](https://skmukhiya.com.np/blogs)
+- [Technology stack](https://skmukhiya.com.np/stack)
+- [Research and publications](https://skmukhiya.com.np/research)
+- [Career](https://skmukhiya.com.np/trajectory)
+- [Contact](https://skmukhiya.com.np/connect)
 
-## Security focus
+## Current areas of work
 
-- Secure architecture and threat modelling
-- API security, OAuth 2.0, OpenID Connect, and Microsoft Entra ID
-- Secure SDLC and OWASP ASVS security requirements
-- SBOM, dependency governance, and software supply-chain security
-- Security-focused review for Rust, Python, FastAPI, React, Next.js, PostgreSQL, and Microsoft SQL Server
-- Azure cloud and platform security
-- Security for AI-assisted development and agentic systems
+- Secure application and API architecture
+- OAuth 2.0, OpenID Connect and Microsoft Entra ID
+- Threat modelling and OWASP ASVS
+- SBOMs, dependency governance and software supply-chain security
+- React, Python, FastAPI, Rust, PostgreSQL and Microsoft SQL Server
+- Azure cloud systems and AI-assisted development
 
-## Location and identity
+## Profiles
 
-- Name: Suresh Kumar Mukhiya
-- Qualification: PhD
-- Location: Bergen, Norway
-- GitHub: https://github.com/sureshHARDIYA
-- LinkedIn: https://www.linkedin.com/in/sureshhardiya/
-- Google Scholar: https://scholar.google.com/citations?user=9-fxxeMAAAAJ
+- [GitHub](https://github.com/sureshHARDIYA)
+- [LinkedIn](https://www.linkedin.com/in/sureshhardiya/)
+- [Google Scholar](https://scholar.google.com/citations?user=9-fxxeMAAAAJ)
