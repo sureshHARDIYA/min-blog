@@ -106,7 +106,9 @@ const MainLayout: React.FC<AppProps> = ({
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="flex-grow pt-16 md:pt-20">
         {activeTab === 'architecture' && latestPost ? (
-          <LatestPostBanner post={latestPost} />
+          <div className="pt-4 pb-8 md:pt-6 md:pb-12">
+            <LatestPostBanner post={latestPost} />
+          </div>
         ) : null}
         {renderCurrentView()}
       </main>
