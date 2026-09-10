@@ -17,11 +17,17 @@ export function LatestPostBanner({ post }: { post: LatestPostSummary }) {
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
-    const updatePosition = () => setCompact(window.scrollY > 240);
+    const updatePosition = () => {
+      setCompact(window.innerWidth >= 768 && window.scrollY > 240);
+    };
 
     updatePosition();
     window.addEventListener('scroll', updatePosition, { passive: true });
-    return () => window.removeEventListener('scroll', updatePosition);
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
   }, []);
 
   return (
@@ -35,10 +41,10 @@ export function LatestPostBanner({ post }: { post: LatestPostSummary }) {
               y: 0,
             }
       }
-      className={`group overflow-hidden border px-5 py-4 shadow-lg backdrop-blur-md ${
+      className={`group overflow-hidden rounded-lg border px-4 py-3 shadow-lg backdrop-blur-md md:px-5 md:py-4 ${
         compact
           ? 'fixed right-4 top-20 z-40 w-[calc(100%-2rem)] max-w-sm md:right-6 md:top-24'
-          : 'sticky top-16 z-40 mx-auto flex w-[calc(100%-3rem)] max-w-[1120px] md:top-20'
+          : 'relative z-30 mx-4 flex md:sticky md:top-20 md:mx-auto md:w-[calc(100%-3rem)] md:max-w-[1120px]'
       } ${
         theme === 'light'
           ? 'border-[#008822]/50 bg-white/95 text-slate-900 hover:border-[#008822]'
@@ -85,7 +91,7 @@ export function LatestPostBanner({ post }: { post: LatestPostSummary }) {
             >
               New AppSec brief
             </span>
-            <span className="mt-1 block truncate font-semibold">{post.title}</span>
+            <span className="mt-1 line-clamp-2 block text-sm font-semibold leading-snug md:truncate md:text-base">{post.title}</span>
           </span>
         </span>
         <span
