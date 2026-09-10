@@ -19,7 +19,7 @@ const personJsonLd = {
   name: 'Suresh Kumar Mukhiya',
   honorificSuffix: 'PhD',
   url: siteUrl,
-  image: `${siteUrl}/favicon-192x192.png`,
+  image: `${siteUrl}/suresh-portrait.png`,
   jobTitle: 'Tech Lead',
   worksFor: {
     '@type': 'Organization',
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/social-preview',
+        url: '/social-preview?v=2',
         width: 1200,
         height: 630,
         alt: 'Suresh Kumar Mukhiya, PhD',
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/social-preview'],
+    images: ['/social-preview?v=2'],
   },
   robots: {
     index: true,
@@ -112,12 +112,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon-128x128.png', type: 'image/png', sizes: '128x128' },
-      { url: '/favicon-192x192.png', type: 'image/png', sizes: '192x192' },
-    ],
+    icon: [{ url: '/favicon.png', type: 'image/png', sizes: '32x32' }],
     apple: '/favicon.png',
   },
   manifest: '/manifest.json',
