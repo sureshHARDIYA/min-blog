@@ -14,7 +14,6 @@ import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
 import { StackView } from './views/StackView';
 import { ConnectView } from './views/ConnectView';
-import { LanguageProvider } from './i18n/LanguageContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 const TAB_META: Record<NavTab, { title: string; description: string }> = {
@@ -123,11 +122,9 @@ export default function App({
 }: AppProps) {
   return (
     <ThemeProvider>
-      <LanguageProvider>
-        <QueryClientProvider client={queryClient}>
-          <MainLayout initialTab={initialTab} latestPost={latestPost} />
-        </QueryClientProvider>
-      </LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <MainLayout initialTab={initialTab} latestPost={latestPost} />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

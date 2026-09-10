@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AnalyticsConsent } from '../components/AnalyticsConsent';
+import { LanguageProvider } from '../i18n/LanguageContext';
 import './globals.css';
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -62,7 +63,7 @@ const websiteJsonLd = {
   name: 'Suresh Kumar Mukhiya, PhD',
   url: siteUrl,
   description: siteDescription,
-  inLanguage: 'en',
+  inLanguage: ['en', 'nb'],
   author: {
     '@id': personId,
   },
@@ -134,8 +135,10 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#0C0C0C] text-[#F5F5F5] antialiased">
-        {children}
-        <AnalyticsConsent />
+        <LanguageProvider>
+          {children}
+          <AnalyticsConsent />
+        </LanguageProvider>
         <Script
           id="person-json-ld"
           type="application/ld+json"
