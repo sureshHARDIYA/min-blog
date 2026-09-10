@@ -3,67 +3,8 @@
 import Link from 'next/link'
 import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 import { useLanguage } from '../../i18n/LanguageContext'
+import copy from './copy.json'
 
-const copy = {
-  en: {
-    navLabel: 'Security page navigation', security: 'Security', blogs: 'Blogs', contact: 'Contact',
-    eyebrow: 'Application security · Bergen, Norway', title: 'Application Security & Secure Software Architecture',
-    intro: 'I help engineering teams design secure APIs, manage software-supply-chain risk, implement practical DevSecOps controls, and build secure cloud applications using Rust, Python, React and Azure.',
-    discuss: 'Discuss a security problem', notes: 'Read my field notes', where: 'Where I work',
-    capabilitiesTitle: 'Security close to the engineering work', verification: 'Verification',
-    evidenceTitle: 'Requirements need evidence',
-    evidence1: 'I use the OWASP Application Security Verification Standard to turn broad security goals into requirements a team can test. Some controls belong in CI; others need architecture review, code review or a deliberately awkward abuse test.',
-    evidence2: 'The OWASP Top 10 is useful for explaining common risks. ASVS is what I reach for when a team needs acceptance criteria and evidence that a control actually works.',
-    method: 'Working method', methodTitle: 'From a real risk to something we can verify',
-    perspective: 'A practical perspective', perspectiveTitle: 'I work at the boundary between architecture and delivery',
-    perspectiveText: 'My background spans hands-on software development, technical leadership and academic research. I am most useful when a security question crosses those boundaries: an Entra design that also has to work in an API, a dependency policy developers can live with, or an architecture decision that needs evidence rather than reassurance.',
-    ctaLabel: 'Have a difficult security decision?', ctaTitle: 'Tell me what you are building and where the uncertainty is.', cta: 'Start a conversation',
-    capabilities: [
-      ['Secure architecture and threat modelling', 'I start with the assets, people and trust boundaries that matter. The useful output is not a perfect diagram; it is a short list of risks and decisions the team can act on.', 'STRIDE · attack paths · trust boundaries · security ADRs'],
-      ['API security, OAuth 2.0, OIDC and Entra ID', 'Signing in and being allowed to perform an action are different problems. I design both, including tenant and resource-level checks that are easy to miss in APIs.', 'OAuth 2.0 · OIDC · Microsoft Entra ID · APIM · Zero Trust'],
-      ['Secure SDLC and security requirements', 'I prefer a few clear requirements in a story and pipeline over a large policy nobody reads. OWASP ASVS gives those requirements a testable foundation.', 'OWASP ASVS · abuse cases · acceptance criteria · security gates'],
-      ['Software supply-chain security', 'An SBOM is only useful when a finding can be connected to a deployed service, an owner and a decision. That connection is where I put most of the effort.', 'CycloneDX · Dependency-Track · provenance · CI/CD hardening'],
-      ['Security-focused code review', 'I pay particular attention to authorization, data access, file handling, error paths and the assumptions hidden between frontend and backend code.', 'Rust · Python/FastAPI · React/Next.js · PostgreSQL · MS SQL'],
-      ['Cloud and platform security', 'My focus is the path an identity, request or secret takes through the system: who can reach it, what they can do and what evidence remains afterwards.', 'Azure · Key Vault · WAF · private endpoints · security telemetry'],
-      ['AI-assisted development security', 'Coding agents make it cheaper to create code and easier to create risk at scale. I work on practical boundaries for tool access, data, review and auditability.', 'least privilege · tool isolation · audit trails · review policy'],
-    ],
-    workflow: [
-      ['Understand', 'Start with the system, its sensitive assets and the ways it could realistically fail or be abused.'],
-      ['Decide', 'Choose proportionate controls and write down ownership, trade-offs and the reasons behind them.'],
-      ['Verify', 'Combine ASVS requirements, automated checks and focused human testing. No single tool is enough.'],
-      ['Learn', 'Use findings and incidents to improve the shared patterns, not only the application where they appeared.'],
-    ],
-  },
-  no: {
-    navLabel: 'Navigasjon for sikkerhetssiden', security: 'Sikkerhet', blogs: 'Blogg', contact: 'Kontakt',
-    eyebrow: 'Applikasjonssikkerhet · Bergen, Norge', title: 'Applikasjonssikkerhet og sikker programvarearkitektur',
-    intro: 'Jeg hjelper utviklingsteam med å designe sikre API-er, håndtere risiko i programvareleverandørkjeden, innføre praktiske DevSecOps-kontroller og bygge sikre skyløsninger med Rust, Python, React og Azure.',
-    discuss: 'Diskuter et sikkerhetsproblem', notes: 'Les feltnotatene mine', where: 'Dette arbeider jeg med',
-    capabilitiesTitle: 'Sikkerhet tett på utviklingsarbeidet', verification: 'Verifisering',
-    evidenceTitle: 'Krav må kunne dokumenteres',
-    evidence1: 'Jeg bruker OWASP Application Security Verification Standard til å gjøre overordnede sikkerhetsmål om til krav teamet kan teste. Noen kontroller hører hjemme i CI; andre krever arkitekturgjennomgang, kodegjennomgang eller målrettet misbrukstesting.',
-    evidence2: 'OWASP Top 10 er nyttig for å forklare vanlige risikoer. ASVS bruker jeg når et team trenger akseptansekriterier og dokumentasjon på at en kontroll faktisk virker.',
-    method: 'Arbeidsmetode', methodTitle: 'Fra reell risiko til noe vi kan verifisere',
-    perspective: 'Et praktisk perspektiv', perspectiveTitle: 'Jeg arbeider i grenseflaten mellom arkitektur og leveranse',
-    perspectiveText: 'Bakgrunnen min omfatter praktisk programvareutvikling, teknisk ledelse og akademisk forskning. Jeg er mest nyttig når et sikkerhetsspørsmål krysser disse grensene: et Entra-design som også må fungere i et API, en avhengighetspolicy utviklere kan leve med, eller en arkitekturbeslutning som trenger dokumentasjon fremfor forsikringer.',
-    ctaLabel: 'Har du en vanskelig sikkerhetsbeslutning?', ctaTitle: 'Fortell hva du bygger, og hvor usikkerheten ligger.', cta: 'Start en samtale',
-    capabilities: [
-      ['Sikker arkitektur og trusselmodellering', 'Jeg starter med verdiene, menneskene og tillitsgrensene som betyr noe. Det nyttige resultatet er ikke et perfekt diagram, men en kort liste over risikoer og beslutninger teamet kan handle på.', 'STRIDE · angrepsveier · tillitsgrenser · sikkerhets-ADR-er'],
-      ['API-sikkerhet, OAuth 2.0, OIDC og Entra ID', 'Innlogging og tillatelse til å utføre en handling er to forskjellige problemer. Jeg designer begge deler, inkludert tenant- og ressurskontroller som lett overses i API-er.', 'OAuth 2.0 · OIDC · Microsoft Entra ID · APIM · Zero Trust'],
-      ['Sikker SDLC og sikkerhetskrav', 'Jeg foretrekker noen få tydelige krav i en sak og pipeline fremfor en omfattende policy ingen leser. OWASP ASVS gir kravene et testbart fundament.', 'OWASP ASVS · misbrukstilfeller · akseptansekriterier · sikkerhetsporter'],
-      ['Sikkerhet i programvareleverandørkjeden', 'En SBOM er bare nyttig når et funn kan knyttes til en produksjonstjeneste, en eier og en beslutning. Det er denne koblingen jeg legger mest arbeid i.', 'CycloneDX · Dependency-Track · proveniens · CI/CD-herding'],
-      ['Sikkerhetsrettet kodegjennomgang', 'Jeg legger særlig vekt på autorisasjon, datatilgang, filhåndtering, feilstier og antakelsene som skjuler seg mellom frontend- og backend-kode.', 'Rust · Python/FastAPI · React/Next.js · PostgreSQL · MS SQL'],
-      ['Sky- og plattformsikkerhet', 'Jeg følger veien en identitet, forespørsel eller hemmelighet tar gjennom systemet: hvem som kan nå den, hva de kan gjøre, og hvilke spor som står igjen.', 'Azure · Key Vault · WAF · private endepunkter · sikkerhetstelemetri'],
-      ['Sikkerhet ved AI-assistert utvikling', 'Kodeagenter gjør det billigere å lage kode og enklere å skape risiko i stor skala. Jeg arbeider med praktiske grenser for verktøytilgang, data, gjennomgang og revisjonsspor.', 'minste privilegium · verktøyisolasjon · revisjonsspor · gjennomgangspolicy'],
-    ],
-    workflow: [
-      ['Forstå', 'Start med systemet, de sensitive verdiene og hvordan det realistisk kan feile eller misbrukes.'],
-      ['Beslutte', 'Velg forholdsmessige kontroller og dokumenter eierskap, avveininger og begrunnelser.'],
-      ['Verifisere', 'Kombiner ASVS-krav, automatiserte kontroller og målrettet menneskelig testing. Ett verktøy er aldri nok.'],
-      ['Lære', 'Bruk funn og hendelser til å forbedre felles mønstre, ikke bare applikasjonen der de oppstod.'],
-    ],
-  },
-} as const
 
 export function SecurityContent() {
   const { language } = useLanguage()
