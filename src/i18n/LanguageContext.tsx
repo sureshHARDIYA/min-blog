@@ -18,15 +18,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     // Try restoring saved language preference
     const saved = localStorage.getItem('app_language') as Language;
-    if (saved && ['en', 'no', 'ne'].includes(saved)) {
+    if (saved && ['en', 'no'].includes(saved)) {
       setLanguageState(saved);
     } else {
-      // Auto detect browser language if Norwegian or Nepali
+      // Auto-detect Norwegian; English is the fallback for every other locale.
       const browserLang = navigator.language.toLowerCase();
       if (browserLang.startsWith('no') || browserLang.startsWith('nb') || browserLang.startsWith('nn')) {
         setLanguageState('no');
-      } else if (browserLang.startsWith('ne')) {
-        setLanguageState('ne');
       }
     }
   }, []);
