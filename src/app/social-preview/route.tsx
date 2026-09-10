@@ -2,7 +2,9 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const portraitUrl = new URL('/suresh-portrait.png', request.url).toString();
+
   return new ImageResponse(
     (
       <div
@@ -60,7 +62,7 @@ export async function GET() {
           <img
             alt="Suresh Kumar Mukhiya"
             height="448"
-            src="https://skmukhiya.com.np/suresh-portrait.png"
+            src={portraitUrl}
             style={{ objectFit: 'cover' }}
             width="448"
           />
