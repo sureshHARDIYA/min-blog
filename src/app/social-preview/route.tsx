@@ -2,8 +2,8 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export async function GET(request: Request) {
-  const portraitUrl = new URL('/suresh-portrait.png', request.url).toString();
+export async function GET() {
+  const portraitUrl = 'https://www.skmukhiya.com.np/suresh-portrait.png';
 
   return new ImageResponse(
     (

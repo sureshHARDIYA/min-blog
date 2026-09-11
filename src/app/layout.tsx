@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/social-preview?v=2',
+        url: '/social-preview?v=3',
         width: 1200,
         height: 630,
         alt: 'Suresh Kumar Mukhiya, PhD'
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/social-preview?v=2']
+    images: ['/social-preview?v=3']
   },
   robots: {
     index: true,
