@@ -123,7 +123,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
             <p className='text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400'>
               Architecture &amp; AppSec
             </p>
-            <h1 className='mt-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl'>
+            <h1 className='mt-4 text-[2.025rem] font-bold tracking-tight sm:text-[2.7rem] lg:text-[4.05rem]'>
               {post.title}
             </h1>
             <time
@@ -197,10 +197,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
       </article>
       {recommendation ? (
         <ArticleRecommendation
-          description={recommendation.description}
           href={articleHref(recommendation.slug)}
-          label='Continue exploring'
-          readLabel='Read next'
           title={recommendation.title}
         />
       ) : null}
