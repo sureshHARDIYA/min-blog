@@ -40,6 +40,8 @@ export function ArticleRecommendation({
               ? undefined
               : {
                   opacity: 1,
+                  x: 0,
+                  y: 0,
                   rotate: [0, 0, -0.6, 0.6, 0, 0],
                   scale: [1, 1, 1.012, 1, 1],
                   boxShadow: [
