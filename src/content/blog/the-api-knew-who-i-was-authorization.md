@@ -435,6 +435,68 @@ For authorization-sensitive changes, an AI review prompt should ask concrete que
 
 The best protection is not a longer prompt. It is an architecture where unsafe code is awkward to write: scoped repository methods, typed principals, explicit access requests, deny-by-default results, and reusable test fixtures with multiple tenants.
 
+## Build it safely with AI
+
+AI-assisted development is now mainstream, but generated security claims still need evidence. Use the following playbook with Claude Code, Codex, Copilot, or another repository-aware coding agent. Give the agent access only to the code and tools required for the review, and ask it to diagnose before it edits.
+
+### Context to give the agent
+
+- the authentication provider and accepted token types;
+- the tenant and organization model;
+- the sensitive resources and ownership relationships;
+- the roles, permissions, and separation-of-duties rules;
+- the API, service, and repository boundaries; and
+- the commands used to run security and integration tests.
+
+### Skills or review capabilities to use
+
+- threat modelling;
+- authentication and authorization review;
+- API and tenant-isolation security;
+- secure code review;
+- database-access review; and
+- negative security-test generation.
+
+### Copyable review prompt
+
+```text
+Review this application for broken object-level authorization and tenant-isolation failures.
+
+Trace every caller-controlled resource identifier through:
+request → authentication → authorization → repository query → response or side effect.
+
+For every affected endpoint:
+1. Identify the principal, action, tenant, and resource.
+2. Verify issuer, audience, lifetime, and token type.
+3. Confirm that authorization is enforced server-side.
+4. Confirm that database reads and writes are tenant-scoped.
+5. Find unscoped methods such as get_by_id.
+6. Check bulk operations, background jobs, caches, and app-only tokens.
+7. Create negative cross-tenant tests.
+8. Report only findings supported by a concrete code path.
+
+Do not modify the code yet.
+
+For each verified finding, return:
+- affected files and functions;
+- attack preconditions and a realistic abuse path;
+- severity with justification;
+- the smallest safe remediation; and
+- a test that proves the remediation works.
+```
+
+### Verification before accepting the result
+
+- [ ] The agent followed a real code path rather than matching keywords.
+- [ ] Authentication and authorization were evaluated separately.
+- [ ] Tenant ownership was enforced by the server.
+- [ ] Data was scoped before it was loaded, changed, cached, or logged.
+- [ ] At least one negative cross-tenant test was executed.
+- [ ] Tokens and sensitive object contents were excluded from logs.
+- [ ] A human reviewed the policy, exploitability, and proposed fix.
+
+> An AI-generated security finding is a hypothesis until the code path, attack conditions, and remediation test have been verified.
+
 ## A practical authorization review checklist
 
 Use this checklist when reviewing a new API endpoint or an existing multi-tenant flow.

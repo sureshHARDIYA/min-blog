@@ -154,6 +154,25 @@
   color: rgba(255, 255, 255, 0.68);
   font-size: 1.2rem;
 }
+
+.blog-ai-playbook {
+  margin: 3rem auto;
+  border: 1px solid rgba(0, 255, 65, 0.45);
+  border-left-width: 5px;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 65, 0.09),
+    rgba(20, 20, 20, 0.96)
+  );
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.blog-ai-playbook > h2:first-child {
+  margin-top: 0;
+  color: #00ff41;
+}
 .blog-prose img {
   display: block;
   width: 100%;
