@@ -11,7 +11,7 @@ interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
 
-const siteUrl = 'https://skmukhiya.com.np'
+const siteUrl = 'https://www.skmukhiya.com.np'
 
 const MARKDOWN_COMPONENTS: Components = {
   h2: ({ children }) => <h2>{children}</h2>,

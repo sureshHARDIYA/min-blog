@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 import { getAllPosts } from '../lib/blog';
 import { BOOK_ROUTE_SLUGS } from '../types';
 
-const siteUrl = 'https://skmukhiya.com.np';
+const siteUrl = 'https://www.skmukhiya.com.np';
 
 const staticRoutes: MetadataRoute.Sitemap = [
   { url: siteUrl, changeFrequency: 'monthly', priority: 1 },

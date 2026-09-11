@@ -6,7 +6,7 @@ import { LanguageProvider } from '../i18n/LanguageContext'
 import './globals.css'
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-const siteUrl = 'https://skmukhiya.com.np'
+const siteUrl = 'https://www.skmukhiya.com.np'
 const personId = `${siteUrl}/#person`
 const websiteId = `${siteUrl}/#website`
 const siteTitle = 'Suresh Kumar Mukhiya, PhD | Tech Lead and Software Architect'

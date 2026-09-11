@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { SecurityContent } from './SecurityContent'
 
-const siteUrl = 'https://skmukhiya.com.np'
+const siteUrl = 'https://www.skmukhiya.com.np'
 const pageUrl = `${siteUrl}/security`
 
 export const metadata: Metadata = {

@@ -4,12 +4,12 @@ Suresh Kumar Mukhiya is a Tech Lead in Bergen, Norway. He writes about software 
 
 ## Start here
 
-- [Application security](https://skmukhiya.com.np/security)
-- [Blog](https://skmukhiya.com.np/blogs)
-- [Technology stack](https://skmukhiya.com.np/stack)
-- [Research and publications](https://skmukhiya.com.np/research)
-- [Career](https://skmukhiya.com.np/trajectory)
-- [Contact](https://skmukhiya.com.np/connect)
+- [Application security](https://www.skmukhiya.com.np/security)
+- [Blog](https://www.skmukhiya.com.np/blogs)
+- [Technology stack](https://www.skmukhiya.com.np/stack)
+- [Research and publications](https://www.skmukhiya.com.np/research)
+- [Career](https://www.skmukhiya.com.np/trajectory)
+- [Contact](https://www.skmukhiya.com.np/connect)
 
 ## Current areas of work
 
