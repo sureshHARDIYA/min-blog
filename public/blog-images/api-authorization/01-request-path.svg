@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">A request crossing authentication and authorization boundaries</title>
+  <desc id="desc">A user request moves from React through Entra ID and an API to tenant-scoped data. Authentication proves identity, while authorization decides access to the requested object.</desc>
+  <rect width="1200" height="560" fill="#0c0c0c"/>
+  <text x="70" y="74" fill="#00ff41" font-family="monospace" font-size="18" font-weight="700">THE REQUEST PATH</text>
+  <text x="70" y="112" fill="#f5f5f5" font-family="Arial, sans-serif" font-size="30" font-weight="700">A valid token is only the beginning</text>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="70" y="190" width="210" height="150" rx="8" fill="#151515" stroke="#444"/><text x="175" y="245" fill="#fff" font-size="22" font-weight="700">React client</text><text x="175" y="280" fill="#aaa" font-size="16">requests invoice 842</text>
+    <rect x="360" y="190" width="210" height="150" rx="8" fill="#151515" stroke="#00ff41"/><text x="465" y="245" fill="#fff" font-size="22" font-weight="700">Entra ID</text><text x="465" y="280" fill="#00ff41" font-size="16">Who are you?</text>
+    <rect x="650" y="190" width="210" height="150" rx="8" fill="#151515" stroke="#ffb020"/><text x="755" y="245" fill="#fff" font-size="22" font-weight="700">API policy</text><text x="755" y="280" fill="#ffb020" font-size="16">May you touch it?</text>
+    <rect x="940" y="190" width="190" height="150" rx="8" fill="#151515" stroke="#4da3ff"/><text x="1035" y="245" fill="#fff" font-size="22" font-weight="700">Tenant data</text><text x="1035" y="280" fill="#4da3ff" font-size="16">Who owns it?</text>
+  </g>
+  <g stroke="#777" stroke-width="3" fill="none"><path d="M280 265h70"/><path d="M570 265h70"/><path d="M860 265h70"/></g>
+  <g fill="#777"><path d="M350 265l-12-7v14z"/><path d="M640 265l-12-7v14z"/><path d="M930 265l-12-7v14z"/></g>
+  <rect x="70" y="400" width="1060" height="90" rx="8" fill="#101510" stroke="#234d2d"/>
+  <text x="600" y="438" fill="#f5f5f5" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">Authentication validates the caller. Authorization evaluates the caller, action, tenant and object.</text>
+  <text x="600" y="470" fill="#00ff41" font-family="monospace" font-size="17" text-anchor="middle">ALLOW only when every boundary agrees</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Layered authorization policy</title><desc id="desc">Token validation, tenant membership, action permission and object relationship are evaluated before a repository query returns minimum data.</desc>
+  <rect width="1200" height="620" fill="#0c0c0c"/>
+  <text x="70" y="70" fill="#00ff41" font-family="monospace" font-size="18" font-weight="700">POLICY BEFORE DATA</text>
+  <text x="70" y="110" fill="#fff" font-family="Arial, sans-serif" font-size="30" font-weight="700">Authorization is a sequence of explicit questions</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="90" y="170" width="1020" height="70" rx="7" fill="#151515" stroke="#555"/><text x="125" y="214" fill="#fff" font-size="20" font-weight="700">1 · Token valid?</text><text x="850" y="214" fill="#aaa" font-size="17">issuer · audience · signature · lifetime</text>
+    <rect x="130" y="260" width="940" height="70" rx="7" fill="#151515" stroke="#555"/><text x="165" y="304" fill="#fff" font-size="20" font-weight="700">2 · Tenant allowed?</text><text x="800" y="304" fill="#aaa" font-size="17">tid · membership · status</text>
+    <rect x="170" y="350" width="860" height="70" rx="7" fill="#151515" stroke="#555"/><text x="205" y="394" fill="#fff" font-size="20" font-weight="700">3 · Action permitted?</text><text x="745" y="394" fill="#aaa" font-size="17">role · scope · business rule</text>
+    <rect x="210" y="440" width="780" height="70" rx="7" fill="#101b13" stroke="#00ff41"/><text x="245" y="484" fill="#fff" font-size="20" font-weight="700">4 · Object belongs to that boundary?</text><text x="785" y="484" fill="#00ff41" font-size="17">scoped query</text>
+  </g>
+  <text x="600" y="565" fill="#00ff41" font-family="monospace" font-size="18" text-anchor="middle">DENY BY DEFAULT · LOG THE DECISION · RETURN MINIMUM DATA</text>
+</svg>
