@@ -3,9 +3,9 @@
   "short_name": "SK Mukhiya",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/suresh-portrait.png",
       "type": "image/png",
-      "sizes": "32x32"
+      "sizes": "460x460"
     }
   ],
   "theme_color": "#0c0c0c",
