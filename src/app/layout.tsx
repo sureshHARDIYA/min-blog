@@ -1,17 +1,17 @@
-import React from 'react';
-import type { Metadata } from 'next';
-import Script from 'next/script';
-import { AnalyticsConsent } from '../components/AnalyticsConsent';
-import { LanguageProvider } from '../i18n/LanguageContext';
-import './globals.css';
+import React from 'react'
+import type { Metadata } from 'next'
+import Script from 'next/script'
+import { AnalyticsConsent } from '../components/AnalyticsConsent'
+import { LanguageProvider } from '../i18n/LanguageContext'
+import './globals.css'
 
-const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-const siteUrl = 'https://skmukhiya.com.np';
-const personId = `${siteUrl}/#person`;
-const websiteId = `${siteUrl}/#website`;
-const siteTitle = 'Suresh Kumar Mukhiya, PhD | Tech Lead and Software Architect';
+const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+const siteUrl = 'https://skmukhiya.com.np'
+const personId = `${siteUrl}/#person`
+const websiteId = `${siteUrl}/#website`
+const siteTitle = 'Suresh Kumar Mukhiya, PhD | Tech Lead and Software Architect'
 const siteDescription =
-  'Writing and project work from Suresh Kumar Mukhiya, a Tech Lead in Bergen working across software architecture, application security, cloud systems and AI.';
+  'Writing and project work from Suresh Kumar Mukhiya, a Tech Lead in Bergen working across software architecture, application security, cloud systems and AI.'
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -24,19 +24,19 @@ const personJsonLd = {
   jobTitle: 'Tech Lead',
   worksFor: {
     '@type': 'Organization',
-    name: 'Lerøy Seafood Group',
+    name: 'Lerøy Seafood Group'
   },
   alumniOf: [
     {
       '@type': 'CollegeOrUniversity',
       name: 'Western Norway University of Applied Sciences',
-      alternateName: 'HVL',
+      alternateName: 'HVL'
     },
     {
       '@type': 'CollegeOrUniversity',
       name: 'Norwegian University of Science and Technology',
-      alternateName: 'NTNU',
-    },
+      alternateName: 'NTNU'
+    }
   ],
   knowsAbout: [
     'Software Architecture',
@@ -46,15 +46,15 @@ const personJsonLd = {
     'Software Supply Chain Security',
     'Cloud Architecture',
     'Artificial Intelligence',
-    'Adaptive Systems',
+    'Adaptive Systems'
   ],
   sameAs: [
     'https://github.com/sureshHARDIYA',
     'https://www.linkedin.com/in/sureshhardiya/',
     'https://scholar.google.com/citations?user=9-fxxeMAAAAJ',
-    'https://www.youtube.com/@SureshKUMARMukhiya',
-  ],
-};
+    'https://www.youtube.com/@SureshKUMARMukhiya'
+  ]
+}
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
@@ -65,20 +65,23 @@ const websiteJsonLd = {
   description: siteDescription,
   inLanguage: ['en', 'nb'],
   author: {
-    '@id': personId,
-  },
-};
+    '@id': personId
+  }
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: '%s | Suresh Kumar Mukhiya, PhD',
+    template: '%s | Suresh Kumar Mukhiya, PhD'
   },
   description: siteDescription,
   authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
   creator: 'Suresh Kumar Mukhiya',
   publisher: 'Suresh Kumar Mukhiya',
+  verification: {
+    google: 'PGJNOFCXfqyHqFDX7ZnRlFXPPDB0UH1BL3CtIeiJqno'
+  },
   openGraph: {
     type: 'profile',
     url: siteUrl,
@@ -91,15 +94,15 @@ export const metadata: Metadata = {
         url: '/social-preview?v=2',
         width: 1200,
         height: 630,
-        alt: 'Suresh Kumar Mukhiya, PhD',
-      },
-    ],
+        alt: 'Suresh Kumar Mukhiya, PhD'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/social-preview?v=2'],
+    images: ['/social-preview?v=2']
   },
   robots: {
     index: true,
@@ -109,53 +112,57 @@ export const metadata: Metadata = {
       follow: true,
       'max-image-preview': 'large',
       'max-snippet': -1,
-      'max-video-preview': -1,
-    },
+      'max-video-preview': -1
+    }
   },
   icons: {
     icon: [{ url: '/favicon.png', type: 'image/png', sizes: '32x32' }],
-    apple: '/favicon.png',
+    apple: '/favicon.png'
   },
-  manifest: '/manifest.json',
-};
+  manifest: '/manifest.json'
+}
 
 export default function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-          rel="stylesheet"
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin='anonymous'
+        />
+        <link
+          href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap'
+          rel='stylesheet'
         />
       </head>
-      <body className="bg-[#0C0C0C] text-[#F5F5F5] antialiased">
+      <body className='bg-[#0C0C0C] text-[#F5F5F5] antialiased'>
         <LanguageProvider>
           {children}
           <AnalyticsConsent />
         </LanguageProvider>
         <Script
-          id="person-json-ld"
-          type="application/ld+json"
+          id='person-json-ld'
+          type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <Script
-          id="website-json-ld"
-          type="application/ld+json"
+          id='website-json-ld'
+          type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {recaptchaSiteKey && (
           <Script
             src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
-            strategy="afterInteractive"
+            strategy='afterInteractive'
           />
         )}
       </body>
     </html>
-  );
+  )
 }
