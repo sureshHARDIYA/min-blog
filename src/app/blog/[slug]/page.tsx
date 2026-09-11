@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown, { type Components } from 'react-markdown'
 
 import { BlogCode, BlogList, BlogListItem } from '../../../components/BlogCode'
+import { ArticleRecommendation } from '../../../components/ArticleRecommendation'
 import { getAllPosts, getPost } from '../../../lib/blog'
 
 interface BlogPostPageProps {
@@ -82,10 +83,15 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params
+async function BlogPostContent({ slug }: { slug: string }) {
   const post = await getPost(slug)
   if (!post) notFound()
+  const posts = await getAllPosts()
+  const currentIndex = posts.findIndex((candidate) => candidate.slug === slug)
+  const newerPost = currentIndex > 0 ? posts[currentIndex - 1] : undefined
+  const olderPost = currentIndex >= 0 ? posts[currentIndex + 1] : undefined
+  const recommendation = olderPost ?? newerPost
+  const articleHref = (targetSlug: string) => `/blog/${targetSlug}`
 
   const url = `${siteUrl}/blog/${post.slug}`
   const articleJsonLd = {
@@ -138,9 +144,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             return (
               <section
                 className={
-                  TWO_COLUMN_SECTIONS.has(title)
-                    ? 'blog-two-column-section'
-                    : undefined
+                  title === 'Build it safely with AI'
+                    ? 'blog-ai-playbook'
+                    : TWO_COLUMN_SECTIONS.has(title)
+                      ? 'blog-two-column-section'
+                      : undefined
                 }
                 key={title || 'introduction'}
               >
@@ -151,7 +159,56 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )
           })}
         </div>
+        <nav
+          aria-label='Article navigation'
+          className='mt-16 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
+        >
+          <div>
+            {olderPost ? (
+              <Link
+                className='block h-full border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-cyan-400/60'
+                href={articleHref(olderPost.slug)}
+              >
+                <span className='font-mono text-[10px] uppercase tracking-widest text-cyan-400'>
+                  ← Previous article
+                </span>
+                <strong className='mt-3 block text-lg leading-6'>
+                  {olderPost.title}
+                </strong>
+              </Link>
+            ) : null}
+          </div>
+          <div>
+            {newerPost ? (
+              <Link
+                className='block h-full border border-white/10 bg-white/[0.03] p-5 text-right transition-colors hover:border-cyan-400/60'
+                href={articleHref(newerPost.slug)}
+              >
+                <span className='font-mono text-[10px] uppercase tracking-widest text-cyan-400'>
+                  Next article →
+                </span>
+                <strong className='mt-3 block text-lg leading-6'>
+                  {newerPost.title}
+                </strong>
+              </Link>
+            ) : null}
+          </div>
+        </nav>
       </article>
+      {recommendation ? (
+        <ArticleRecommendation
+          description={recommendation.description}
+          href={articleHref(recommendation.slug)}
+          label='Continue exploring'
+          readLabel='Read next'
+          title={recommendation.title}
+        />
+      ) : null}
     </main>
   )
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  return <BlogPostContent slug={slug} />
 }
