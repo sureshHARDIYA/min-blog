@@ -30,7 +30,7 @@ export function SecurityContent() {
         <p className='mt-8 max-w-3xl text-xl font-light leading-8 text-white/75 md:text-2xl md:leading-9'>{text.intro}</p>
         <div className='mt-10 flex flex-wrap gap-4'>
           <a className='bg-[#00FF41] px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-[#0C0C0C] hover:bg-white' href='mailto:itsmeskm99@gmail.com?subject=Application%20security%20collaboration'>{text.discuss}</a>
-          <Link className='border border-white/20 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest hover:border-[#00FF41] hover:text-[#00FF41]' href='/blogs'>{text.notes}</Link>
+          <Link className='border border-white/20 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest hover:border-[#00FF41] hover:text-[#00FF41]' href='/blog/the-api-knew-who-i-was-authorization'>{text.notes}</Link>
         </div>
       </div></section>
 
