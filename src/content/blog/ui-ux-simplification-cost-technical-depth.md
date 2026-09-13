@@ -1,6 +1,8 @@
 ---
 title: "UI/UX Simplification Has a Cost: The Technical Depth Behind a Simple Screen"
 description: "A principal architect's guide to the hidden state, security, reliability, and service-boundary costs behind apparently simple web application experiences."
+seoTitle: "The Hidden Technical Cost of Simple UI/UX"
+seoDescription: "How apparently simple UI/UX moves complexity into state, authorization, concurrency, failure recovery and service boundaries—and how to design for it."
 date: "2026-09-09"
 ---
 
@@ -601,6 +603,12 @@ Three principles summarize the approach:
 UI/UX simplification always has a cost. Good architecture does not eliminate that cost. It makes the cost visible, places it behind sound boundaries, and ensures that the resulting experience remains simple when the network is slow, the token expires, two people edit at once, a dependency fails, or AI-generated code meets the untidy world.
 
 That is technical depth: not more technology, but more truth in the design.
+
+## Continue exploring
+
+- [My application security practice and working method](/security)
+- [Why authentication is not enough for API authorization](/blog/the-api-knew-who-i-was-authorization)
+- [A practical weekly AppSec brief](/blog/appsec-2026-09-07)
 
 ## Further reading
 
