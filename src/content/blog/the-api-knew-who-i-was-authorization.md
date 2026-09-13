@@ -2,7 +2,7 @@
 title: "The API Knew Who I Was, but Not What I Was Allowed to Touch"
 description: "A practical AppSec story about broken object-level authorization, tenant isolation, Microsoft Entra ID, FastAPI, Rust, PostgreSQL, and the evidence a secure API should leave behind."
 seoTitle: "API Authorization: Authentication Is Not Enough"
-seoDescription: "A practical guide to broken object-level authorization, tenant isolation, server and the evidence a secure API should leave behind."
+seoDescription: "See how a valid identity can still cross tenant boundaries, where object authorization fails, and what tests prove a secure API blocks the request."
 date: "2026-09-11"
 ---
 
