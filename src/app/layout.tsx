@@ -9,9 +9,9 @@ const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 const siteUrl = 'https://www.skmukhiya.com.np'
 const personId = `${siteUrl}/#person`
 const websiteId = `${siteUrl}/#website`
-const siteTitle = 'Suresh Kumar Mukhiya, PhD | Tech Lead and Software Architect'
+const siteTitle = 'Suresh Kumar Mukhiya, PhD | AppSec & Architecture'
 const siteDescription =
-  'Writing and project work from Suresh Kumar Mukhiya, a Tech Lead in Bergen working across software architecture, application security, cloud systems and AI.'
+  'Cybersecurity and software architecture field notes from Suresh Kumar Mukhiya, a Tech Lead in Bergen working with secure APIs, cloud systems and AI.'
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -63,7 +63,7 @@ const websiteJsonLd = {
   name: 'Suresh Kumar Mukhiya, PhD',
   url: siteUrl,
   description: siteDescription,
-  inLanguage: ['en', 'nb'],
+  inLanguage: 'en',
   author: {
     '@id': personId
   }

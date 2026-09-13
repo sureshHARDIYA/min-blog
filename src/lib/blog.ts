@@ -11,6 +11,8 @@ export interface BlogPost {
   slug: string;
   title: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
   date: string;
   content: string;
 }
@@ -78,6 +80,8 @@ export async function getPost(slug: string): Promise<BlogPost | null> {
       slug,
       title: metadata.title,
       description: metadata.description,
+      seoTitle: metadata.seoTitle || undefined,
+      seoDescription: metadata.seoDescription || undefined,
       date: metadata.date,
       content,
     };

@@ -18,8 +18,8 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 const TAB_META: Record<NavTab, { title: string; description: string }> = {
   architecture: {
-    title: 'Suresh Kumar Mukhiya, PhD | System Architect, Cybersecurity & AI',
-    description: 'Suresh Kumar Mukhiya, PhD: adaptive systems, scalable architecture, cybersecurity, AI, and technical leadership in Norway.',
+    title: 'Suresh Kumar Mukhiya, PhD | AppSec & Architecture',
+    description: 'Cybersecurity and software architecture field notes from Suresh Kumar Mukhiya, a Tech Lead in Bergen working with secure APIs, cloud systems and AI.',
   },
   trajectory: {
     title: 'Trajectory | Suresh Kumar Mukhiya, PhD',
