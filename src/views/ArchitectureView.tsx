@@ -40,7 +40,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
         {/* Hero and engineering evidence carousel */}
         <SlowCarousel
           ariaLabel='Professional introduction and engineering evidence'
-          initialIndex={1}
+          initialIndex={0}
           intervalMs={12000}
           slides={[
             {
