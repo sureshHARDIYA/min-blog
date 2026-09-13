@@ -1,6 +1,8 @@
 ---
 title: "The API Knew Who I Was, but Not What I Was Allowed to Touch"
 description: "A practical AppSec story about broken object-level authorization, tenant isolation, Microsoft Entra ID, FastAPI, Rust, PostgreSQL, and the evidence a secure API should leave behind."
+seoTitle: "API Authorization: Authentication Is Not Enough"
+seoDescription: "A practical guide to broken object-level authorization, tenant isolation, server and the evidence a secure API should leave behind."
 date: "2026-09-11"
 ---
 
@@ -561,6 +563,12 @@ The lesson from invoice `842` is not merely â€œremember to add a tenant filter.â
 The API knew who Alice was.
 
 It also needed to know what she was allowed to touch.
+
+## Continue exploring
+
+- [My application security practice and working method](/security)
+- [A practical weekly AppSec brief](/blog/appsec-2026-09-07)
+- [The hidden technical cost behind simple UI/UX](/blog/ui-ux-simplification-cost-technical-depth)
 
 ## Further reading
 
