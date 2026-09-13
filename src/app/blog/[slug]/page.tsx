@@ -65,7 +65,7 @@ export async function generateMetadata({
   const seoDescription = post.seoDescription ?? post.description
 
   return {
-    title: seoTitle,
+    title: { absolute: seoTitle },
     description: seoDescription,
     authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
     alternates: { canonical: url },
