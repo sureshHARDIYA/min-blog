@@ -61,24 +61,26 @@ export async function generateMetadata({
   if (!post) return {}
 
   const url = `${siteUrl}/blog/${post.slug}`
+  const seoTitle = post.seoTitle ?? post.title
+  const seoDescription = post.seoDescription ?? post.description
 
   return {
-    title: post.title,
-    description: post.description,
+    title: seoTitle,
+    description: seoDescription,
     authors: [{ name: 'Suresh Kumar Mukhiya', url: siteUrl }],
     alternates: { canonical: url },
     openGraph: {
       type: 'article',
       url,
-      title: post.title,
-      description: post.description,
+      title: seoTitle,
+      description: seoDescription,
       publishedTime: post.date,
       authors: [siteUrl]
     },
     twitter: {
       card: 'summary',
-      title: post.title,
-      description: post.description
+      title: seoTitle,
+      description: seoDescription
     }
   }
 }
