@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown, { type Components } from 'react-markdown'
 
 import { BlogCode, BlogList, BlogListItem } from '../../../components/BlogCode'
+import { AppSecSubscribeForm } from '../../../components/AppSecSubscribeForm'
 import { ArticleRecommendation } from '../../../components/ArticleRecommendation'
 import { getAllPosts, getPost } from '../../../lib/blog'
 
@@ -12,8 +13,6 @@ interface BlogPostPageProps {
 }
 
 const siteUrl = 'https://www.skmukhiya.com.np'
-const appSecSignupUrl =
-  'https://c073d8d8.sibforms.com/serve/MUIFAMIAQwwo1-91P5eaP1hpe1U4hufEDLms-syqqX9AMdMzjCo_QWtu5CGZKIYZAoNPxUwQqxe-oSz8CLXMST06LqkubO-9Yjuz_rcdRfs2z5EunEBMMLxSnwe9zXS54nPGOTkhYlc8J4S6AN-mnpl1esZ0ZoDBA6yV1JUR0S4jNXLElPmqfPthLDIukv_Ds9nB0NMb8K07JxOk-g=='
 
 const MARKDOWN_COMPONENTS: Components = {
   h2: ({ children }) => <h2>{children}</h2>,
@@ -182,41 +181,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
               developments for developers, Tech Leads and architects—delivered
               weekly.
             </p>
-            <form
-              action={appSecSignupUrl}
-              className='mt-6 flex max-w-2xl flex-col gap-3 sm:flex-row'
-              method='POST'
-              target='_blank'
-            >
-              <label className='sr-only' htmlFor='appsec-subscribe-email'>
-                Email address
-              </label>
-              <input
-                autoComplete='email'
-                className='min-h-12 flex-1 border border-white/20 bg-[#0C0C0C] px-4 text-base text-white outline-none placeholder:text-white/40 focus:border-cyan-400'
-                id='appsec-subscribe-email'
-                name='EMAIL'
-                placeholder='you@example.com'
-                required
-                type='email'
-              />
-              <input
-                aria-hidden='true'
-                autoComplete='off'
-                className='hidden'
-                name='email_address_check'
-                tabIndex={-1}
-                type='text'
-              />
-              <input name='locale' type='hidden' value='en' />
-              <input name='html_type' type='hidden' value='simple' />
-              <button
-                className='min-h-12 bg-cyan-400 px-5 py-3 font-semibold text-[#071013] transition-colors hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300'
-                type='submit'
-              >
-                Subscribe free →
-              </button>
-            </form>
+            <AppSecSubscribeForm />
             <p className='mt-4 text-sm text-white/50'>
               Subscription and confirmation are handled securely by Brevo.
               Unsubscribe at any time.
