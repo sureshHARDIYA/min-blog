@@ -12,6 +12,8 @@ interface BlogPostPageProps {
 }
 
 const siteUrl = 'https://www.skmukhiya.com.np'
+const appSecSignupUrl =
+  'https://c073d8d8.sibforms.com/serve/MUIFAMIAQwwo1-91P5eaP1hpe1U4hufEDLms-syqqX9AMdMzjCo_QWtu5CGZKIYZAoNPxUwQqxe-oSz8CLXMST06LqkubO-9Yjuz_rcdRfs2z5EunEBMMLxSnwe9zXS54nPGOTkhYlc8J4S6AN-mnpl1esZ0ZoDBA6yV1JUR0S4jNXLElPmqfPthLDIukv_Ds9nB0NMb8K07JxOk-g=='
 
 const MARKDOWN_COMPONENTS: Components = {
   h2: ({ children }) => <h2>{children}</h2>,
@@ -161,6 +163,39 @@ async function BlogPostContent({ slug }: { slug: string }) {
             )
           })}
         </div>
+        {post.slug.startsWith('appsec-') ? (
+          <aside
+            aria-labelledby='appsec-subscribe-title'
+            className='mx-auto mt-16 max-w-5xl border border-cyan-400/30 bg-cyan-400/[0.06] p-6 sm:p-8'
+          >
+            <p className='font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400'>
+              Weekly engineering signal
+            </p>
+            <h2
+              className='mt-3 text-2xl font-bold tracking-tight sm:text-3xl'
+              id='appsec-subscribe-title'
+            >
+              Get the Monday AppSec Brief
+            </h2>
+            <p className='mt-3 max-w-3xl text-base leading-7 text-white/70 sm:text-lg'>
+              Consequential application-security and software supply-chain
+              developments for developers, Tech Leads and architects—delivered
+              weekly.
+            </p>
+            <a
+              className='mt-6 inline-flex min-h-11 items-center justify-center bg-cyan-400 px-5 py-3 font-semibold text-[#071013] transition-colors hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300'
+              href={appSecSignupUrl}
+              rel='noreferrer'
+              target='_blank'
+            >
+              Subscribe free →
+            </a>
+            <p className='mt-4 text-sm text-white/50'>
+              Subscription and confirmation are handled securely by Brevo.
+              Unsubscribe at any time.
+            </p>
+          </aside>
+        ) : null}
         <nav
           aria-label='Article navigation'
           className='mt-16 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
