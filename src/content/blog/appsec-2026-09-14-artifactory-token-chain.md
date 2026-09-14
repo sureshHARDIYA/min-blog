@@ -14,12 +14,29 @@ The important engineering decision this week is to treat an exposed or affected 
 
 ## Risk at a glance
 
-| Priority | Issue | Affected technology and versions | Exploitation or evidence | Suggested owner |
-| --- | --- | --- | --- | --- |
-| Act now | Artifactory token disclosure and privilege escalation | CVE-2026-42018 across affected 7.x branches; CVE-2026-42016 before 7.133.11 | CISA KEV, 11 September; active exploitation confirmed | Platform / DevSecOps |
-| Act now if present | Malicious `greentic-setup` release | Exactly `1.3.1-dev.34027618345`, including transitively through four Greentic crates | RustSec; malicious package removed after about 27 hours; no known downloads | Rust service owner / endpoint security |
-| Watch | ExLlamaV3 CUDA out-of-bounds access | `exllamav3_ext` before the fix merged in PR 310; no fixed release number stated by CERT/CC | CERT/CC VU#369611; crash/instability demonstrated, not active exploitation | AI platform owner |
-| No action | Core FastAPI, React/Next.js, PostgreSQL, SQL Server, Azure/Entra, Dependency-Track and CycloneDX | No consequential material update identified since the previous brief | Primary-source review through 14 September | Relevant service owners |
+### Act now — Artifactory token flaws
+
+**Affected:** CVE-2026-42018 across affected 7.x branches; CVE-2026-42016 before 7.133.11  
+**Evidence:** CISA KEV, 11 September; active exploitation confirmed  
+**Owner:** Platform / DevSecOps
+
+### Act now if present — malicious Rust crate
+
+**Affected:** `greentic-setup 1.3.1-dev.34027618345`, including transitively through four Greentic crates  
+**Evidence:** RustSec; package removed after about 27 hours; no known downloads  
+**Owner:** Rust service owner / endpoint security
+
+### Watch — ExLlamaV3 CUDA out-of-bounds access
+
+**Affected:** `exllamav3_ext` before the fix merged in PR 310; CERT/CC states no fixed release number  
+**Evidence:** CERT/CC VU#369611; crash or instability demonstrated, with no reported active exploitation  
+**Owner:** AI platform owner
+
+### No action — no consequential core-stack update
+
+**Affected:** FastAPI, React/Next.js, PostgreSQL, SQL Server, Azure/Entra, Dependency-Track and CycloneDX  
+**Evidence:** No consequential material update identified in the primary-source review through 14 September  
+**Owner:** Relevant service owners
 
 ## Significant developments
 
@@ -130,18 +147,3 @@ Begin in read-only assessment mode for <REPOSITORY> in <DEPLOYMENT_ENVIRONMENT>.
 - CERT Coordination Center — [VU#369611 / CVE-2026-84286](https://www.kb.cert.org/vuls/id/369611), 11 September 2026.
 - OWASP Dependency-Track — [Release 5.1.0](https://github.com/DependencyTrack/dependency-track/releases/tag/5.1.0), 27 August 2026.
 
-## LinkedIn draft
-
-Two more JFrog Artifactory token flaws are now confirmed exploited. For engineering leaders, that turns an upgrade ticket into a supply-chain investigation: patching the repository does not prove that artifacts distributed before the fix are trustworthy.
-
-This week's AppSec brief focuses on three practical checks:
-
-1. Inventory and investigate affected Artifactory instances, tokens and promoted artifacts.
-2. Search Rust lockfiles and caches for the single malicious `greentic-setup` release.
-3. Isolate ExLlamaV3 workers where untrusted inputs can reach CUDA dispatch.
-
-The brief includes a focused developer checklist and a read-only prompt that teams can use with their preferred coding agent.
-
-https://www.skmukhiya.com.np/blog/appsec-2026-09-14-artifactory-token-chain
-
-#AppSec #SoftwareSupplyChain #DevSecOps #Rust #AISecurity
