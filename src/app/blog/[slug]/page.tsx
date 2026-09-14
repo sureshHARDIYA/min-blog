@@ -183,8 +183,9 @@ async function BlogPostContent({ slug }: { slug: string }) {
             </p>
             <AppSecSubscribeForm />
             <p className='mt-4 text-sm text-white/50'>
-              Subscription and confirmation are handled securely by Brevo.
-              Unsubscribe at any time.
+              You will receive only the Monday AppSec Brief—no promotions or
+              unrelated emails. Subscription confirmation is handled by Brevo,
+              and you can unsubscribe at any time.
             </p>
           </aside>
         ) : null}

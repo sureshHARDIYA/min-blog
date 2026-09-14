@@ -33,7 +33,7 @@ export function AppSecSubscribeForm() {
       form.reset()
       setStatus('success')
       setMessage(
-        result.message || 'You are subscribed. Please check your inbox.'
+        result.message || 'One last step: check your email and click the confirmation link.'
       )
     } catch (error) {
       setStatus('error')

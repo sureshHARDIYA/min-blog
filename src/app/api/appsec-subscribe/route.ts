@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
   if (company) {
     return NextResponse.json({
-      message: 'You are subscribed. Please check your inbox.',
+      message: 'One last step: check your email and click the confirmation link.',
       success: true
     })
   }
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-      message: result?.message || 'You are subscribed. Please check your inbox.',
+      message: 'One last step: check your email and click the confirmation link.',
       success: true
     })
   } catch {
