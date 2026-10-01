@@ -1,41 +1,93 @@
 @import "tailwindcss";
 
+:root {
+  
+  --font-heading: 'Century Gothic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --text-on-dark: #fff;
+  --text-on-dark-muted: #ffffffb8;
+  --text-on-light: #000;
+  --text-on-light-muted: #000000a1;
+}
+
 @layer base {
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0C0C0C;
-    color: #F5F5F5;
+    font-family: var(--font-body);
+    background-color: #0c0c0c;
+    color: var(--text-on-dark);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
   }
 }
 
 .font-display {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-heading);
+  font-size: clamp(3.0625rem, -1.9375rem + 7.8125vw, 7.4375rem);
   font-weight: 900;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .font-headline-lg {
-  font-family: 'Inter', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-size: clamp(2.3125rem, -0.5089285714rem + 4.408482vw, 4.78125rem);
+  font-weight: 900;
   letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .font-headline-md {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: clamp(1.3125rem, 0.5625rem + 1.171875vw, 1.96875rem);
+  font-weight: 900;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .font-code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
 .font-body-md {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.7142857143rem + 0.446429vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.5;
 }
 
 .font-body-lg {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
+  font-size: clamp(1.15625rem, 0.6919642857rem + 0.725446vw, 1.5625rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.5;
+}
+
+.font-body-sm {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 0.7321428571rem + 0.223214vw, 1rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.5;
 }
 
 .dot-grid {
