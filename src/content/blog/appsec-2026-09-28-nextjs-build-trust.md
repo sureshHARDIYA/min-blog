@@ -39,7 +39,7 @@ The [release announcement](https://nextjs.org/blog/nextjs-security-update-septem
 
 **What changed and evidence.** CISA’s [23 September catalog change](https://github.com/cisagov/kev-data/commit/4a8ab2f71f71c57148b9bdbd3a59d1588c743dc6) changes CVE-2026-63077 from unknown to known ransomware use. This is an escalation in exploitation evidence, not a newly discovered flaw.
 
-**Scope and response.** [JetBrains’ advisory](https://blog.jetbrains.com/teamcity/2026/07/cve-2026-63077/) identifies unauthenticated command execution through the agent polling protocol. Fixed On-Premises versions include 2025.11.7 and 2026.1.3. TeamCity Cloud customers require no action for this vulnerability. A vendor patch plugin is available for older supported installations when an upgrade is blocked.
+**Scope and response.** The vendor advisory identifies unauthenticated command execution through the agent polling protocol. Fixed On-Premises versions include 2025.11.7 and 2026.1.3. TeamCity Cloud customers require no action for this vulnerability. A vendor patch plugin is available for older supported installations when an upgrade is blocked.
 
 **Why it matters and exposure check.** Ask who operates the build server, record its exact patch state and historical network exposure, and identify credentials and artifacts it could access. An affected build system can undermine otherwise clean application dependencies.
 
@@ -140,7 +140,6 @@ Propose minimal remediations with verification commands/tests, without executing
 - Next.js, 22 September 2026: [ImageResponse advisory](https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j) and [release announcement](https://nextjs.org/blog/nextjs-security-update-september-22-2026).
 - Next.js, 23 September 2026: [30 September advance notice](https://nextjs.org/blog/upcoming-nextjs-security-release-september-2026).
 - CISA, 23 September 2026: [TeamCity ransomware-status change](https://github.com/cisagov/kev-data/commit/4a8ab2f71f71c57148b9bdbd3a59d1588c743dc6).
-- JetBrains, 27 July 2026, updated 7 August: [CVE-2026-63077 advisory](https://blog.jetbrains.com/teamcity/2026/07/cve-2026-63077/).
 - CISA, 24 September 2026: [WSO2 KEV addition](https://github.com/cisagov/kev-data/commit/203fa4633af39c6944608e30984996f04ccc4541). WSO2, publication date not verified: [vendor advisory and update matrix](https://security.docs.wso2.com/en/latest/security-announcements/security-advisories/2026/WSO2-2026-5328/).
 - Microsoft, 22 September 2026: [EvilTokens disruption](https://blogs.microsoft.com/on-the-issues/2026/09/22/disrupting-eviltokens-the-ai-chatbot-built-for-cybercrime/) and [technical analysis](https://www.microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-code-phishing/).
 - RustSec, 23 September 2026: [librsvg advisory](https://rustsec.org/advisories/RUSTSEC-2026-0305.html).

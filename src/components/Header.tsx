@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       <div className='flex justify-between items-center px-6 py-4 max-w-[1120px] mx-auto'>
         <button
           onClick={() => handleNavClick('architecture')}
-          className={`font-black text-lg md:text-xl tracking-tighter uppercase text-left transition-colors cursor-pointer flex flex-col items-start ${
+          className={`font-headline-md uppercase text-left transition-colors cursor-pointer flex flex-col items-start ${
             theme === 'light'
               ? 'text-slate-900 hover:text-[#008822]'
               : 'text-[#F5F5F5] hover:text-[#00FF41]'
