@@ -63,7 +63,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                 <CyclingText text={t.hero.tag} />
               </span>
               <h1
-                className={`font-black text-4xl sm:text-5xl md:text-6xl leading-[0.95] tracking-tighter uppercase ${
+                className={`font-display uppercase ${
                   theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
                 }`}
               >
@@ -102,7 +102,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
               }`}
             >
               <p
-                className={`font-body-lg text-lg leading-relaxed font-light ${
+                className={`font-body-lg ${
                   theme === 'light' ? 'text-slate-700' : 'text-[#F5F5F5]/80'
                 }`}
               >
@@ -178,7 +178,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
               {t.hero.directive}
             </span>
             <h2
-              className={`font-black text-2xl md:text-3xl uppercase tracking-tight ${
+              className={`font-headline-lg uppercase ${
                 theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
               }`}
             >
@@ -206,7 +206,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                 {t.hero.companyTag}
               </span>
               <h3
-                className={`font-black text-2xl mb-3 tracking-tight ${
+                className={`font-headline-md mb-3 ${
                   theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
                 }`}
               >
@@ -239,7 +239,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                 {t.hero.philosophyTag}
               </span>
               <h2
-                className={`font-black text-2xl md:text-3xl uppercase tracking-tight ${
+                className={`font-headline-lg uppercase ${
                   theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
                 }`}
               >
@@ -293,7 +293,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                     {item.number}
                   </div>
                   <h3
-                    className={`font-black text-xl marker-line pl-6 tracking-tight transition-colors ${
+                    className={`font-headline-md marker-line pl-6 transition-colors ${
                       theme === 'light'
                         ? 'text-slate-900 group-hover:text-[#008822]'
                         : 'text-[#F5F5F5] group-hover:text-[#00FF41]'
@@ -302,7 +302,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                     {item.title}
                   </h3>
                   <p
-                    className={`font-body-md text-xs mt-2 line-clamp-2 ${
+                    className={`font-body-sm mt-2 line-clamp-2 ${
                       theme === 'light' ? 'text-slate-600' : 'text-[#F5F5F5]/60'
                     }`}
                   >
@@ -356,14 +356,14 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                 PHILOSOPHY {selectedPhilosophy.number}
               </span>
               <h3
-                className={`font-black text-2xl mb-3 tracking-tight ${
+                className={`font-headline-md mb-3 ${
                   theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
                 }`}
               >
                 {selectedPhilosophy.title}
               </h3>
               <p
-                className={`font-body-md text-sm mb-4 leading-relaxed ${
+                className={`font-body-md mb-4 leading-relaxed ${
                   theme === 'light' ? 'text-slate-700' : 'text-[#F5F5F5]/80'
                 }`}
               >
@@ -387,7 +387,7 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
                   {selectedPhilosophy.details.map((detail, idx) => (
                     <li
                       key={idx}
-                      className={`font-body-md text-xs flex items-start gap-2 ${
+                      className={`font-body-sm flex items-start gap-2 ${
                         theme === 'light'
                           ? 'text-slate-800'
                           : 'text-[#F5F5F5]/90'
