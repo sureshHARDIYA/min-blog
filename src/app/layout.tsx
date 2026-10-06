@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import Script from 'next/script'
 import { AnalyticsConsent } from '../components/AnalyticsConsent'
 import { LanguageProvider } from '../i18n/LanguageContext'
@@ -122,11 +123,15 @@ export const metadata: Metadata = {
   manifest: '/manifest.json'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: {
   children: React.ReactNode
 }) {
+  // Reading the request headers keeps the route dynamic so Next.js can apply
+  // the per-request CSP nonce generated in proxy.ts to framework scripts.
+  await headers()
+
   return (
     <html lang='en' suppressHydrationWarning>
       <body className='bg-[#0C0C0C] text-white antialiased'>

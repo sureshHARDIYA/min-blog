@@ -40,7 +40,7 @@
 
 .font-display {
   font-family: var(--font-heading);
-  font-size: clamp(3.0625rem, -1.9375rem + 7.8125vw, 7.4375rem);
+  font-size: clamp(1.8375rem, -1.1625rem + 4.6875vw, 4.4625rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.1;
