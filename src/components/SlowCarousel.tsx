@@ -53,6 +53,9 @@ export const SlowCarousel: React.FC<SlowCarouselProps> = ({
         if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false)
       }}
       onFocus={() => setPaused(true)}
+      onPointerDown={() => setPaused(true)}
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
     >
       <div>
         <AnimatePresence initial={false} mode='wait'>

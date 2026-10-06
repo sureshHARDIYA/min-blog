@@ -7,6 +7,7 @@ import { useTheme } from '../context/ThemeContext'
 import { HeroPlayer } from '../components/HeroPlayer'
 import { CyclingText } from '../components/CyclingText'
 import { GitHubTechnologyMap } from '../components/GitHubTechnologyMap'
+import { SecurityEvidence } from '../components/SecurityEvidence'
 import { SlowCarousel } from '../components/SlowCarousel'
 import {
   HomeBlogGrid,
@@ -166,6 +167,11 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
               id: 'github-evidence',
               label: 'GitHub engineering evidence',
               content: <GitHubTechnologyMap compact />
+            },
+            {
+              id: 'security-evidence',
+              label: 'Application security evidence',
+              content: <SecurityEvidence />
             }
           ]}
         />
