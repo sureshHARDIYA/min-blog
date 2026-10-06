@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTrajectory } from '../services/api';
 import { TrajectoryItem } from '../types';
@@ -6,7 +6,6 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
 export const TrajectoryView: React.FC = () => {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const { t } = useLanguage();
   const { theme } = useTheme();
 
@@ -15,13 +14,6 @@ export const TrajectoryView: React.FC = () => {
     queryFn: fetchTrajectory,
   });
 
-  const allTags = Array.from(
-    new Set(trajectoryList?.flatMap((item) => item.tags) || [])
-  );
-
-  const filteredItems = selectedTag
-    ? trajectoryList?.filter((item) => item.tags.includes(selectedTag))
-    : trajectoryList;
 
   return (
     <div className="pt-24 pb-16 px-6 max-w-[1120px] mx-auto w-full min-h-[calc(100vh-80px)]">
@@ -29,7 +21,7 @@ export const TrajectoryView: React.FC = () => {
       <section className={`mt-8 mb-12 border-b pb-8 ${
         theme === 'light' ? 'border-slate-300' : 'border-white/10'
       }`}>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="max-w-3xl">
           <div>
             <span className={`font-mono text-xs uppercase tracking-[0.25em] font-bold block mb-1 ${
               theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
@@ -64,45 +56,6 @@ export const TrajectoryView: React.FC = () => {
             </div>
           </div>
 
-          {/* Filter Tags */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className={`font-code text-xs uppercase mr-2 font-bold ${
-              theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/50'
-            }`}>
-              {t.trajectory.domainFilter}
-            </span>
-            <button
-              onClick={() => setSelectedTag(null)}
-              className={`font-code text-xs px-3 py-1 rounded-xs border transition-colors cursor-pointer uppercase font-bold tracking-wider ${
-                selectedTag === null
-                  ? theme === 'light'
-                    ? 'bg-[#008822] text-white border-[#008822]'
-                    : 'bg-[#00FF41] text-[#0C0C0C] border-[#00FF41]'
-                  : theme === 'light'
-                    ? 'bg-slate-100 text-slate-700 border-slate-300 hover:border-[#008822]'
-                    : 'bg-[#141414] text-[#F5F5F5]/70 border-white/10 hover:border-[#00FF41]/50 hover:text-[#F5F5F5]'
-              }`}
-            >
-              {t.trajectory.all}
-            </button>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                className={`font-code text-xs px-3 py-1 rounded-xs border transition-colors cursor-pointer uppercase font-bold tracking-wider ${
-                  selectedTag === tag
-                    ? theme === 'light'
-                      ? 'bg-[#008822] text-white border-[#008822]'
-                      : 'bg-[#00FF41] text-[#0C0C0C] border-[#00FF41]'
-                    : theme === 'light'
-                      ? 'bg-slate-100 text-slate-700 border-slate-300 hover:border-[#008822]'
-                      : 'bg-[#141414] text-[#F5F5F5]/70 border-white/10 hover:border-[#00FF41]/50 hover:text-[#F5F5F5]'
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -122,7 +75,7 @@ export const TrajectoryView: React.FC = () => {
             ))}
           </div>
         ) : (
-          filteredItems?.map((item: TrajectoryItem) => (
+          trajectoryList?.map((item: TrajectoryItem) => (
             <React.Fragment key={item.id}>
               {/* Timeline Period & Company Column */}
               <div className="col-span-1 md:col-span-3 text-left md:text-right md:pr-8 relative">
