@@ -33,7 +33,7 @@ const evidenceLinks = [
     href: '/blog/the-api-knew-who-i-was-authorization'
   },
   {
-    label: 'Latest AppSec brief',
+    label: 'Featured AppSec brief',
     title: 'Cache and sandbox boundaries',
     href: '/blog/appsec-2026-10-05-cache-and-sandbox-boundaries'
   },
