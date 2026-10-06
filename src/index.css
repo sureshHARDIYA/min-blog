@@ -48,7 +48,7 @@
 
 .font-headline-lg {
   font-family: var(--font-heading);
-  font-size: clamp(2.3125rem, -0.5089285714rem + 4.408482vw, 4.78125rem);
+  font-size: clamp(1.3875rem, -0.3053571428rem + 2.6450892vw, 2.86875rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   line-height: 1.1;
