@@ -126,7 +126,6 @@ const MainLayout: React.FC<AppProps> = ({
 
 export default function App({
   initialTab = 'architecture',
-  latestPost,
   latestPosts = [],
 }: AppProps) {
   return (
