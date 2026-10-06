@@ -48,14 +48,23 @@ const queryClient = new QueryClient({
   },
 });
 
+interface HomeBlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
 interface AppProps {
   initialTab?: NavTab;
   latestPost?: LatestPostSummary;
+  latestPosts?: HomeBlogPost[];
 }
 
 const MainLayout: React.FC<AppProps> = ({
   initialTab = 'architecture',
   latestPost,
+  latestPosts = [],
 }) => {
   const [activeTab, setActiveTab] = useState<NavTab>(initialTab);
   const { theme } = useTheme();
@@ -82,7 +91,12 @@ const MainLayout: React.FC<AppProps> = ({
   const renderCurrentView = () => {
     switch (activeTab) {
       case 'architecture':
-        return <ArchitectureView setActiveTab={setActiveTab} />;
+        return (
+          <ArchitectureView
+            latestPosts={latestPosts}
+            setActiveTab={setActiveTab}
+          />
+        );
       case 'trajectory':
         return <TrajectoryView />;
       case 'research':
@@ -92,7 +106,12 @@ const MainLayout: React.FC<AppProps> = ({
       case 'connect':
         return <ConnectView />;
       default:
-        return <ArchitectureView setActiveTab={setActiveTab} />;
+        return (
+          <ArchitectureView
+            latestPosts={latestPosts}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 
@@ -119,11 +138,16 @@ const MainLayout: React.FC<AppProps> = ({
 export default function App({
   initialTab = 'architecture',
   latestPost,
+  latestPosts = [],
 }: AppProps) {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <MainLayout initialTab={initialTab} latestPost={latestPost} />
+        <MainLayout
+          initialTab={initialTab}
+          latestPost={latestPost}
+          latestPosts={latestPosts}
+        />
       </QueryClientProvider>
     </ThemeProvider>
   );

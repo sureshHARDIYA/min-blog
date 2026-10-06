@@ -8,6 +8,10 @@ import { HeroPlayer } from '../components/HeroPlayer'
 import { CyclingText } from '../components/CyclingText'
 import { GitHubTechnologyMap } from '../components/GitHubTechnologyMap'
 import { SlowCarousel } from '../components/SlowCarousel'
+import {
+  HomeBlogGrid,
+  HomeBlogPost
+} from '../components/HomeBlogGrid'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import {
   EASE_OUT_EXPO,
@@ -17,10 +21,12 @@ import {
 } from '../components/motion-primitives'
 
 interface ArchitectureViewProps {
+  latestPosts?: HomeBlogPost[]
   setActiveTab: (tab: NavTab) => void
 }
 
 export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
+  latestPosts = [],
   setActiveTab
 }) => {
   const [selectedPhilosophy, setSelectedPhilosophy] =
@@ -313,6 +319,8 @@ export const ArchitectureView: React.FC<ArchitectureViewProps> = ({
             </Stagger>
           )}
         </section>
+
+        {latestPosts.length > 0 ? <HomeBlogGrid posts={latestPosts} /> : null}
       </div>
 
       {/* Philosophy Details Modal */}
