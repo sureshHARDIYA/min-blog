@@ -16,21 +16,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const posts = await getAllPosts();
-  const [latestPost] = posts;
   const latestPosts = posts.slice(0, 6).map(({ content: _content, ...post }) => post);
 
-  return (
-    <App
-      latestPosts={latestPosts}
-      latestPost={
-        latestPost
-          ? {
-              slug: latestPost.slug,
-              title: latestPost.title,
-              date: latestPost.date,
-            }
-          : undefined
-      }
-    />
-  );
+  return <App latestPosts={latestPosts} />;
 }

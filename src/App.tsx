@@ -5,10 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getNavTabFromPath, NavTab } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import {
-  LatestPostBanner,
-  LatestPostSummary,
-} from './components/LatestPostBanner';
 import { ArchitectureView } from './views/ArchitectureView';
 import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
@@ -57,13 +53,11 @@ interface HomeBlogPost {
 
 interface AppProps {
   initialTab?: NavTab;
-  latestPost?: LatestPostSummary;
   latestPosts?: HomeBlogPost[];
 }
 
 const MainLayout: React.FC<AppProps> = ({
   initialTab = 'architecture',
-  latestPost,
   latestPosts = [],
 }) => {
   const [activeTab, setActiveTab] = useState<NavTab>(initialTab);
@@ -123,11 +117,6 @@ const MainLayout: React.FC<AppProps> = ({
     }`}>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="flex-grow pt-16 md:pt-20">
-        {activeTab === 'architecture' && latestPost ? (
-          <div className="pt-4 pb-6 md:pt-6 md:pb-12">
-            <LatestPostBanner post={latestPost} />
-          </div>
-        ) : null}
         {renderCurrentView()}
       </main>
       <Footer setActiveTab={setActiveTab} />
@@ -145,7 +134,6 @@ export default function App({
       <QueryClientProvider client={queryClient}>
         <MainLayout
           initialTab={initialTab}
-          latestPost={latestPost}
           latestPosts={latestPosts}
         />
       </QueryClientProvider>
