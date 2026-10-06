@@ -5,10 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getNavTabFromPath, NavTab } from './types';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import {
-  LatestPostBanner,
-  LatestPostSummary,
-} from './components/LatestPostBanner';
 import { ArchitectureView } from './views/ArchitectureView';
 import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
@@ -48,14 +44,21 @@ const queryClient = new QueryClient({
   },
 });
 
+interface HomeBlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
 interface AppProps {
   initialTab?: NavTab;
-  latestPost?: LatestPostSummary;
+  latestPosts?: HomeBlogPost[];
 }
 
 const MainLayout: React.FC<AppProps> = ({
   initialTab = 'architecture',
-  latestPost,
+  latestPosts = [],
 }) => {
   const [activeTab, setActiveTab] = useState<NavTab>(initialTab);
   const { theme } = useTheme();
@@ -82,7 +85,12 @@ const MainLayout: React.FC<AppProps> = ({
   const renderCurrentView = () => {
     switch (activeTab) {
       case 'architecture':
-        return <ArchitectureView setActiveTab={setActiveTab} />;
+        return (
+          <ArchitectureView
+            latestPosts={latestPosts}
+            setActiveTab={setActiveTab}
+          />
+        );
       case 'trajectory':
         return <TrajectoryView />;
       case 'research':
@@ -92,7 +100,12 @@ const MainLayout: React.FC<AppProps> = ({
       case 'connect':
         return <ConnectView />;
       default:
-        return <ArchitectureView setActiveTab={setActiveTab} />;
+        return (
+          <ArchitectureView
+            latestPosts={latestPosts}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 
@@ -104,11 +117,6 @@ const MainLayout: React.FC<AppProps> = ({
     }`}>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <main className="flex-grow pt-16 md:pt-20">
-        {activeTab === 'architecture' && latestPost ? (
-          <div className="pt-4 pb-6 md:pt-6 md:pb-12">
-            <LatestPostBanner post={latestPost} />
-          </div>
-        ) : null}
         {renderCurrentView()}
       </main>
       <Footer setActiveTab={setActiveTab} />
@@ -118,12 +126,15 @@ const MainLayout: React.FC<AppProps> = ({
 
 export default function App({
   initialTab = 'architecture',
-  latestPost,
+  latestPosts = [],
 }: AppProps) {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <MainLayout initialTab={initialTab} latestPost={latestPost} />
+        <MainLayout
+          initialTab={initialTab}
+          latestPosts={latestPosts}
+        />
       </QueryClientProvider>
     </ThemeProvider>
   );
