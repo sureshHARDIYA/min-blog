@@ -71,8 +71,8 @@ export function SecurityEvidence() {
         </header>
         <div>
           <p className={`text-base leading-7 md:text-lg ${muted}`}>
-            Practical security work connected to public analysis, architecture decisions
-            and repeatable engineering controls—not self-rated skill scores.
+            Public analysis, architecture decisions and repeatable engineering controls
+            showing how security is applied in practice.
           </p>
           <Link
             className={`mt-5 inline-flex items-center gap-2 font-code text-xs font-bold uppercase tracking-widest ${accent}`}
