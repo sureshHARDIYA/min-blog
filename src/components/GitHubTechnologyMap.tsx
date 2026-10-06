@@ -202,7 +202,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
   return (
     <section
       aria-labelledby="github-activity-title"
-      className={`${compact ? 'mb-0 p-5 md:p-6' : 'mb-14 p-6 md:p-8'} border bg-transparent ${theme === 'light' ? '[--chart-center:#F4F6F8] border-slate-300 text-slate-900' : '[--chart-center:#0C0C0C] border-white/10 text-[#F5F5F5]'}`}
+      className={`${compact ? 'mb-0 p-5 md:p-6' : 'mb-14 p-6 md:p-8'} bg-transparent ${theme === 'light' ? '[--chart-center:#F4F6F8] text-slate-900' : '[--chart-center:#0C0C0C] text-[#F5F5F5]'}`}
     >
       <h2 className="sr-only" id="github-activity-title">GitHub engineering activity</h2>
       <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
