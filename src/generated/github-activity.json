@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T12:14:17.981Z",
+  "generatedAt": "2026-10-12T13:06:46.269Z",
   "username": "sureshHARDIYA",
   "profile": {
     "name": "Suresh KUMAR Mukhiya",
@@ -11,17 +11,12 @@
   "publicOnly": false,
   "windowDays": 90,
   "repositoriesAnalyzed": 39,
-  "recentCommits": 268,
+  "recentCommits": 116,
   "activityWeeks": [
-    {
-      "start": "2026-07-13",
-      "label": "13 Jul",
-      "commits": 4
-    },
     {
       "start": "2026-07-20",
       "label": "20 Jul",
-      "commits": 1
+      "commits": 0
     },
     {
       "start": "2026-07-27",
@@ -31,27 +26,27 @@
     {
       "start": "2026-08-03",
       "label": "3 Aug",
-      "commits": 3
+      "commits": 0
     },
     {
       "start": "2026-08-10",
       "label": "10 Aug",
-      "commits": 82
+      "commits": 2
     },
     {
       "start": "2026-08-17",
       "label": "17 Aug",
-      "commits": 34
+      "commits": 0
     },
     {
       "start": "2026-08-24",
       "label": "24 Aug",
-      "commits": 3
+      "commits": 0
     },
     {
       "start": "2026-08-31",
       "label": "31 Aug",
-      "commits": 2
+      "commits": 0
     },
     {
       "start": "2026-09-07",
@@ -61,7 +56,7 @@
     {
       "start": "2026-09-14",
       "label": "14 Sept",
-      "commits": 106
+      "commits": 67
     },
     {
       "start": "2026-09-21",
@@ -76,7 +71,12 @@
     {
       "start": "2026-10-05",
       "label": "5 Oct",
-      "commits": 19
+      "commits": 17
+    },
+    {
+      "start": "2026-10-12",
+      "label": "12 Oct",
+      "commits": 16
     }
   ],
   "technologies": [
@@ -84,43 +84,43 @@
       "name": "JavaScript",
       "category": "Frontend",
       "repositories": 28,
-      "recentCommits": 161
+      "recentCommits": 115
     },
     {
       "name": "Node.js",
       "category": "Platform",
       "repositories": 28,
-      "recentCommits": 118
+      "recentCommits": 115
     },
     {
       "name": "CSS",
       "category": "Frontend",
       "repositories": 24,
-      "recentCommits": 121
+      "recentCommits": 115
     },
     {
       "name": "React",
       "category": "Frontend",
       "repositories": 24,
-      "recentCommits": 118
+      "recentCommits": 115
     },
     {
       "name": "TypeScript",
       "category": "Frontend",
       "repositories": 24,
-      "recentCommits": 106
+      "recentCommits": 103
     },
     {
       "name": "Tailwind CSS",
       "category": "Frontend",
       "repositories": 18,
-      "recentCommits": 101
+      "recentCommits": 103
     },
     {
       "name": "HTML",
       "category": "Frontend",
       "repositories": 15,
-      "recentCommits": 121
+      "recentCommits": 115
     },
     {
       "name": "Next.js",
@@ -132,13 +132,13 @@
       "name": "Shell",
       "category": "Platform",
       "repositories": 8,
-      "recentCommits": 150
+      "recentCommits": 1
     },
     {
       "name": "Python",
       "category": "Backend",
       "repositories": 5,
-      "recentCommits": 145
+      "recentCommits": 1
     },
     {
       "name": "Dockerfile",
@@ -147,26 +147,26 @@
       "recentCommits": 0
     },
     {
-      "name": "Pandas",
-      "category": "Data & AI",
-      "repositories": 1,
-      "recentCommits": 6
-    },
-    {
-      "name": "scikit-learn",
-      "category": "Data & AI",
-      "repositories": 1,
-      "recentCommits": 6
-    },
-    {
       "name": "Django",
       "category": "Backend",
       "repositories": 1,
       "recentCommits": 0
     },
     {
+      "name": "Pandas",
+      "category": "Data & AI",
+      "repositories": 1,
+      "recentCommits": 0
+    },
+    {
       "name": "PHP",
       "category": "Backend",
+      "repositories": 1,
+      "recentCommits": 0
+    },
+    {
+      "name": "scikit-learn",
+      "category": "Data & AI",
       "repositories": 1,
       "recentCommits": 0
     }
@@ -207,31 +207,31 @@
   ],
   "repositories": [
     {
+      "name": "Private personal work",
+      "url": "https://github.com/sureshHARDIYA",
+      "description": null,
+      "pushedAt": "2026-10-12T13:06:46.269Z",
+      "recentCommits": 13,
+      "repositoryCount": 24,
+      "languages": [
+        "JavaScript",
+        "HTML",
+        "TypeScript",
+        "SCSS"
+      ]
+    },
+    {
       "name": "Public personal work",
       "url": "https://github.com/sureshHARDIYA",
       "description": null,
-      "pushedAt": "2026-10-05T12:14:17.981Z",
-      "recentCommits": 107,
+      "pushedAt": "2026-10-12T13:06:46.269Z",
+      "recentCommits": 103,
       "repositoryCount": 15,
       "languages": [
         "TypeScript",
         "JavaScript",
         "CSS",
         "HTML"
-      ]
-    },
-    {
-      "name": "Private personal work",
-      "url": "https://github.com/sureshHARDIYA",
-      "description": null,
-      "pushedAt": "2026-10-05T12:14:17.981Z",
-      "recentCommits": 161,
-      "repositoryCount": 24,
-      "languages": [
-        "TypeScript",
-        "SCSS",
-        "CSS",
-        "JavaScript"
       ]
     }
   ],
