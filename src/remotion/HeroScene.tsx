@@ -124,7 +124,8 @@ export const HeroScene: React.FC<HeroSceneProps> = ({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            filter: 'grayscale(1) contrast(1.25)',
+            objectPosition: 'center 38%',
+            filter: 'grayscale(1) contrast(1.1)',
             opacity: 0.9,
             clipPath: `inset(0px 0px ${Math.max(0, height - revealY)}px 0px)`
           }}
