@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = () => {
           >
             {t.footer.networks}
           </span>
-          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-xs'>
+          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-[0.45rem] sm:text-[0.45rem]'>
             <a
               href='https://github.com/sureshHARDIYA'
               target='_blank'
@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>GitHub</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
@@ -97,7 +97,7 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>LinkedIn</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
@@ -112,7 +112,7 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>YouTube</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
@@ -127,7 +127,7 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>Google Scholar</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
@@ -142,7 +142,7 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>{t.footer.myTalks}</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
@@ -157,7 +157,22 @@ export const Footer: React.FC<FooterProps> = () => {
               }`}
             >
               <span>PhD Resources</span>
-              <span className='material-symbols-outlined text-xs'>
+              <span className='material-symbols-outlined text-[0.55rem]'>
+                north_east
+              </span>
+            </a>
+            <a
+              href='https://sureshhardiya.github.io/vulnintel/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+                theme === 'light'
+                  ? 'text-slate-700 hover:text-[#008822]'
+                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
+              }`}
+            >
+              <span>Security Notice Alert</span>
+              <span className='material-symbols-outlined text-[0.55rem]'>
                 north_east
               </span>
             </a>
