@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = () => {
           >
             {t.footer.networks}
           </span>
-          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-[0.45rem] sm:text-[0.45rem]'>
+          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-[16px]'>
             <a
               href='https://github.com/sureshHARDIYA'
               target='_blank'
