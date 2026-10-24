@@ -187,10 +187,10 @@ export const Footer: React.FC<FooterProps> = () => {
           >
             {t.footer.contact}
           </span>
-          <nav className='flex flex-col gap-2 font-body-md text-xs'>
+          <nav className='flex flex-col gap-2 font-body-md text-[16px]'>
             <a
               href='mailto:itsmeskm99@gmail.com'
-              className={`transition-colors duration-200 font-mono ${
+              className={`transition-colors duration-200 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-800 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/80 hover:text-[#00FF41]'
