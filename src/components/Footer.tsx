@@ -70,12 +70,12 @@ export const Footer: React.FC<FooterProps> = () => {
           >
             {t.footer.networks}
           </span>
-          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 font-body-md text-[16px]'>
+          <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 text-[16px]'>
             <a
               href='https://github.com/sureshHARDIYA'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -90,7 +90,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://www.linkedin.com/in/sureshhardiya/'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -105,7 +105,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://www.youtube.com/@SureshKUMARMukhiya'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -120,7 +120,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://scholar.google.com/citations?hl=en&view_op=list_works&gmla=AO4B3jvPGtKOD6tjKzHR0aCqvorVLxPTdXJDM7pAW7KaOMZPxdpE4NGA-i2H_e94T1bRGO8BV4X3AilXRUBb-1RQoXbl&user=9-fxxeMAAAAJ'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -135,7 +135,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://skm-presents.netlify.app/?slideIndex=0&stepIndex=0'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -150,7 +150,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://github.com/sureshHARDIYA/phd-resources'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
@@ -165,7 +165,7 @@ export const Footer: React.FC<FooterProps> = () => {
               href='https://sureshhardiya.github.io/vulnintel/'
               target='_blank'
               rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono ${
+              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
                 theme === 'light'
                   ? 'text-slate-700 hover:text-[#008822]'
                   : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
