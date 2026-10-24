@@ -161,6 +161,7 @@ export const Footer: React.FC<FooterProps> = () => {
                 north_east
               </span>
             </a>
+            <a href='/vulnerabilities' className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${theme === 'light' ? 'text-slate-700 hover:text-[#008822]' : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'}`}>Vulnerability Intelligence <span aria-hidden='true'>↗</span></a>
             <a
               href='https://sureshhardiya.github.io/vulnintel/'
               target='_blank'
