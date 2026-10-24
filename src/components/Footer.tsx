@@ -132,21 +132,6 @@ export const Footer: React.FC<FooterProps> = () => {
               </span>
             </a>
             <a
-              href='https://skm-presents.netlify.app/?slideIndex=0&stepIndex=0'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>{t.footer.myTalks}</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a
               href='https://github.com/sureshHARDIYA/phd-resources'
               target='_blank'
               rel='noopener noreferrer'
