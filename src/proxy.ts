@@ -18,6 +18,7 @@ function contentSecurityPolicy(nonce: string) {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://avatars.githubusercontent.com https://lh3.googleusercontent.com",
     "font-src 'self'",
+    "media-src 'self' https: blob:",
     "connect-src 'self' https://*.google-analytics.com https://www.google.com https://www.gstatic.com https://formspree.io",
     'frame-src https://www.google.com https://recaptcha.google.com',
     "worker-src 'self' blob:",

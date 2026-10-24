@@ -130,10 +130,14 @@ export default async function RootLayout({
 }) {
   // Reading the request headers keeps the route dynamic so Next.js can apply
   // the per-request CSP nonce generated in proxy.ts to framework scripts.
-  await headers()
+  const requestHeaders = await headers()
+  const nonce = requestHeaders.get('x-nonce') ?? undefined
 
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('app_theme')==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
+      </head>
       <body className='bg-[#0C0C0C] text-white antialiased'>
         <LanguageProvider>
           {children}
