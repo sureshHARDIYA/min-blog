@@ -417,3 +417,16 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Server-rendered blog pages follow the persisted theme before hydration. */
+html.light body, html.light .blog-theme-page { background-color: #f4f6f8; color: #0f172a; }
+html.light .blog-theme-page .text-white\/65,
+html.light .blog-theme-page .text-white\/70,
+html.light .blog-theme-page .text-white\/80,
+html.light .blog-theme-page .text-white\/50 { color: #475569; }
+html.light .blog-theme-page .border-white\/10 { border-color: #cbd5e1; }
+html.light .blog-prose h2, html.light .blog-prose h3 { color: #0f172a; }
+html.light .blog-prose blockquote { color: #475569; }
+html.light .blog-prose a { color: #0369a1; }
+html.light .blog-ai-playbook { background: #ecfdf5; }
+html.light .blog-task-item { background: #fff; border-color: #cbd5e1; }
