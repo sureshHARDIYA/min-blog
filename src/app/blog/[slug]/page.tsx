@@ -111,7 +111,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
   }
 
   return (
-    <main className='min-h-screen bg-[#0C0C0C] px-5 py-16 text-[#F5F5F5] sm:px-8 lg:px-12 lg:py-20'>
+    <main className='blog-theme-page min-h-screen bg-[#0C0C0C] px-5 py-16 text-[#F5F5F5] sm:px-8 lg:px-12 lg:py-20'>
       <script
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
         type='application/ld+json'
