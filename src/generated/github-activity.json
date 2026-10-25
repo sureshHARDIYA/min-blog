@@ -1,82 +1,82 @@
 {
-  "generatedAt": "2026-10-19T10:43:08.146Z",
+  "generatedAt": "2026-10-25T06:55:54.886Z",
   "username": "sureshHARDIYA",
   "profile": {
     "name": "Suresh KUMAR Mukhiya",
     "avatarUrl": "https://avatars.githubusercontent.com/u/2022919?v=4",
     "profileUrl": "https://github.com/sureshHARDIYA",
-    "publicRepositories": 90,
+    "publicRepositories": 92,
     "joinedAt": "2012-07-22T18:08:21Z"
   },
   "publicOnly": false,
   "windowDays": 90,
   "repositoriesAnalyzed": 39,
-  "recentCommits": 122,
+  "recentCommits": 247,
   "activityWeeks": [
     {
-      "start": "2026-07-27",
-      "label": "27 Jul",
+      "start": "2026-08-02",
+      "label": "2 Aug",
       "commits": 0
     },
     {
-      "start": "2026-08-03",
-      "label": "3 Aug",
-      "commits": 0
-    },
-    {
-      "start": "2026-08-10",
-      "label": "10 Aug",
+      "start": "2026-08-09",
+      "label": "9 Aug",
       "commits": 2
     },
     {
-      "start": "2026-08-17",
-      "label": "17 Aug",
+      "start": "2026-08-16",
+      "label": "16 Aug",
       "commits": 0
     },
     {
-      "start": "2026-08-24",
-      "label": "24 Aug",
+      "start": "2026-08-23",
+      "label": "23 Aug",
       "commits": 0
     },
     {
-      "start": "2026-08-31",
-      "label": "31 Aug",
+      "start": "2026-08-30",
+      "label": "30 Aug",
       "commits": 0
     },
     {
-      "start": "2026-09-07",
-      "label": "7 Sept",
+      "start": "2026-09-06",
+      "label": "6 Sept",
       "commits": 0
     },
     {
-      "start": "2026-09-14",
-      "label": "14 Sept",
-      "commits": 66
+      "start": "2026-09-13",
+      "label": "13 Sept",
+      "commits": 8
     },
     {
-      "start": "2026-09-21",
-      "label": "21 Sept",
-      "commits": 13
+      "start": "2026-09-20",
+      "label": "20 Sept",
+      "commits": 31
     },
     {
-      "start": "2026-09-28",
-      "label": "28 Sept",
+      "start": "2026-09-27",
+      "label": "27 Sept",
       "commits": 1
     },
     {
-      "start": "2026-10-05",
-      "label": "5 Oct",
+      "start": "2026-10-04",
+      "label": "4 Oct",
       "commits": 11
     },
     {
-      "start": "2026-10-12",
-      "label": "12 Oct",
+      "start": "2026-10-11",
+      "label": "11 Oct",
       "commits": 22
     },
     {
-      "start": "2026-10-19",
-      "label": "19 Oct",
-      "commits": 7
+      "start": "2026-10-18",
+      "label": "18 Oct",
+      "commits": 1
+    },
+    {
+      "start": "2026-10-25",
+      "label": "25 Oct",
+      "commits": 171
     }
   ],
   "technologies": [
@@ -84,43 +84,43 @@
       "name": "JavaScript",
       "category": "Frontend",
       "repositories": 28,
-      "recentCommits": 115
+      "recentCommits": 144
     },
     {
       "name": "Node.js",
       "category": "Platform",
       "repositories": 27,
-      "recentCommits": 115
-    },
-    {
-      "name": "CSS",
-      "category": "Frontend",
-      "repositories": 23,
-      "recentCommits": 115
-    },
-    {
-      "name": "React",
-      "category": "Frontend",
-      "repositories": 23,
-      "recentCommits": 115
+      "recentCommits": 144
     },
     {
       "name": "TypeScript",
       "category": "Frontend",
       "repositories": 23,
-      "recentCommits": 103
+      "recentCommits": 132
+    },
+    {
+      "name": "CSS",
+      "category": "Frontend",
+      "repositories": 22,
+      "recentCommits": 115
+    },
+    {
+      "name": "React",
+      "category": "Frontend",
+      "repositories": 22,
+      "recentCommits": 115
     },
     {
       "name": "Tailwind CSS",
       "category": "Frontend",
-      "repositories": 17,
+      "repositories": 16,
       "recentCommits": 103
     },
     {
       "name": "HTML",
       "category": "Frontend",
       "repositories": 15,
-      "recentCommits": 115
+      "recentCommits": 215
     },
     {
       "name": "Next.js",
@@ -132,13 +132,13 @@
       "name": "Shell",
       "category": "Platform",
       "repositories": 9,
-      "recentCommits": 7
+      "recentCommits": 3
     },
     {
       "name": "Python",
       "category": "Backend",
       "repositories": 6,
-      "recentCommits": 7
+      "recentCommits": 103
     },
     {
       "name": "Dockerfile",
@@ -147,10 +147,10 @@
       "recentCommits": 0
     },
     {
-      "name": "Django",
+      "name": "Rust",
       "category": "Backend",
       "repositories": 1,
-      "recentCommits": 0
+      "recentCommits": 100
     },
     {
       "name": "Pandas",
@@ -174,19 +174,19 @@
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 46.6
+      "percentage": 45.1
     },
     {
       "name": "JavaScript",
-      "percentage": 41.4
+      "percentage": 42.1
     },
     {
       "name": "TeX",
-      "percentage": 4.7
+      "percentage": 5.3
     },
     {
       "name": "Python",
-      "percentage": 3.8
+      "percentage": 3.6
     },
     {
       "name": "Shell",
@@ -207,31 +207,31 @@
   ],
   "repositories": [
     {
-      "name": "Private personal work",
-      "url": "https://github.com/sureshHARDIYA",
-      "description": null,
-      "pushedAt": "2026-10-19T10:43:08.146Z",
-      "recentCommits": 19,
-      "repositoryCount": 25,
-      "languages": [
-        "TypeScript",
-        "PLpgSQL",
-        "JavaScript",
-        "CSS"
-      ]
-    },
-    {
       "name": "Public personal work",
       "url": "https://github.com/sureshHARDIYA",
       "description": null,
-      "pushedAt": "2026-10-19T10:43:08.146Z",
-      "recentCommits": 103,
-      "repositoryCount": 14,
+      "pushedAt": "2026-10-25T06:55:54.886Z",
+      "recentCommits": 232,
+      "repositoryCount": 15,
       "languages": [
         "TypeScript",
         "JavaScript",
         "CSS",
         "HTML"
+      ]
+    },
+    {
+      "name": "Private personal work",
+      "url": "https://github.com/sureshHARDIYA",
+      "description": null,
+      "pushedAt": "2026-10-25T06:55:54.886Z",
+      "recentCommits": 15,
+      "repositoryCount": 24,
+      "languages": [
+        "JavaScript",
+        "HTML",
+        "TypeScript",
+        "SCSS"
       ]
     }
   ],
