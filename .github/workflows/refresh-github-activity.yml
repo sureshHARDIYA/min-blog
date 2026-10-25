@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature/github-technology-map
+      - main
     paths:
       - scripts/generate-github-activity.mjs
       - .github/workflows/refresh-github-activity.yml
   schedule:
-    - cron: '17 5 * * 1'
+    - cron: '17 5 * * *'
 
 permissions:
   contents: write
@@ -34,12 +34,13 @@ jobs:
 
       - name: Generate privacy-safe aggregate activity
         env:
-          GH_ACTIVITY_TOKEN: ${{ secrets.GH_ACTIVITY_TOKEN }}
+          GH_ACTIVITY_TOKEN: ${{ secrets.GH_ACTIVITY_TOKEN || github.token }}
           GITHUB_ACTIVITY_USER: sureshHARDIYA
         run: node scripts/generate-github-activity.mjs
 
       - name: Commit updated snapshot
-        if: github.actor != 'github-actions[bot]'
+        env:
+          PUSH_TOKEN: ${{ secrets.GH_ACTIVITY_TOKEN || github.token }}
         run: |
           if git diff --quiet -- src/generated/github-activity.json; then
             echo "Technology map is already current."
@@ -50,4 +51,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/generated/github-activity.json
           git commit -m "chore: refresh public technology map"
-          git push
+          git -c http.extraheader="AUTHORIZATION: basic $(printf "x-access-token:%s" "$PUSH_TOKEN" | base64 -w0)" push origin HEAD:main
