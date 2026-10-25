@@ -16,7 +16,7 @@ function DonutChart({
   valueSuffix,
 }: Readonly<{ title: string; items: ChartItem[]; valueSuffix: string }>) {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
-  const visibleItems = items.filter(({ value }) => value > 0).slice(0, 8);
+  const visibleItems = items.filter(({ value }) => value > 0);
   const total = visibleItems.reduce((sum, item) => sum + item.value, 0);
   let cursor = 0;
   const segments = visibleItems.map((item, index) => {
