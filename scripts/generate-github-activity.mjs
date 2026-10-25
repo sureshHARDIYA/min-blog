@@ -216,8 +216,7 @@ const output = {
       name,
       percentage: totalLanguageBytes ? Math.round((bytes / totalLanguageBytes) * 1000) / 10 : 0,
     }))
-    .sort((left, right) => right.percentage - left.percentage)
-    .slice(0, 8),
+    .sort((left, right) => right.percentage - left.percentage),
   repositories: [...activityGroups.values()].map((group) => ({
     name: group.name,
     url: profile.html_url,
