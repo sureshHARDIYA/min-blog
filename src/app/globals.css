@@ -430,3 +430,12 @@ html.light .blog-prose blockquote { color: #475569; }
 html.light .blog-prose a { color: #0369a1; }
 html.light .blog-ai-playbook { background: #ecfdf5; }
 html.light .blog-task-item { background: #fff; border-color: #cbd5e1; }
+
+/* VulnIntel table adapts to the persisted light theme. */
+html.light .blog-theme-page table { border-color: #cbd5e1; }
+html.light .blog-theme-page table thead { background: #e2e8f0; }
+html.light .blog-theme-page table tbody { border-color: #cbd5e1; }
+html.light .blog-theme-page table tbody tr { border-color: #cbd5e1; }
+html.light .blog-theme-page table tbody tr:hover { background: #e2e8f0; }
+html.light .blog-theme-page table a { color: #008822; }
+html.light .blog-theme-page .text-white\/60 { color: #475569; }
