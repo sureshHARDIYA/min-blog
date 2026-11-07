@@ -13,6 +13,15 @@ export const api = axios.create({
 // Mock Data Arrays
 const MOCK_TRAJECTORY: TrajectoryItem[] = [
   {
+    id: 'halifax-1',
+    company: 'Halifax AS (Revios)',
+    url: 'https://revios.no',
+    period: '2026 — Current',
+    role: 'Co-founder & CTO',
+    description: 'Co-founded Halifax AS to build Revios, audit software (revisjonsprogram) for Nordic audit firms. Leading architecture and engineering of an ISA-structured audit workflow with SAF-T import, Brønnøysund register lookup, explainable ML and auditor-approved AI suggestions, a signed append-only audit log, and two-axis multi-tenant row-level security on Azure.',
+    tags: ['Rust', 'Axum', 'PostgreSQL', 'Python', 'FastAPI', 'Next.js', 'TypeScript', 'Azure', 'Multi-tenancy', 'GDPR', 'Explainable AI', 'Audit (ISA)'],
+  },
+  {
     id: 'leroy-1',
     company: 'Lerøy Seafood Group',
     period: '2026 (Jan) — Current',

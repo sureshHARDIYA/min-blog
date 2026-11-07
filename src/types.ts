@@ -41,6 +41,8 @@ export interface TrajectoryItem {
   role: string;
   description: string;
   tags: string[];
+  /** Optional company/product website; when set, the company name links to it. */
+  url?: string;
 }
 
 export interface PublishedBook {

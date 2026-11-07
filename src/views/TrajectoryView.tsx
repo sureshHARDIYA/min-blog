@@ -88,7 +88,22 @@ export const TrajectoryView: React.FC = () => {
                   <h2 className={`font-black text-2xl tracking-tight ${
                     theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
                   }`}>
-                    {item.company}
+                    {item.url ? (
+                      <a
+                        href={item.url}
+                        target='_blank'
+                        rel='noopener'
+                        className={`underline decoration-2 underline-offset-4 transition-colors duration-200 ${
+                          theme === 'light'
+                            ? 'decoration-[#008822]/40 hover:text-[#008822]'
+                            : 'decoration-[#00FF41]/40 hover:text-[#00FF41]'
+                        }`}
+                      >
+                        {item.company}
+                      </a>
+                    ) : (
+                      item.company
+                    )}
                   </h2>
                 </div>
               </div>
