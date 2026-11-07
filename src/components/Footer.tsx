@@ -5,6 +5,7 @@ import { Language } from '../i18n/translations'
 import { useTheme } from '../context/ThemeContext'
 import { downloadCV } from '../utils/downloadCV'
 import { Stagger, StaggerItem } from './motion-primitives'
+import { FOOTER_LINKS } from './footerLinks'
 
 interface FooterProps {
   setActiveTab?: (tab: NavTab) => void
@@ -71,97 +72,27 @@ export const Footer: React.FC<FooterProps> = () => {
             {t.footer.networks}
           </span>
           <nav className='grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-2 text-[16px]'>
-            <a
-              href='https://github.com/sureshHARDIYA'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>GitHub</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a
-              href='https://www.linkedin.com/in/sureshhardiya/'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>LinkedIn</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a
-              href='https://www.youtube.com/@SureshKUMARMukhiya'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>YouTube</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a
-              href='https://scholar.google.com/citations?hl=en&view_op=list_works&gmla=AO4B3jvPGtKOD6tjKzHR0aCqvorVLxPTdXJDM7pAW7KaOMZPxdpE4NGA-i2H_e94T1bRGO8BV4X3AilXRUBb-1RQoXbl&user=9-fxxeMAAAAJ'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>Google Scholar</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a
-              href='https://github.com/sureshHARDIYA/phd-resources'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>PhD Resources</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
-            <a href='/vulnerabilities' className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${theme === 'light' ? 'text-slate-700 hover:text-[#008822]' : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'}`}>Vulnerability Intelligence <span aria-hidden='true'>↗</span></a>
-            <a
-              href='https://sureshhardiya.github.io/vulnintel/'
-              target='_blank'
-              rel='noopener noreferrer'
-              className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
-                theme === 'light'
-                  ? 'text-slate-700 hover:text-[#008822]'
-                  : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
-              }`}
-            >
-              <span>Security Notice Alert</span>
-              <span className='material-symbols-outlined text-[0.55rem]'>
-                north_east
-              </span>
-            </a>
+            {FOOTER_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                {...(link.isExternal
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+                className={`transition-colors duration-200 inline-flex items-center gap-1 font-mono text-[16px] ${
+                  theme === 'light'
+                    ? 'text-slate-700 hover:text-[#008822]'
+                    : 'text-[#F5F5F5]/70 hover:text-[#00FF41]'
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.isExternal && (
+                  <span aria-hidden='true' className='material-symbols-outlined text-[14px]!'>
+                    north_east
+                  </span>
+                )}
+              </a>
+            ))}
           </nav>
         </StaggerItem>
 
