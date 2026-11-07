@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = () => {
               >
                 <span>{link.label}</span>
                 {link.isExternal && (
-                  <span className='material-symbols-outlined text-[0.55rem]'>
+                  <span aria-hidden='true' className='material-symbols-outlined text-[14px]!'>
                     north_east
                   </span>
                 )}
