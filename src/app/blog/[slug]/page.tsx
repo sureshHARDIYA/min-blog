@@ -151,7 +151,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
                 <details className='agentbaiting-accordion' key={title}>
                   <summary>{title}<span aria-hidden='true'>＋</span></summary>
                   <div className='agentbaiting-accordion-body'>
-                    <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section.replace(/^## .+\\n/, '')}</ReactMarkdown>
+                    <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section.slice(section.indexOf('\n') + 1)}</ReactMarkdown>
                   </div>
                 </details>
               ) : (
