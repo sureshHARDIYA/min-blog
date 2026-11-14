@@ -47,11 +47,11 @@ function renderArticleMarkdown(source: string) {
     if (current.length) blocks.push({ kind: 'markdown', lines: current })
     current = []
   }
-  const isSeparator = (line: string) => /^\\s*\\|?\\s*:?-{3,}:?\\s*(\\|\\s*:?-{3,}:?\\s*)+\\|?\\s*$/.test(line)
-  const cells = (line: string) => line.trim().replace(/^\\|/, '').replace(/\\|$/, '').split(/(?<!\\\\)\\|/).map((cell) => cell.trim().replace(/\\\\\\|/g, '|'))
+  const isSeparator = (line: string) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line)
+  const cells = (line: string) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim())
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    if (/^\\s*```/.test(line)) inFence = !inFence
+    if (line.trimStart().startsWith('```')) inFence = !inFence
     if (!inFence && line.includes('|') && i + 1 < lines.length && isSeparator(lines[i + 1])) {
       flush()
       const table = [line, lines[++i]]
