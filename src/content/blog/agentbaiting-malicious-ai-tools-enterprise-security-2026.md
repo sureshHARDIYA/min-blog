@@ -10,7 +10,7 @@ tags: "appsec, ai-security, mcp, agent-security, software-supply-chain, threat-i
 
 ## Executive assessment
 
-**Assessment: substantiated threat, with important limits on the reported numbers.** The LinkedIn essay [“Malicious Repos Disguising as Agent Tools: A Growing Security Problem”](https://www.linkedin.com/pulse/malicious-repos-disguising-agent-tools-growing-security-santana-deumf) discusses a real attack pattern. The strongest directly reviewed evidence is Island Security's July 2026 **FakeGit / AgentBaiting** investigation, corroborated in reporting by BleepingComputer, Help Net Security and RH-ISAC. This analysis does not independently reverse-engineer malware samples or validate every repository attribution.
+**Assessment: substantiated threat, with important limits on the reported numbers.** This investigation examines a documented malicious-repository attack pattern. The strongest directly reviewed evidence is Island Security's July 2026 **FakeGit / AgentBaiting** investigation, corroborated in reporting by BleepingComputer, Help Net Security and RH-ISAC. This analysis does not independently reverse-engineer malware samples or validate every repository attribution.
 
 Attackers publish plausible AI Skills, MCP servers and developer utilities on GitHub, replicate documentation and developer identities, and place malicious installation steps in READMEs or public capability catalogs. A human developer—or an assistant finding tools on their behalf—can carry these instructions into a trusted development environment. The security failure is **untrusted repository content being promoted into executable authority**.
 
@@ -196,18 +196,17 @@ Sources: [Acronis report coverage](https://www.helpnetsecurity.com/2026/11/10/ac
 
 ## Limitations and methodology
 
-Research cutoff: **14 November 2026**. This article reviews the linked LinkedIn commentary against Island's original investigation and security reporting. No live malware was executed, no independent census of GitHub repositories was performed, and no private enterprise telemetry was examined. Reported campaign counts are attributed to the researchers, not presented as original measurements. AI-assistant testing was limited and cannot establish a general failure probability. Registry listings may be automated or manually submitted; the original researchers could not conclusively determine the mechanism for every listing.
+Research cutoff: **14 November 2026**. This article evaluates Island's original investigation against additional security reporting. No live malware was executed, no independent census of GitHub repositories was performed, and no private enterprise telemetry was examined. Reported campaign counts are attributed to the researchers, not presented as original measurements. AI-assistant testing was limited and cannot establish a general failure probability. Registry listings may be automated or manually submitted; the original researchers could not conclusively determine the mechanism for every listing.
 
 ## References
 
-1. [Original LinkedIn article — Malicious Repos Disguising as Agent Tools](https://www.linkedin.com/pulse/malicious-repos-disguising-agent-tools-growing-security-santana-deumf)
-2. [Island Security — AgentBaiting: How 800+ Fake AI Skills and MCP Servers Delivered Malware (20 July 2026)](https://www.island.io/blog/agentbaiting-how-800-fake-ai-skills-and-mcp-servers-delivered-malware)
-3. [BleepingComputer — FakeGit campaign and researcher clarification (21 July 2026)](https://www.bleepingcomputer.com/news/security/fakegit-campaign-uses-7-600-github-repos-to-push-smartloader-malware/amp/)
-4. [Help Net Security — AI agents tricked into recommending malicious repositories (21 July 2026)](https://www.helpnetsecurity.com/2026/07/21/github-repos-malware-campaign-fakegit-ai-agents/)
-5. [RH-ISAC — AgentBaiting campaign and sample hashes (21 July 2026)](https://rhisac.org/threat-intelligence/new-agentbaiting-campaign-delivers-smartloader-via-fake-ai-skills-and-mcp-servers/)
-6. [Recorded Future — H1 2026 Malware and Vulnerability Trends](https://www.recordedfuture.com/research/h1-2026-malware-vulnerability-trends)
-7. [Help Net Security — Malicious OpenClaw skills (10 November 2026)](https://www.helpnetsecurity.com/2026/11/10/acronis-ai-agent-cyberattacks-report/)
-8. [AgentSec threat timeline — 73 agent-lure repositories](https://github.com/FlorianBruniaux/agentsec-triage/blob/main/docs/SECURITY-TIMELINE.md)
-9. [OX Security — wfx-loot CI secret-stealing campaign (12 November 2026)](https://www.ox.security/blog/thousands-of-github-accounts-hijacked-with-wfx-loot-ci-secret-stealing-malware-via-github-actions-npm/)
+1. [Island Security — AgentBaiting: How 800+ Fake AI Skills and MCP Servers Delivered Malware (20 July 2026)](https://www.island.io/blog/agentbaiting-how-800-fake-ai-skills-and-mcp-servers-delivered-malware)
+2. [BleepingComputer — FakeGit campaign and researcher clarification (21 July 2026)](https://www.bleepingcomputer.com/news/security/fakegit-campaign-uses-7-600-github-repos-to-push-smartloader-malware/amp/)
+3. [Help Net Security — AI agents tricked into recommending malicious repositories (21 July 2026)](https://www.helpnetsecurity.com/2026/07/21/github-repos-malware-campaign-fakegit-ai-agents/)
+4. [RH-ISAC — AgentBaiting campaign and sample hashes (21 July 2026)](https://rhisac.org/threat-intelligence/new-agentbaiting-campaign-delivers-smartloader-via-fake-ai-skills-and-mcp-servers/)
+5. [Recorded Future — H1 2026 Malware and Vulnerability Trends](https://www.recordedfuture.com/research/h1-2026-malware-vulnerability-trends)
+6. [Help Net Security — Malicious OpenClaw skills (10 November 2026)](https://www.helpnetsecurity.com/2026/11/10/acronis-ai-agent-cyberattacks-report/)
+7. [AgentSec threat timeline — 73 agent-lure repositories](https://github.com/FlorianBruniaux/agentsec-triage/blob/main/docs/SECURITY-TIMELINE.md)
+8. [OX Security — wfx-loot CI secret-stealing campaign (12 November 2026)](https://www.ox.security/blog/thousands-of-github-accounts-hijacked-with-wfx-loot-ci-secret-stealing-malware-via-github-actions-npm/)
 
 **Bottom line:** Agent capability discovery is a software supply-chain ingestion point. The defense is not to stop using AI agents, but to prevent attacker-controlled repository instructions from crossing into privileged execution without provenance, policy enforcement and observable approval.
