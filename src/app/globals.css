@@ -470,3 +470,15 @@ html.light .agentbaiting-chart-note { color: #334155; }
 html.light .agentbaiting-accordion { background: #fff; border-color: #cbd5e1; }
 @media(max-width: 600px) { .agentbaiting-chart-stats { grid-template-columns: 1fr; } .agentbaiting-stat { flex-direction: row; align-items: center; justify-content: space-between; } }
 @media print { .agentbaiting-chart { break-inside: avoid; } }
+
+/* Responsive evidence tables in enterprise research reports */
+.agentbaiting-table-scroll { max-width: 64rem; margin: 1.5rem auto; overflow-x: auto; border: 1px solid #334155; border-radius: .65rem; }
+.agentbaiting-table-scroll:focus-visible { outline: 2px solid #22d3ee; outline-offset: 3px; }
+.agentbaiting-data-table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .9rem; line-height: 1.5; }
+.agentbaiting-data-table th { text-align: left; font-weight: 700; background: #1e293b; color: #f1f5f9; }
+.agentbaiting-data-table th, .agentbaiting-data-table td { padding: .8rem 1rem; border-bottom: 1px solid #334155; vertical-align: top; }
+.agentbaiting-data-table tbody tr:nth-child(even) { background: rgba(148,163,184,.06); }
+.agentbaiting-data-table p { margin: 0; }
+html.light .agentbaiting-table-scroll { border-color: #cbd5e1; }
+html.light .agentbaiting-data-table th { background: #e2e8f0; color: #0f172a; }
+html.light .agentbaiting-data-table th, html.light .agentbaiting-data-table td { border-color: #cbd5e1; }
