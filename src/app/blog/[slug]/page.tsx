@@ -36,6 +36,44 @@ const MARKDOWN_COMPONENTS: Components = {
   blockquote: ({ children }) => <blockquote>{children}</blockquote>
 }
 
+
+/** Render pipe tables without a new dependency; preserve Markdown outside tables. */
+function renderArticleMarkdown(source: string) {
+  const lines = source.split('\n')
+  const blocks: Array<{ kind: 'markdown' | 'table'; lines: string[] }> = []
+  let current: string[] = []
+  let inFence = false
+  const flush = () => {
+    if (current.length) blocks.push({ kind: 'markdown', lines: current })
+    current = []
+  }
+  const isSeparator = (line: string) => /^\\s*\\|?\\s*:?-{3,}:?\\s*(\\|\\s*:?-{3,}:?\\s*)+\\|?\\s*$/.test(line)
+  const cells = (line: string) => line.trim().replace(/^\\|/, '').replace(/\\|$/, '').split(/(?<!\\\\)\\|/).map((cell) => cell.trim().replace(/\\\\\\|/g, '|'))
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    if (/^\\s*```/.test(line)) inFence = !inFence
+    if (!inFence && line.includes('|') && i + 1 < lines.length && isSeparator(lines[i + 1])) {
+      flush()
+      const table = [line, lines[++i]]
+      while (i + 1 < lines.length && lines[i + 1].includes('|') && lines[i + 1].trim()) table.push(lines[++i])
+      blocks.push({ kind: 'table', lines: table })
+    } else current.push(line)
+  }
+  flush()
+  return blocks.map((block, index) => {
+    if (block.kind === 'markdown') return <ReactMarkdown components={MARKDOWN_COMPONENTS} key={index}>{block.lines.join('\n')}</ReactMarkdown>
+    const headers = cells(block.lines[0])
+    return (
+      <div className='agentbaiting-table-scroll' key={index} role='region' aria-label={`Evidence table ${index + 1}`} tabIndex={0}>
+        <table className='agentbaiting-data-table'>
+          <thead><tr>{headers.map((header, cellIndex) => <th scope='col' key={cellIndex}><ReactMarkdown components={MARKDOWN_COMPONENTS}>{header}</ReactMarkdown></th>)}</tr></thead>
+          <tbody>{block.lines.slice(2).map((row, rowIndex) => <tr key={rowIndex}>{headers.map((_, cellIndex) => <td key={cellIndex}><ReactMarkdown components={MARKDOWN_COMPONENTS}>{cells(row)[cellIndex] ?? ''}</ReactMarkdown></td>)}</tr>)}</tbody>
+        </table>
+      </div>
+    )
+  })
+}
+
 const TWO_COLUMN_SECTIONS = new Set(['Security depth across the screen'])
 
 function markdownSections(markdown: string) {
@@ -151,7 +189,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
                 <details className='agentbaiting-accordion' key={title}>
                   <summary>{title}<span aria-hidden='true'>＋</span></summary>
                   <div className='agentbaiting-accordion-body'>
-                    <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section.slice(section.indexOf('\n') + 1)}</ReactMarkdown>
+                    {renderArticleMarkdown(section.slice(section.indexOf('\n') + 1))}
                   </div>
                 </details>
               ) : (
@@ -165,7 +203,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
                   }
                   key={title || 'introduction'}
                 >
-                  <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section}</ReactMarkdown>
+                  {post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' ? renderArticleMarkdown(section) : <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section}</ReactMarkdown>}
                   {post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' && title === 'Evidence dashboard' ? <AgentBaitingChart /> : null}
                 </section>
               )
