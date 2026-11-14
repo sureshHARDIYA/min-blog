@@ -6,6 +6,7 @@ import ReactMarkdown, { type Components } from 'react-markdown'
 import { BlogCode, BlogList, BlogListItem } from '../../../components/BlogCode'
 import { AppSecSubscribeForm } from '../../../components/AppSecSubscribeForm'
 import { ArticleRecommendation } from '../../../components/ArticleRecommendation'
+import { AgentBaitingChart } from '../../../components/AgentBaitingChart'
 import { getAllPosts, getPost } from '../../../lib/blog'
 
 interface BlogPostPageProps {
@@ -145,20 +146,29 @@ async function BlogPostContent({ slug }: { slug: string }) {
           {markdownSections(post.content).map((section) => {
             const title = sectionTitle(section)
             return (
-              <section
-                className={
-                  title === 'Build it safely with AI'
-                    ? 'blog-ai-playbook'
-                    : TWO_COLUMN_SECTIONS.has(title)
-                      ? 'blog-two-column-section'
-                      : undefined
-                }
-                key={title || 'introduction'}
-              >
-                <ReactMarkdown components={MARKDOWN_COMPONENTS}>
-                  {section}
-                </ReactMarkdown>
-              </section>
+              post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' &&
+              new Set(['Technical evidence appendix', 'Limitations and methodology', 'References', 'Detection engineering: actionable hypotheses', 'Enterprise threat model']).has(title) ? (
+                <details className='agentbaiting-accordion' key={title}>
+                  <summary>{title}<span aria-hidden='true'>＋</span></summary>
+                  <div className='agentbaiting-accordion-body'>
+                    <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section.replace(/^## .+\\n/, '')}</ReactMarkdown>
+                  </div>
+                </details>
+              ) : (
+                <section
+                  className={
+                    title === 'Build it safely with AI'
+                      ? 'blog-ai-playbook'
+                      : TWO_COLUMN_SECTIONS.has(title)
+                        ? 'blog-two-column-section'
+                        : undefined
+                  }
+                  key={title || 'introduction'}
+                >
+                  <ReactMarkdown components={MARKDOWN_COMPONENTS}>{section}</ReactMarkdown>
+                  {post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' && title === 'Evidence dashboard' ? <AgentBaitingChart /> : null}
+                </section>
+              )
             )
           })}
         </div>
