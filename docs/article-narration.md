@@ -65,3 +65,7 @@ For meaningful summaries, create `src/content/narration/<slug>.json` with sectio
 Descriptions must be reviewed against actual data and visuals. A chart inserted through React rather than Markdown (such as `AgentBaitingChart`) **is not automatically discoverable** by this Markdown-only extractor; add an explicit narrative in the article or extend the renderer with a linked narration marker. No vision model or LLM is invoked automatically, so there are no hidden AI-description costs.
 
 Editing an override invalidates the manifest and regenerates affected narration. This is **section-level** highlighting, not word-level or chart-point highlighting. Review articles containing complex custom components before generating the full back catalogue.
+
+## Instructions for future writing agents
+
+Read `AGENTS.md` (and the tool-specific `CLAUDE.md` / `.github/copilot-instructions.md`) before drafting an article. Use `python3 scripts/check-article-narration.py` to audit the entire archive, or pass article paths to check only new work. The audit is advisory by default; `--strict` makes warnings fail. The audio workflow runs the advisory audit before synthesis. Review warnings against source material; the script cannot understand React-only components or certify factual correctness.
