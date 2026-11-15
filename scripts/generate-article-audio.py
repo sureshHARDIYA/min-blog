@@ -80,6 +80,10 @@ def synthesize(text, *, allow_sentence_retry=True):
         ) from None
 
 def main():
+    unchanged_articles = 0
+    reused_segments = 0
+    generated_segments = 0
+    generated_characters = 0
     OUT.mkdir(parents=True, exist_ok=True)
     for article in ARTICLES.glob("*.md"):
         source = article.read_text()
@@ -89,7 +93,13 @@ def main():
         fingerprint = hashlib.sha256(content.encode() + b"\\nNARRATION\\n" + override_bytes).hexdigest()
         destination = OUT / (article.stem + ".json")
         previous = json.loads(destination.read_text()) if destination.exists() else {}
-        if previous.get("contentHash") == fingerprint and previous.get("voice") == VOICE and previous.get("storage") == "r2":
+        if (
+            previous.get("contentHash") == fingerprint
+            and previous.get("voice") == VOICE
+            and previous.get("storage") == "r2"
+            and previous.get("publicBaseUrl") == PUBLIC_BASE
+        ):
+            unchanged_articles += 1
             continue
         segments = []
         sections = [section for section in re.split(r"(?=^## )", content, flags=re.M) if section]
@@ -110,11 +120,22 @@ def main():
                     if error.response["Error"]["Code"] not in ("404", "NoSuchKey", "NotFound"):
                         raise
                     exists = False
-                if not exists:
+                if exists:
+                    reused_segments += 1
+                else:
                     audio = synthesize(chunk)
                     R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")
+                    generated_segments += 1
+                    generated_characters += len(chunk)
                 segments.append({"id":f"listen-section-{index}","text":chunk[:100],"url":url})
-        destination.write_text(json.dumps({"contentHash":fingerprint,"voice":VOICE,"storage":"r2","segments":segments},indent=2)+"\n")
+        destination.write_text(json.dumps({"contentHash":fingerprint,"voice":VOICE,"storage":"r2","publicBaseUrl":PUBLIC_BASE,"segments":segments},indent=2)+"\n")
+
+    print(
+        f"Narration: {unchanged_articles} unchanged articles skipped, "
+        f"{reused_segments} existing segments reused, "
+        f"{generated_segments} new segments synthesized "
+        f"({generated_characters} input characters)."
+    )
 
 if __name__ == "__main__":
     main()
