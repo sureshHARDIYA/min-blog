@@ -537,3 +537,15 @@ html.light .agentbaiting-accordion { background: #fff; border-color: #cbd5e1; }
 html.light .agentbaiting-table-scroll { border-color: #cbd5e1; }
 html.light .agentbaiting-data-table th { background: #e2e8f0; color: #0f172a; }
 html.light .agentbaiting-data-table th, html.light .agentbaiting-data-table td { border-color: #cbd5e1; }
+
+
+/* Calm, accessible article narration and section-level reading focus */
+.article-listen { margin: 1.5rem 0 0; padding: 1rem 0; border-bottom: 1px solid var(--article-border); color: var(--article-text); }
+.article-listen-controls { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem; }
+.article-listen-label { margin-right: auto; color: var(--article-muted); font: 600 .7rem ui-monospace, monospace; letter-spacing: .12em; }
+.article-listen button, .article-listen select { border: 1px solid var(--article-border); border-radius: .5rem; background: var(--article-surface); color: var(--article-text); padding: .4rem .65rem; font-size: .85rem; cursor: pointer; }
+.article-listen button:hover { border-color: var(--article-accent); }
+.article-listen input[type=range] { width: 100%; margin-top: .9rem; accent-color: var(--article-accent); }
+.article-listen-status { display: block; color: var(--article-muted); font-size: .75rem; }
+.blog-prose section[data-listen-active=true] { background: color-mix(in srgb, var(--article-accent) 7%, transparent); border-radius: .4rem; box-shadow: 0 0 0 .5rem color-mix(in srgb, var(--article-accent) 7%, transparent); transition: background .3s ease; }
+@media (prefers-reduced-motion: reduce) { .blog-prose section[data-listen-active=true] { transition: none; } }
