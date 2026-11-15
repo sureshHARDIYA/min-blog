@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "54729e5fb0720d2dcdf3226434bd210253bcbed4ba2804c200c8b50bbc2b1532",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,23 +7,31 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "What matters this week Two newly published Python advisories reinforce a familiar engineering lesson",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/100baa6a126b9d9406c6.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/100baa6a126b9d9406c6.mp3",
+      "duration": 54.384
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Tech-lead decisions 1. Re-run dependency inventory and SBOM generation for every production service;",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/0019261cbceb61d4aae9.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/0019261cbceb61d4aae9.mp3",
+      "duration": 67.608
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Concrete deliverable By Friday, produce one exception report joining the current SBOM with internet-",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/1fcd1d1f3880c2dfc0c5.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/1fcd1d1f3880c2dfc0c5.mp3",
+      "duration": 20.544
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Sources - GitHub Advisory: unauthenticated script execution in rust-iot-platform - GitHub Advisory D",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/7f0cbf3a8ade0c24d3bf.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/7f0cbf3a8ade0c24d3bf.mp3",
+      "duration": 26.328
     }
   ]
 }

@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "3ec5fccb99da7791c8b24687f6691c20713e13e97ac159a8a728474a74c79a94",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,53 +7,73 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "Executive summary The important engineering decision this week is to treat an exposed or affected Ar",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/bf0fa103e464cd7c431f.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/bf0fa103e464cd7c431f.mp3",
+      "duration": 60.984
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Risk at a glance Act now \u2014 Artifactory token flaws Affected: CVE-2026-42018 across affected 7.x bran",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/14b57787319191f5f71a.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/14b57787319191f5f71a.mp3",
+      "duration": 64.464
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Significant developments Act now: two exploited Artifactory flaws form a token escalation path What ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/895873ec437a9473d037.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/895873ec437a9473d037.mp3",
+      "duration": 367.776
     },
     {
       "id": "listen-section-2",
+      "part": 1,
       "text": "GitHub, registry and cloud credentials if telemetry indicates execution or if containment cannot est",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/4ac324049f9792ec625f.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/4ac324049f9792ec625f.mp3",
+      "duration": 149.568
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Supply-chain watch No new CycloneDX specification or OWASP Dependency-Track release was identified a",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/9f93364fe5e026ba3cc5.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/9f93364fe5e026ba3cc5.mp3",
+      "duration": 59.088
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "AI-assisted development watch Do not let a coding agent treat a version bump as proof of remediation",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/8639e39f499cd69b51a1.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/8639e39f499cd69b51a1.mp3",
+      "duration": 61.464
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "Developer checklist Today - [ ] Inventory self-hosted JFrog Artifactory versions and exposure; compl",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/705a87a2132e480d9d96.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/705a87a2132e480d9d96.mp3",
+      "duration": 129.456
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/b1696f943b98a66fb87b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/b1696f943b98a66fb87b.mp3",
+      "duration": 8.616
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "Monday action plan 1. Platform owner: complete the Artifactory version and exposure inventory; evide",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/f5175b4610c4d9c1c537.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/f5175b4610c4d9c1c537.mp3",
+      "duration": 62.328
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "References - CISA \u2014 CISA Adds Three Known Exploited Vulnerabilities to Catalog, 11 September 2026. -",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/1b09bdd7f4d8acd6a4ca.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/1b09bdd7f4d8acd6a4ca.mp3",
+      "duration": 61.056
     }
   ]
 }

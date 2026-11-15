@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "ab5a3a9839b74a6f6e9d094c5e2ad9cb64053c8c7a47df027692965773e6e4af",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,93 +7,129 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "The request that looked completely legitimate The support message was short: \u201cAn accountant opened a",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/d2c1ba9ebc90fb6de95e.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/d2c1ba9ebc90fb6de95e.mp3",
+      "duration": 151.728
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Why this mistake survives professional teams Broken authorization is rarely caused by a developer de",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/5dd31cd5bee32a1f6aa0.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/5dd31cd5bee32a1f6aa0.mp3",
+      "duration": 118.368
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "The one-digit attack Let us make the scenario concrete. Northwind Audit and Contoso Accounting both ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/f1e7df88692cf08844eb.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/f1e7df88692cf08844eb.mp3",
+      "duration": 143.304
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Authentication and authorization are different systems Authentication establishes an identity. Autho",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/91a21a1fcb81bf23ec7e.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/91a21a1fcb81bf23ec7e.mp3",
+      "duration": 136.104
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "Treat token claims as input, not as the whole policy Claims are useful, but they require discipline.",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/d96e405a4d4cfa0214fd.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/d96e405a4d4cfa0214fd.mp3",
+      "duration": 93.864
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "Put the tenant boundary into the query The first durable repair is to remove unsafe repository metho",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/34bc927c84d34915ce98.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/34bc927c84d34915ce98.mp3",
+      "duration": 78.168
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "A policy should read like the decision it protects Tenant-scoped queries solve a large class of prob",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/466ad37f898e39191d19.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/466ad37f898e39191d19.mp3",
+      "duration": 99.768
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "The frontend is not an authorization boundary A React application should hide or disable actions the",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/0bff1100edbace86e53a.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/0bff1100edbace86e53a.mp3",
+      "duration": 96.624
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Defence in depth with PostgreSQL Application-layer authorization is essential because it understands",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/e301205ff33420eedbfa.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/e301205ff33420eedbfa.mp3",
+      "duration": 64.464
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Deny by default when context is incomplete Distributed systems make authorization context inconvenie",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/a3b43c89dcd1947ff424.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/a3b43c89dcd1947ff424.mp3",
+      "duration": 91.368
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "Test the matrix, not only the happy path Authorization tests need multiple identities, tenants, role",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/353d2423eea485cac3a1.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/353d2423eea485cac3a1.mp3",
+      "duration": 77.736
     },
     {
       "id": "listen-section-11",
+      "part": 0,
       "text": "Authorization failures are design feedback When a cross-tenant test fails, the immediate response is",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/9e65be8a78f01fff6bda.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/9e65be8a78f01fff6bda.mp3",
+      "duration": 83.328
     },
     {
       "id": "listen-section-12",
+      "part": 0,
       "text": "AI-generated code makes the safe default more important Coding agents are good at extending visible ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/eb29a4b58965a453be69.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/eb29a4b58965a453be69.mp3",
+      "duration": 92.208
     },
     {
       "id": "listen-section-13",
+      "part": 0,
       "text": "Build it safely with AI AI-assisted development is now mainstream, but generated security claims sti",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/962c4d3217965f256a5d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/962c4d3217965f256a5d.mp3",
+      "duration": 119.544
     },
     {
       "id": "listen-section-14",
+      "part": 0,
       "text": "A practical authorization review checklist Use this checklist when reviewing a new API endpoint or a",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/f4dc6b40b5548d1c5c4d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/f4dc6b40b5548d1c5c4d.mp3",
+      "duration": 137.688
     },
     {
       "id": "listen-section-15",
+      "part": 0,
       "text": "What I would ask in the architecture review When a diagram says \u201cauthenticated API,\u201d I now want to k",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/da9f0329e6cfebfe101d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/da9f0329e6cfebfe101d.mp3",
+      "duration": 80.544
     },
     {
       "id": "listen-section-16",
+      "part": 0,
       "text": "Continue exploring - My application security practice and working method - A practical weekly AppSec",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/13a43b128bcb9fc57a2e.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/13a43b128bcb9fc57a2e.mp3",
+      "duration": 10.488
     },
     {
       "id": "listen-section-17",
+      "part": 0,
       "text": "Further reading - OWASP API1:2023 \u2014 Broken Object Level Authorization - OWASP API5:2023 \u2014 Broken Fun",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/435ba1770fe0b182d6a4.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/435ba1770fe0b182d6a4.mp3",
+      "duration": 30.048
     }
   ]
 }

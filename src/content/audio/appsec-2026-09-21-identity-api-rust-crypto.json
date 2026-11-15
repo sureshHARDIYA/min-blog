@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "b47ad7c14102fa9fdca5578e603d963948049118622ee1afd0fbf8dc064fbdb8",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,63 +7,87 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "Executive summary The most important engineering decision this week is to treat Cisco Identity Servi",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/f75203610f03839d9f1c.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/f75203610f03839d9f1c.mp3",
+      "duration": 62.856
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Risk at a glance Act now \u2014 Cisco ISE API authentication bypass Affected: Cisco ISE and ISE-PIC. Cisc",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/56ef027006562114955c.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/56ef027006562114955c.mp3",
+      "duration": 206.784
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Significant developments",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/40dc283af36b7d839f76.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/40dc283af36b7d839f76.mp3",
+      "duration": 1.728
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "1. Cisco ISE: an authentication bypass in the identity control plane What changed On 16 September, C",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/a50eb962363f0a4e256b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/a50eb962363f0a4e256b.mp3",
+      "duration": 166.776
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "2. pqckyber: an optimized backend removes a core cryptographic defense What changed RustSec issued R",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/db4847fad482ca365850.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/db4847fad482ca365850.mp3",
+      "duration": 180.576
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "3. cryptoki: safe Rust code can still inherit unsafe decoder assumptions What changed RustSec issued",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/d0592736bbc1c1cd3bdb.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/d0592736bbc1c1cd3bdb.mp3",
+      "duration": 149.064
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "Supply-chain watch No newly verified malicious npm, PyPI or crates.io package campaign met the publi",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/4b9949801ab0ae79f14b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/4b9949801ab0ae79f14b.mp3",
+      "duration": 66.984
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "AI-assisted development watch This week's identity API flaw gives code reviewers and coding agents a",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/644a416436720809e287.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/644a416436720809e287.mp3",
+      "duration": 62.448
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Developer checklist Today - [ ] Inventory every Cisco ISE and ISE-PIC node and record its exact rele",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/cf93c436e156cc543ddc.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/cf93c436e156cc543ddc.mp3",
+      "duration": 126.264
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/b1696f943b98a66fb87b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/b1696f943b98a66fb87b.mp3",
+      "duration": 7.416
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "Monday action plan 1. Network identity owner: complete the Cisco ISE/ISE-PIC inventory, patch every ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/a2585df9b3ce26937fb5.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/a2585df9b3ce26937fb5.mp3",
+      "duration": 61.944
     },
     {
       "id": "listen-section-11",
+      "part": 0,
       "text": "References - Cisco \u2014 Cisco Identity Services Engine Authentication Bypass Vulnerability, CVE-2026-76",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/dda0ce4185f010189bb1.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/dda0ce4185f010189bb1.mp3",
+      "duration": 30.048
     }
   ]
 }

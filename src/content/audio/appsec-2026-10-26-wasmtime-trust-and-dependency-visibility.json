@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "c18764a7c04282ae25099423f93e0caedb7a2edfc44f7fa8ef0a0a51bb615e17",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,58 +7,80 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "Executive summary The urgent decision this week is whether untrusted WebAssembly reaches Wasmtime. T",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/373bddf39a322beff71c.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/373bddf39a322beff71c.mp3",
+      "duration": 36.624
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Risk at a glance - Act now if exposed \u2014 Wasmtime/Cranelift: crafted WebAssembly can trigger compiler",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/f945105540f51308de10.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/f945105540f51308de10.mp3",
+      "duration": 116.088
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Wasmtime: compiler bugs can invalidate the sandbox What changed. Bytecode Alliance published two cri",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/155f609f39934793f24d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/155f609f39934793f24d.mp3",
+      "duration": 180.864
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Tokio 1.54.0: a one-release use-after-free What changed and evidence. RUSTSEC-2026-0384, issued 22 O",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/befd5b47d3597d8078f4.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/befd5b47d3597d8078f4.mp3",
+      "duration": 95.808
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "Rust TLS: remove distrusted emSign paths What changed. RustSec published three related advisories on",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/610ba447c2de1f26e293.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/610ba447c2de1f26e293.mp3",
+      "duration": 141.096
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "Supply-chain watch Package installation gets a policy gate GitHub\u2019s package firewall, released in pu",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/0d882fd1498c8e9e2cdb.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/0d882fd1498c8e9e2cdb.mp3",
+      "duration": 155.184
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "AI-assisted development watch This week connects agent safety to ordinary build controls. An agent t",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/53b06679b046d61e313c.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/53b06679b046d61e313c.mp3",
+      "duration": 49.848
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "Developer checklist Today - [ ] Run cargo audit and cargo tree -i wasmtime; retain a fixed resolved ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/0a0e9955955ad068e40d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/0a0e9955955ad068e40d.mp3",
+      "duration": 92.928
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/b1696f943b98a66fb87b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/b1696f943b98a66fb87b.mp3",
+      "duration": 7.896
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Monday action plan 1. Agent/runtime platform: patch every reachable Wasmtime line and prove the depl",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/44d307f3f5e8c06126bd.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/44d307f3f5e8c06126bd.mp3",
+      "duration": 52.488
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "References - Bytecode Alliance, Wasmtime bit-packing sandbox escape, GHSA-897f-g5gm-fmxm, 19 October",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/1e99f2d2da1637d1fd60.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/1e99f2d2da1637d1fd60.mp3",
+      "duration": 95.856
     }
   ]
 }

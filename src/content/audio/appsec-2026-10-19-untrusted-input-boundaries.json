@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "f8f7b340ede07e022b2d9954465d0b7d2836cf061829efe8e33b081f26d2fbd7",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,63 +7,87 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "Executive summary This week\u2019s engineering decision is straightforward: treat archive extraction, dec",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/2f89eb13aee8cfda3bd4.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/2f89eb13aee8cfda3bd4.mp3",
+      "duration": 37.968
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Risk at a glance - Act now if present \u2014 zip: affected extraction paths can create symlinks outside t",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/8e8a9d94f60fb24ee8bb.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/8e8a9d94f60fb24ee8bb.mp3",
+      "duration": 87.744
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Rust zip: extraction can cross the directory boundary What changed. Three related RustSec advisories",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/35821098e7deeaf55c55.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/35821098e7deeaf55c55.mp3",
+      "duration": 140.424
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Wasmtime: filesystem sandbox escape on affected hosts What changed. Wasmtime published GHSA-vqjp-4c8",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/478b7aa8b02836a79bff.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/478b7aa8b02836a79bff.mp3",
+      "duration": 129.264
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "ruzstd: tiny input, large memory failure What changed and evidence. RUSTSEC-2026-0344, issued 12 Oct",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/d2d5f0fff1d73b3632ec.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/d2d5f0fff1d73b3632ec.mp3",
+      "duration": 84.984
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "rustls: debug output can become credential material What changed and evidence. RUSTSEC-2026-0346, is",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/eec0d20ca24740f89619.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/eec0d20ca24740f89619.mp3",
+      "duration": 87.384
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "Supply-chain watch The material package changes this week are in Rust\u2019s archive, compression, WebAss",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/fb1852ccd50bd789939a.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/fb1852ccd50bd789939a.mp3",
+      "duration": 53.736
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "AI-assisted development watch Generated code often reaches for a convenient extraction helper or san",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/2787c7d84a0f90ae3c13.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/2787c7d84a0f90ae3c13.mp3",
+      "duration": 34.488
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Developer checklist Today - [ ] Run cargo audit and cargo tree -i zip; retain evidence of zip 9.0.1+",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/105085909962b673e7c6.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/105085909962b673e7c6.mp3",
+      "duration": 84.528
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/b1696f943b98a66fb87b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/b1696f943b98a66fb87b.mp3",
+      "duration": 8.616
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "Monday action plan 1. Rust service owners: prove the resolved zip and ruzstd versions and patch reac",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/0c54f4c856973427d913.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/0c54f4c856973427d913.mp3",
+      "duration": 53.304
     },
     {
       "id": "listen-section-11",
+      "part": 0,
       "text": "References - RustSec, zip symlink extraction advisory RUSTSEC-2026-0368, 17 October 2026. - RustSec,",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/f5b7ae7dbd246e965f8f.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/f5b7ae7dbd246e965f8f.mp3",
+      "duration": 80.664
     }
   ]
 }

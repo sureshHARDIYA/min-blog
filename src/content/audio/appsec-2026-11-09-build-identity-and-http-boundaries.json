@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "b19894e5aa26febc02396d6ab22ed4b936a39629f034599a2fdd48033bcd7466",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,58 +7,80 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "Executive summary The urgent engineering decision this week is whether untrusted build or request in",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/a098ca013cfc64744abb.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/a098ca013cfc64744abb.mp3",
+      "duration": 41.856
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Risk at a glance - Act now if exposed \u2014 kaniko Azure token disclosure: kaniko before 1.25.20 can sen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/b27675155a920533621d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/b27675155a920533621d.mp3",
+      "duration": 115.464
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Kaniko: a Dockerfile can redirect a live Entra token What changed. GitHub reviewed CVE-2026-105769 /",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/774cf01d12ee6234f138.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/774cf01d12ee6234f138.mp3",
+      "duration": 180.768
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Actix: enforce the same HTTP message at every layer What changed. RustSec issued a cluster of Actix ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/e3c29acef758c505763a.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/e3c29acef758c505763a.mp3",
+      "duration": 181.824
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "Azure Key Vault Rust clients: rejected challenges must not change future authorization What changed.",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/2746b8a79003237a9793.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/2746b8a79003237a9793.mp3",
+      "duration": 137.184
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "Supply-chain watch GitHub will temporarily enforce its default block on pullrequesttarget today, 9 N",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/2d25a9a0bf5c96ea0522.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/2d25a9a0bf5c96ea0522.mp3",
+      "duration": 86.616
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "AI-assisted development watch An agent can turn configuration into an attack surface by editing Dock",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/cf9d370b78a72c4facbd.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/cf9d370b78a72c4facbd.mp3",
+      "duration": 52.128
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "Developer checklist Today - [ ] Kaniko: identify every executor, warmer and helper below 1.25.20; ev",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/1e3cd41b83a8ef305c76.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/1e3cd41b83a8ef305c76.mp3",
+      "duration": 117.384
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/b1696f943b98a66fb87b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/b1696f943b98a66fb87b.mp3",
+      "duration": 7.536
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Monday action plan 1. Container platform lead: patch kaniko and determine whether any affected build",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/1249cbf4c02070369416.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/1249cbf4c02070369416.mp3",
+      "duration": 64.176
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "References - GitHub Advisory Database \u2014 CVE-2026-105769 / GHSA-5q7h-w9jf-cx97, published 2 November ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/04b2d63d7885f0e6a433.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/04b2d63d7885f0e6a433.mp3",
+      "duration": 76.584
     }
   ]
 }

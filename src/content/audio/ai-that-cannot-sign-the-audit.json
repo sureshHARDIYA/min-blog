@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "08a366ea71081a108eb9a832127051fb482c354d2ce63b062e652544477df9be",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,43 +7,59 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "The question an auditor actually asks When you show AI to an auditor, the first question is rarely \"",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/0c588a754d180d198273.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/0c588a754d180d198273.mp3",
+      "duration": 79.656
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "Rule 1: Detection is deterministic; language is the only job for the LLM There are two very differen",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/d9b3539173d52891e43d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/d9b3539173d52891e43d.mp3",
+      "duration": 90.936
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Rule 2: Every AI suggestion is inert until a human approves it In Revios, an AI suggestion is a prop",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/60f3377ccae09e66c27b.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/60f3377ccae09e66c27b.mp3",
+      "duration": 60.096
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Rule 3: The audit log is append-only, signed and chained \"Show what you did and why\" requires a reco",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/29398089fc64c6a5dfbc.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/29398089fc64c6a5dfbc.mp3",
+      "duration": 48.888
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "Rule 4: Personal data stays out of the ledger An immutable log and the GDPR right to erasure look li",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/b9e27f502cab91bc20b7.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/b9e27f502cab91bc20b7.mp3",
+      "duration": 42.168
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "Rule 5: Isolation is enforced by the database, not by remembering a WHERE clause Audit firms hold so",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/763d666eb9c21e710356.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/763d666eb9c21e710356.mp3",
+      "duration": 49.224
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "Why this matters beyond compliance These rules are not only about passing inspection. They change ho",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/90a650fee462b1355473.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/90a650fee462b1355473.mp3",
+      "duration": 43.104
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "What we are looking for Revios is in early access. We are looking for a small number of Norwegian au",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/452556663e2c9aee2bf6.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/452556663e2c9aee2bf6.mp3",
+      "duration": 27.216
     }
   ]
 }

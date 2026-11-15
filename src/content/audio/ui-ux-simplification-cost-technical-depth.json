@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "contentHash": "77cb500dff73500991bd4370939e20b4ae643ca023ad3eca3006bc216122a62f",
   "voice": "en-US-Chirp3-HD-Leda",
   "storage": "r2",
@@ -6,88 +7,122 @@
   "segments": [
     {
       "id": "listen-section-0",
+      "part": 0,
       "text": "The simple screen that was not simple A product team asks for a simpler experience. The customer rec",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/73f219a57c22c4a1b381.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/73f219a57c22c4a1b381.mp3",
+      "duration": 126.336
     },
     {
       "id": "listen-section-1",
+      "part": 0,
       "text": "A working example: the customer operations workspace Imagine a business application used by account ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/dadba02b71fd2530198f.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/dadba02b71fd2530198f.mp3",
+      "duration": 196.368
     },
     {
       "id": "listen-section-2",
+      "part": 0,
       "text": "Technical depth is not technical complexity I use technical depth to describe how well the implement",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/8b35c9997ca5c5289b66.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/8b35c9997ca5c5289b66.mp3",
+      "duration": 163.656
     },
     {
       "id": "listen-section-3",
+      "part": 0,
       "text": "Good design begins with jobs and consequences Consider the same role change in three forms. An inlin",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/e7b4a7f0f116e3338d86.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/e7b4a7f0f116e3338d86.mp3",
+      "duration": 71.784
     },
     {
       "id": "listen-section-4",
+      "part": 0,
       "text": "Refactoring the React state model The first useful refactoring names the state before choosing a glo",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4f871422cf9b29ec95de.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4f871422cf9b29ec95de.mp3",
+      "duration": 234.336
     },
     {
       "id": "listen-section-5",
+      "part": 0,
       "text": "The API must not inherit the screen Frontend convenience often leaks into a backend-for-frontend end",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/a44eada6fe5b0953c8d9.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/a44eada6fe5b0953c8d9.mp3",
+      "duration": 238.536
     },
     {
       "id": "listen-section-6",
+      "part": 0,
       "text": "Entra ID: authentication is not the authorization model For a React single-page application using Mi",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/7034614e56fcb7a3f7c6.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/7034614e56fcb7a3f7c6.mp3",
+      "duration": 138.888
     },
     {
       "id": "listen-section-7",
+      "part": 0,
       "text": "Rust microservices: type safety does not choose the boundary Suppose risk assessment runs in a Rust ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4e0ac48f56e473c692f8.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4e0ac48f56e473c692f8.mp3",
+      "duration": 251.304
     },
     {
       "id": "listen-section-8",
+      "part": 0,
       "text": "Reliability is part of the interaction design A design is incomplete until it shows failure and reco",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/23bfd0fa03229b73c7f9.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/23bfd0fa03229b73c7f9.mp3",
+      "duration": 152.928
     },
     {
       "id": "listen-section-9",
+      "part": 0,
       "text": "Security depth across the screen The one-page workspace expands the attack surface because it loads ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/f919e5e22d82a2458af0.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/f919e5e22d82a2458af0.mp3",
+      "duration": 148.656
     },
     {
       "id": "listen-section-10",
+      "part": 0,
       "text": "Maintainability and readability are operational controls Readable code reduces the time between dete",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/06aeae8c0bbd59b0bb29.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/06aeae8c0bbd59b0bb29.mp3",
+      "duration": 99.384
     },
     {
       "id": "listen-section-11",
+      "part": 0,
       "text": "When everything is vibe coded AI-assisted development changes the economics of producing code. It do",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4a21527d86622b482f2d.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4a21527d86622b482f2d.mp3",
+      "duration": 292.008
     },
     {
       "id": "listen-section-11",
+      "part": 1,
       "text": "- an assistant without the assessment.write capability cannot invoke a write tool, even for an autho",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/f36672239434d004b88f.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/f36672239434d004b88f.mp3",
+      "duration": 44.448
     },
     {
       "id": "listen-section-12",
+      "part": 0,
       "text": "Architecture review checklist Use this checklist before accepting a \u201csimplified\u201d UI. UI/UX - [ ] Is ",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/8bf1805423385d94405c.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/8bf1805423385d94405c.mp3",
+      "duration": 168.576
     },
     {
       "id": "listen-section-13",
+      "part": 0,
       "text": "Reflections The best UI often feels inevitable. That feeling is produced by careful decisions undern",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4d5a35a52bf4810edf63.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/4d5a35a52bf4810edf63.mp3",
+      "duration": 117.288
     },
     {
       "id": "listen-section-14",
+      "part": 0,
       "text": "Continue exploring - My application security practice and working method - Why authentication is not",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/15fa439d900a72c53079.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/15fa439d900a72c53079.mp3",
+      "duration": 11.304
     },
     {
       "id": "listen-section-15",
+      "part": 0,
       "text": "Further reading - Martin Fowler \u2014 Refactoring code that accesses external services - React \u2014 Managin",
-      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/b9ab8b3d8f3bab45dbc9.mp3"
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/b9ab8b3d8f3bab45dbc9.mp3",
+      "duration": 30.048
     }
   ]
 }
