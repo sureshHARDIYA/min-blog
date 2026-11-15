@@ -23,6 +23,7 @@ const copy = {
     results: (count: number) => `${count} ${count === 1 ? 'post' : 'posts'}`,
     empty: 'No matching posts. Try a different search.',
     read: 'Read note',
+    featured: 'Featured article',
     dateLocale: 'en-GB'
   },
   no: {
@@ -35,6 +36,7 @@ const copy = {
     results: (count: number) => `${count} innlegg`,
     empty: 'Ingen treff. Prøv et annet søk.',
     read: 'Les innlegget',
+    featured: 'Utvalgt artikkel',
     dateLocale: 'nb-NO'
   }
 }
@@ -98,11 +100,7 @@ export function BlogsContent({ posts }: { posts: BlogPostSummary[] }) {
         </div>
         <p className={`font-body-md mt-4 max-w-2xl ${muted}`}>{text.intro}</p>
 
-        <div
-          className={`mb-6 mt-9 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-y py-4 ${
-            light ? 'border-slate-300' : 'border-white/10'
-          }`}
-        >
+        <div className='mb-6 mt-9 flex flex-wrap items-center justify-between gap-x-6 gap-y-3'>
           <div
             role='search'
             aria-label={text.search}
@@ -160,11 +158,14 @@ export function BlogsContent({ posts }: { posts: BlogPostSummary[] }) {
 
         {results.length ? (
           <div className={blogPostGridClassName}>
-            {results.map((post) => (
+            {results.map((post, index) => (
               <BlogPostCard
                 key={post.slug}
                 post={post}
                 heading='h2'
+                featuredLabel={
+                  !terms.length && index === 0 ? text.featured : undefined
+                }
                 locale={text.dateLocale}
                 readLabel={text.read}
               />

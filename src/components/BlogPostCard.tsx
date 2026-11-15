@@ -25,11 +25,13 @@ export const blogPostGridClassName =
 export function BlogPostCard({
   post,
   heading: Heading,
+  featuredLabel,
   locale = 'en-GB',
   readLabel = 'Read note'
 }: {
   post: BlogPostSummary
   heading: 'h2' | 'h3'
+  featuredLabel?: string
   locale?: string
   readLabel?: string
 }) {
@@ -37,12 +39,23 @@ export function BlogPostCard({
 
   return (
     <article
-      className={`group relative flex h-full min-h-72 flex-col border p-6 shadow-sm transition-all duration-300 ${
+      className={`group relative flex h-full flex-col border p-6 shadow-sm transition-all duration-300 ${
+        featuredLabel ? 'col-span-full sm:p-8' : 'min-h-72'
+      } ${
         theme === 'light'
           ? 'border-slate-200 bg-white hover:border-[#008822] focus-within:border-[#008822] hover:shadow-md'
           : 'border-white/10 bg-[#141414] hover:border-[#00FF41] focus-within:border-[#00FF41]'
       }`}
     >
+      {featuredLabel && (
+        <p
+          className={`mb-4 font-code text-xs font-bold uppercase tracking-widest ${
+            theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
+          }`}
+        >
+          {featuredLabel}
+        </p>
+      )}
       <div className='mb-6 flex flex-wrap items-center gap-x-3 gap-y-2'>
         <time
           className={`font-code text-xs font-bold uppercase tracking-wider ${
@@ -66,7 +79,9 @@ export function BlogPostCard({
       </div>
 
       <Heading
-        className={`font-headline-md wrap-break-word transition-colors ${
+        className={`wrap-break-word transition-colors ${
+          featuredLabel ? 'font-headline-lg max-w-4xl' : 'font-headline-md'
+        } ${
           theme === 'light'
             ? 'text-slate-900 group-hover:text-[#008822]'
             : 'text-[#F5F5F5] group-hover:text-[#00FF41]'
@@ -80,9 +95,11 @@ export function BlogPostCard({
         </Link>
       </Heading>
       <p
-        className={`mt-4 line-clamp-3 text-sm leading-6 ${
-          theme === 'light' ? 'text-slate-600' : 'text-white/60'
-        }`}
+        className={`mt-4 ${
+          featuredLabel
+            ? 'font-body-sm max-w-3xl'
+            : 'line-clamp-3 text-sm leading-6'
+        } ${theme === 'light' ? 'text-slate-600' : 'text-white/60'}`}
       >
         {post.description}
       </p>
