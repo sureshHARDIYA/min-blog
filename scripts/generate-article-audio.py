@@ -46,7 +46,9 @@ def main():
     for article in ARTICLES.glob("*.md"):
         source = article.read_text()
         content = re.split(r"\n---\n", source, maxsplit=1)[-1].strip()
-        fingerprint = hashlib.sha256(content.encode()).hexdigest()
+        override_path = pathlib.Path("src/content/narration") / (article.stem + ".json")
+        override_bytes = override_path.read_bytes() if override_path.exists() else b""
+        fingerprint = hashlib.sha256(content.encode() + b"\\nNARRATION\\n" + override_bytes).hexdigest()
         destination = OUT / (article.stem + ".json")
         previous = json.loads(destination.read_text()) if destination.exists() else {}
         if previous.get("contentHash") == fingerprint and previous.get("voice") == VOICE and previous.get("storage") == "r2":
