@@ -1,0 +1,51 @@
+name: Generate article narration
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/blog/**'
+      - 'scripts/generate-article-audio.py'
+      - 'scripts/narration.py'
+      - 'src/content/narration/**'
+permissions:
+  contents: write
+  id-token: write
+concurrency:
+  group: article-audio
+  cancel-in-progress: false
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_AUDIO_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Audit article narration compatibility
+        run: python3 scripts/check-article-narration.py
+      - name: Install R2 client
+        run: python3 -m pip install --disable-pip-version-check boto3==1.35.99
+      - name: Generate and upload section audio
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+          ARTICLE_AUDIO_VOICE: en-US-Chirp3-HD-Leda
+        run: python3 scripts/generate-article-audio.py
+      - name: Commit updated manifests
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/audio
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh article narration manifests"
+            git push
+          fi
