@@ -37,3 +37,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# local AI agent tool state
+.claude-flow/
