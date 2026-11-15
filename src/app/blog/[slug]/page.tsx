@@ -9,6 +9,8 @@ import { AppSecSubscribeForm } from '../../../components/AppSecSubscribeForm'
 import { ArticleRecommendation } from '../../../components/ArticleRecommendation'
 import { AgentBaitingChart } from '../../../components/AgentBaitingChart'
 import { getAllPosts, getPost } from '../../../lib/blog'
+import { getArticleAudio } from '../../../lib/articleAudio'
+import { ArticleListen } from '../../../components/ArticleListen'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -129,6 +131,7 @@ export async function generateMetadata({
 async function BlogPostContent({ slug }: { slug: string }) {
   const post = await getPost(slug)
   if (!post) notFound()
+  const audioSegments = await getArticleAudio(post.slug, post.content)
   const posts = await getAllPosts()
   const currentIndex = posts.findIndex((candidate) => candidate.slug === slug)
   const newerPost = currentIndex > 0 ? posts[currentIndex - 1] : undefined
@@ -174,8 +177,9 @@ async function BlogPostContent({ slug }: { slug: string }) {
           </p>
         </header>
 
+        <ArticleListen segments={audioSegments} />
         <div className='blog-prose mt-7 wrap-break-word text-white/80 sm:mt-9'>
-          {markdownSections(post.content).map((section) => {
+          {markdownSections(post.content).map((section, sectionIndex) => {
             const title = sectionTitle(section)
             return (
               post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' &&
@@ -188,6 +192,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
                 </details>
               ) : (
                 <section
+                  id={`listen-section-${sectionIndex}`}
                   className={
                     title === 'Build it safely with AI'
                       ? 'blog-ai-playbook'
