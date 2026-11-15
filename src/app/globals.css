@@ -583,3 +583,27 @@ html.light .agentbaiting-data-table th, html.light .agentbaiting-data-table td {
 .article-listen-error { margin:.6rem 0 0; color:#dc2626; font-size:.82rem; }
 @media(max-width:650px) { .article-listen-main { flex-direction:column; align-items:stretch; gap:1rem; } .article-listen-transport { justify-content:center; } .article-listen-footer { display:grid; grid-template-columns:1fr; } .article-listen-field { width:100%; justify-content:space-between; } .article-listen-section select { max-width:75%; } .article-listen-volume input { width:60%; } .article-listen-badge { margin-left:4rem; } }
 @media(prefers-reduced-motion:reduce) { .article-listen button { transition:none; } }
+
+
+/* Floating compact player while the original player is above the viewport. */
+.article-listen-anchor { height:0; }
+.article-listen.article-listen-compact { position:fixed; z-index:45; top:var(--audio-sticky-top, 72px); left:50%; transform:translateX(-50%); width:min(calc(100% - 2rem), 1120px); margin:0; padding:.65rem 3rem .65rem 1rem; border-radius:1rem; box-shadow:0 8px 28px rgba(0,0,0,.2); }
+.article-listen-compact .article-listen-header { display:none; }
+.article-listen-compact .article-listen-main { margin:0; padding:0; border:0; }
+.article-listen-compact .article-listen-play { width:2.8rem; height:2.8rem; font-size:1rem; }
+.article-listen-compact .article-listen-skip { width:2.3rem; height:2.3rem; }
+.article-listen-compact .article-listen-footer, .article-listen-compact .article-listen-status { display:none; }
+.article-listen .article-listen-expand { display:none; }
+.article-listen-compact .article-listen-expand { display:grid; position:absolute; top:50%; right:.55rem; transform:translateY(-50%); width:2rem; height:2rem; border:1px solid var(--article-border); border-radius:50%; background:var(--article-surface); color:var(--article-text); }
+.article-listen-compact.article-listen-expanded .article-listen-footer, .article-listen-compact.article-listen-expanded .article-listen-status { display:flex; }
+.article-listen-compact.article-listen-expanded .article-listen-footer { margin-top:.8rem; }
+@media(max-width:650px) {
+  .article-listen.article-listen-compact { top:var(--audio-sticky-top-mobile, 60px); width:calc(100% - 1rem); padding:.5rem 2.5rem .5rem .65rem; }
+  .article-listen-compact .article-listen-main { flex-direction:row; gap:.7rem; }
+  .article-listen-compact .article-listen-transport { gap:.3rem; }
+  .article-listen-compact .article-listen-play { width:2.4rem; height:2.4rem; }
+  .article-listen-compact .article-listen-skip { width:2rem; height:2rem; font-size:1.25rem; }
+  .article-listen-compact .article-listen-timeline { gap:.3rem; }
+  .article-listen-compact .article-listen-time { font-size:.65rem; }
+  .article-listen-compact.article-listen-expanded .article-listen-footer { display:grid; }
+}
