@@ -665,3 +665,24 @@ html.light .agentbaiting-data-table th, html.light .agentbaiting-data-table td {
  .article-listen-compact.article-listen-expanded .article-listen-footer:not(.article-listen-footer-open) { display:none; }
  .article-listen-compact.article-listen-expanded .article-listen-footer.article-listen-footer-open { display:grid; }
 }
+
+
+/* Separate floating player: the full player never leaves article flow. */
+.article-listen-floating { position:fixed; left:50%; transform:translateX(-50%); z-index:49; width:min(calc(100vw - 20px),1120px); box-sizing:border-box; padding:8px 10px; border:1px solid var(--article-border); border-radius:0 0 14px 14px; background:var(--article-surface); color:var(--article-text); box-shadow:0 8px 18px #0002; }
+.article-listen-floating-row { display:flex; align-items:center; gap:8px; min-width:0; }
+.article-listen-floating button { display:grid; place-items:center; flex:none; width:34px; height:34px; border:1px solid var(--article-border); border-radius:50%; background:transparent; color:var(--article-text); cursor:pointer; }
+.article-listen-floating .article-listen-floating-play { background:var(--article-accent); color:white; border-color:var(--article-accent); }
+.article-listen-floating input[type=range] { flex:1; min-width:24px; width:auto; margin:0; accent-color:var(--article-accent); }
+.article-listen-floating-time { flex:none; font-size:11px; font-variant-numeric:tabular-nums; color:var(--article-muted); }
+.article-listen-floating-options { display:flex; gap:12px; padding:10px 4px 4px; border-top:1px solid var(--article-border); margin-top:8px; }
+.article-listen-floating-options label { display:flex; gap:8px; align-items:center; min-width:0; font-size:12px; }
+.article-listen-floating-options label:last-child { flex:1; }
+.article-listen-floating-options select { min-width:0; max-width:100%; padding:6px; border:1px solid var(--article-border); border-radius:6px; background:var(--article-surface); color:var(--article-text); }
+.article-listen-floating button:focus-visible,.article-listen-floating select:focus-visible,.article-listen-floating input:focus-visible { outline:2px solid var(--article-accent); outline-offset:2px; }
+@media(max-width:650px) {
+ .article-listen-floating { width:100%; border-left:0; border-right:0; border-radius:0 0 12px 12px; padding:7px 8px; }
+ .article-listen-floating-row { gap:5px; }
+ .article-listen-floating button { width:30px; height:30px; }
+ .article-listen-floating-time { font-size:10px; }
+ .article-listen-floating-options { flex-wrap:wrap; }
+}
