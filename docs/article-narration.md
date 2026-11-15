@@ -31,7 +31,7 @@ The blog generates section-level MP3s once using Google Cloud Text-to-Speech and
 - Each section uses a deterministic key derived from its voice and spoken text. Unchanged sections reuse existing audio.
 - Manifests in `src/content/audio/<slug>.json` contain only URLs and metadata, not MP3s. A new manifest commit triggers a site deployment.
 - The player is hidden when a manifest is absent or stale. Highlighting is section-level, not word-level.
-- A section longer than 4,500 UTF-8 bytes currently causes an explicit error rather than truncation; split the section before generating.
+- Long sections are automatically divided at word boundaries into synthesis-safe chunks, while the player continues highlighting the containing article section.
 - English Chirp voice is the current default. Norwegian articles require language/voice selection before generation.
 
 ## Cost and operations
