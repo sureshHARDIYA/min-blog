@@ -27,6 +27,8 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_AUDIO_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@v2
+      - name: Audit article narration compatibility
+        run: python3 scripts/check-article-narration.py
       - name: Install R2 client
         run: python3 -m pip install --disable-pip-version-check boto3==1.35.99
       - name: Generate and upload section audio
