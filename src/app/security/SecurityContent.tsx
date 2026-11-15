@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 import { useLanguage } from '../../i18n/LanguageContext'
 import copy from './copy.json'
+import { SecurityScorecard } from './SecurityScorecard'
+import type { SecurityScores } from '../../lib/securityScores'
 
 
-export function SecurityContent() {
+export function SecurityContent({ scores }: Readonly<{ scores: SecurityScores }>) {
   const { language } = useLanguage()
   const text = copy[language]
 
@@ -45,6 +47,8 @@ export function SecurityContent() {
         <div className='lg:col-span-5'><p className='font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]'>{text.verification}</p><h2 className='mt-3 text-3xl font-black tracking-tight md:text-4xl'>{text.evidenceTitle}</h2></div>
         <div className='lg:col-span-7'><p className='text-lg leading-8 text-white/75'>{text.evidence1}</p><p className='mt-5 text-lg leading-8 text-white/75'>{text.evidence2}</p></div>
       </div></section>
+
+      <SecurityScorecard scores={scores} text={text.scorecard} />
 
       <section className='px-6 py-20'><div className='mx-auto max-w-[1120px]'>
         <p className='font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]'>{text.method}</p><h2 className='mt-3 text-3xl font-black tracking-tight md:text-5xl'>{text.methodTitle}</h2>

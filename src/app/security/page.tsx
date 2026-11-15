@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getSecurityScores } from '../../lib/securityScores'
 import { SecurityContent } from './SecurityContent'
 
 const siteUrl = 'https://www.skmukhiya.com.np'
@@ -40,7 +41,9 @@ const securityJsonLd = {
   ]
 }
 
-export default function SecurityPage() {
+export default async function SecurityPage() {
+  const scores = await getSecurityScores()
+
   return (
     <>
       <script
@@ -49,7 +52,7 @@ export default function SecurityPage() {
         }}
         type='application/ld+json'
       />
-      <SecurityContent />
+      <SecurityContent scores={scores} />
     </>
   )
 }

@@ -77,7 +77,30 @@
         "Learn",
         "Use findings and incidents to improve the shared patterns, not only the application where they appeared."
       ]
-    ]
+    ],
+    "scorecard": {
+      "label": "This site, verified",
+      "title": "I hold my own site to the same standard",
+      "intro": "Independent scanners check this website and its source code. The results below refresh every hour, and each one links to the full public report.",
+      "viewReport": "View report",
+      "unavailable": "Check live",
+      "headersTitle": "HTTP security headers",
+      "headersSource": "Mozilla HTTP Observatory",
+      "headersDetail": "{passed} of {total} tests passed",
+      "codeTitle": "Code security rating",
+      "codeSource": "SonarCloud",
+      "codeDetail": "{count} open vulnerabilities",
+      "gateTitle": "Quality gate",
+      "gateSource": "SonarCloud",
+      "gatePassed": "Passed",
+      "gateFailed": "Failed",
+      "gateDetail": "Checked on every pull request",
+      "disclosureTitle": "Vulnerability reporting",
+      "disclosureSource": "security.txt (RFC 9116)",
+      "disclosureValue": "Open",
+      "disclosureDetail": "Private reporting with a published policy",
+      "codeDetailOne": "1 open vulnerability"
+    }
   },
   "no": {
     "navLabel": "Navigasjon for sikkerhetssiden",
@@ -157,7 +180,29 @@
         "Lære",
         "Bruk funn og hendelser til å forbedre felles mønstre, ikke bare applikasjonen der de oppstod."
       ]
-    ]
+    ],
+    "scorecard": {
+      "label": "Dette nettstedet, verifisert",
+      "title": "Jeg stiller samme krav til mitt eget nettsted",
+      "intro": "Uavhengige skannere kontrollerer dette nettstedet og kildekoden. Resultatene under oppdateres hver time, og hvert av dem lenker til den fullstendige offentlige rapporten.",
+      "viewReport": "Se rapport",
+      "unavailable": "Sjekk selv",
+      "headersTitle": "HTTP-sikkerhetshoder",
+      "headersSource": "Mozilla HTTP Observatory",
+      "headersDetail": "{passed} av {total} tester bestått",
+      "codeTitle": "Sikkerhetsvurdering av koden",
+      "codeSource": "SonarCloud",
+      "codeDetail": "{count} åpne sårbarheter",
+      "gateTitle": "Kvalitetsport",
+      "gateSource": "SonarCloud",
+      "gatePassed": "Bestått",
+      "gateFailed": "Ikke bestått",
+      "gateDetail": "Kontrolleres ved hver pull request",
+      "disclosureTitle": "Sårbarhetsrapportering",
+      "disclosureSource": "security.txt (RFC 9116)",
+      "disclosureValue": "Åpen",
+      "disclosureDetail": "Privat rapportering med publisert retningslinje",
+      "codeDetailOne": "1 åpen sårbarhet"
+    }
   }
 }
-

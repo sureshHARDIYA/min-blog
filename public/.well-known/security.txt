@@ -1,0 +1,6 @@
+Contact: https://github.com/sureshHARDIYA/min-blog/security/advisories/new
+Contact: mailto:itsmeskm99@gmail.com
+Expires: 2027-11-15T00:00:00.000Z
+Preferred-Languages: en, no
+Canonical: https://www.skmukhiya.com.np/.well-known/security.txt
+Policy: https://github.com/sureshHARDIYA/min-blog/blob/main/SECURITY.md
