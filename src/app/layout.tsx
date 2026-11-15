@@ -136,6 +136,8 @@ export default async function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        <link rel='alternate' type='application/rss+xml' title='Blog feed' href='/rss.xml' />
+        <link rel='alternate' type='application/rss+xml' title='Narrated articles (podcast)' href='/podcast.xml' />
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('app_theme')==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
       </head>
       <body className='bg-[#0C0C0C] text-white antialiased'>

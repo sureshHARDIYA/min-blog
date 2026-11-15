@@ -26,7 +26,8 @@ OUT = ROOT / "audio"
 USAGE_LEDGER = ROOT / "audio-usage.json"
 
 # Bump when the manifest shape changes so existing manifests are rewritten (audio is reused).
-MANIFEST_VERSION = 2
+MANIFEST_VERSION = 3
+DEFAULT_VOICES = {"en": "en-US-Chirp3-HD-Leda", "nb": "nb-NO-Chirp3-HD-Leda"}
 MAX_CHUNK_BYTES = 4200
 HARD_LIMIT_BYTES = 4500
 SHORT_SENTENCE_BYTES = 250
@@ -86,6 +87,12 @@ def mp3_duration(header, size):
     return round(size * 8 / (kilobits * 1000), 3)
 
 
+def article_language(frontmatter):
+    """`nb` when the frontmatter declares Norwegian (`lang: nb`, `no` or `nn`), else `en`."""
+    match = re.search(r"^lang(?:uage)?:\s*[\"']?(\w+)", frontmatter, flags=re.M)
+    return "nb" if match and match.group(1).lower() in ("no", "nb", "nn") else "en"
+
+
 def fingerprint_of(content, override_bytes):
     return hashlib.sha256(content.encode() + b"\\nNARRATION\\n" + override_bytes).hexdigest()
 
@@ -136,17 +143,16 @@ class Budget:
 
 
 class Synthesizer:
-    def __init__(self, voice, project_id, tokens, *, opener=urllib.request.urlopen, sleep=time.sleep):
-        self.voice = voice
+    def __init__(self, project_id, tokens, *, opener=urllib.request.urlopen, sleep=time.sleep):
         self.project_id = project_id
         self._tokens = tokens
         self._open = opener
         self._sleep = sleep
 
-    def _build_request(self, text):
+    def _build_request(self, text, voice):
         payload = {
             "input": {"text": text},
-            "voice": {"languageCode": self.voice[:5], "name": self.voice},
+            "voice": {"languageCode": voice[:5], "name": voice},
             "audioConfig": {"audioEncoding": "MP3"},
         }
         return urllib.request.Request(
@@ -176,11 +182,11 @@ class Synthesizer:
             is_long_sentence=error.code == 400 and "sentence" in lowered and "long" in lowered,
         )
 
-    def _request(self, text):
+    def _request(self, text, voice):
         has_refreshed_token = False
         for attempt in range(1, MAX_ATTEMPTS + 1):
             try:
-                with self._open(self._build_request(text), timeout=120) as response:
+                with self._open(self._build_request(text, voice), timeout=120) as response:
                     return base64.b64decode(json.load(response)["audioContent"])
             except HTTPError as error:
                 if error.code == 401 and not has_refreshed_token:
@@ -195,22 +201,22 @@ class Synthesizer:
             self._sleep(2 ** attempt)
         raise SynthesisError("Cloud Text-to-Speech retries were exhausted.")
 
-    def synthesize(self, text):
+    def synthesize(self, text, voice):
         try:
-            return self._request(text)
+            return self._request(text, voice)
         except SynthesisError as error:
             if not error.is_long_sentence:
                 raise
         # MP3 frames are self-contained, so separately synthesized pieces can be joined.
-        return b"".join(self._request(piece) for piece in chunks(shorten_sentences(text)))
+        return b"".join(self._request(piece, voice) for piece in chunks(shorten_sentences(text)))
 
 
 class Generator:
-    def __init__(self, *, storage, bucket, public_base, voice, synthesizer, budget):
+    def __init__(self, *, storage, bucket, public_base, voices, synthesizer, budget):
         self.storage = storage
         self.bucket = bucket
         self.public_base = public_base
-        self.voice = voice
+        self.voices = voices
         self.synthesizer = synthesizer
         self.budget = budget
         self.unchanged_articles = 0
@@ -231,15 +237,16 @@ class Generator:
         header = self.storage.get_object(Bucket=self.bucket, Key=key, Range="bytes=0-3")["Body"].read()  # NOSONAR python:S7608
         return mp3_duration(header, size) or 0
 
-    def _segment(self, article, index, part, chunk):
+    def _segment(self, article, index, part, chunk, voice, fresh_audio):
         if len(chunk.encode("utf-8")) > HARD_LIMIT_BYTES:
             raise ValueError(f"{article.name} has a single oversized word in section {index}")
-        section_hash = hashlib.sha256((self.voice + "\\n" + chunk).encode()).hexdigest()[:20]
+        section_hash = hashlib.sha256((voice + "\\n" + chunk).encode()).hexdigest()[:20]
         key = f"articles/{article.stem}/{section_hash}.mp3"
         duration = self._existing_duration(key)
         if duration is None:
             self.budget.charge(len(chunk))
-            audio = self.synthesizer.synthesize(chunk)
+            audio = self.synthesizer.synthesize(chunk, voice)
+            fresh_audio[key] = audio
             self.storage.put_object(  # NOSONAR python:S7608
                 Bucket=self.bucket,
                 Key=key,
@@ -256,39 +263,78 @@ class Generator:
             segment["duration"] = duration
         return segment
 
-    def _is_current(self, previous, fingerprint):
+    def _episode(self, article, segments, fresh_audio):
+        """One MP3 for the whole article (used by the podcast feed), built by joining segments."""
+        prefix = self.public_base + "/"
+        keys = [segment["url"][len(prefix):] for segment in segments]
+        if not keys:
+            return None
+        episode_hash = hashlib.sha256("\n".join(keys).encode()).hexdigest()[:20]
+        key = f"articles/{article.stem}/episode-{episode_hash}.mp3"
+        try:
+            size = self.storage.head_object(Bucket=self.bucket, Key=key)["ContentLength"]  # NOSONAR python:S7608
+        except Exception as error:  # botocore ClientError, see _existing_duration
+            code = getattr(error, "response", {}).get("Error", {}).get("Code")
+            if code not in MISSING_OBJECT_CODES:
+                raise
+            # MP3 frames are self-contained, so constant-bitrate segments can simply be joined.
+            audio = b"".join(
+                fresh_audio.get(segment_key)
+                or self.storage.get_object(Bucket=self.bucket, Key=segment_key)["Body"].read()  # NOSONAR python:S7608
+                for segment_key in keys
+            )
+            self.storage.put_object(  # NOSONAR python:S7608
+                Bucket=self.bucket,
+                Key=key,
+                Body=audio,
+                ContentType="audio/mpeg",
+                CacheControl="public, max-age=31536000, immutable",
+            )
+            size = len(audio)
+        duration = round(sum(segment.get("duration", 0) for segment in segments), 3)
+        return {"url": f"{self.public_base}/{key}", "bytes": size, "duration": duration}
+
+    def _is_current(self, previous, fingerprint, voice):
         return (
             previous.get("version") == MANIFEST_VERSION
             and previous.get("contentHash") == fingerprint
-            and previous.get("voice") == self.voice
+            and previous.get("voice") == voice
             and previous.get("storage") == "r2"
             and previous.get("publicBaseUrl") == self.public_base
         )
 
     def process(self, article):
-        content = re.split(r"\n---\n", article.read_text(), maxsplit=1)[-1].strip()
+        frontmatter, _, body = article.read_text().partition("\n---\n")
+        content = (body or frontmatter).strip()
+        language = article_language(frontmatter if body else "")
+        voice = self.voices[language]
         override_path = OVERRIDES / (article.stem + ".json")
         override_bytes = override_path.read_bytes() if override_path.exists() else b""
         fingerprint = fingerprint_of(content, override_bytes)
         destination = OUT / (article.stem + ".json")
         previous = json.loads(destination.read_text()) if destination.exists() else {}
-        if self._is_current(previous, fingerprint):
+        if self._is_current(previous, fingerprint, voice):
             self.unchanged_articles += 1
             return
         segments = []
+        fresh_audio = {}
         sections = [section for section in re.split(r"(?=^## )", content, flags=re.M) if section]
         for index, section in enumerate(sections):
-            text = narration_text(section, article.stem, index)
+            text = narration_text(section, article.stem, index, language)
             for part, chunk in enumerate(chunks(text)):
-                segments.append(self._segment(article, index, part, chunk))
+                segments.append(self._segment(article, index, part, chunk, voice, fresh_audio))
         manifest = {
             "version": MANIFEST_VERSION,
             "contentHash": fingerprint,
-            "voice": self.voice,
+            "voice": voice,
+            "language": language,
             "storage": "r2",
             "publicBaseUrl": self.public_base,
             "segments": segments,
         }
+        episode = self._episode(article, segments, fresh_audio)
+        if episode:
+            manifest["episode"] = episode
         destination.write_text(json.dumps(manifest, indent=2) + "\n")
 
     def run(self, articles):
@@ -332,7 +378,10 @@ def main():
 
     month = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m")
     ledger, used_this_month = load_usage(month)
-    voice = os.environ.get("ARTICLE_AUDIO_VOICE", "en-US-Chirp3-HD-Leda")
+    voices = {
+        "en": os.environ.get("ARTICLE_AUDIO_VOICE") or DEFAULT_VOICES["en"],
+        "nb": os.environ.get("ARTICLE_AUDIO_VOICE_NB") or DEFAULT_VOICES["nb"],
+    }
     budget = Budget(
         env_int("ARTICLE_AUDIO_MAX_CHARS_PER_RUN", DEFAULT_MAX_CHARS_PER_RUN),
         env_int("ARTICLE_AUDIO_MAX_CHARS_PER_MONTH", DEFAULT_MAX_CHARS_PER_MONTH),
@@ -348,8 +397,8 @@ def main():
         ),
         bucket=os.environ["R2_BUCKET"],
         public_base=os.environ["R2_PUBLIC_BASE_URL"].rstrip("/"),
-        voice=voice,
-        synthesizer=Synthesizer(voice, os.environ["ARTICLE_AUDIO_GCP_PROJECT"], TokenSource()),
+        voices=voices,
+        synthesizer=Synthesizer(os.environ["ARTICLE_AUDIO_GCP_PROJECT"], TokenSource()),
         budget=budget,
     )
     failures = generator.run(sorted(ARTICLES.glob("*.md")))

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import App from '../../App';
-import { getNavTabFromPath } from '../../types';
+import { getNavTabFromPath, isKnownAppPath } from '../../types';
 
 const routeMeta: Record<string, { title: string; description: string }> = {
   trajectory: {
@@ -47,5 +48,9 @@ export default async function CatchAllPage({
   params: Promise<{ slug?: string[] }>;
 }) {
   const { slug = [] } = await params;
+  if (!isKnownAppPath(slug)) {
+    notFound();
+  }
+
   return <App initialTab={getNavTabFromPath(`/${slug[0] || ''}`)} />;
 }

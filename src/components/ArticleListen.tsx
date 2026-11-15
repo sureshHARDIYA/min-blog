@@ -12,6 +12,11 @@ import { createPortal } from 'react-dom'
 
 import './article-listen.css'
 import {
+  clearListenProgress,
+  readListenProgress,
+  saveListenProgress
+} from './listenProgress'
+import {
   forgetAudioSyncMode,
   useAudioBeats,
   useAudioSyncMode
@@ -47,6 +52,9 @@ type IconName =
 
 const RATES = [0.75, 1, 1.25, 1.5, 2]
 const SKIP_SECONDS = 15
+const SAVE_INTERVAL_SECONDS = 5
+/** Start fetching the next section this long before the current one ends. */
+const PRELOAD_LEAD_SECONDS = 30
 const BEAT_COUNT = 32
 const MINI_BEAT_COUNT = 4
 const PLAY_ERROR = 'Audio could not be played. Please try again.'
@@ -281,6 +289,46 @@ export function ArticleListen({
   const lastIndex = tracks.length - 1
   const active = tracks[index]
 
+  // Restore where the reader stopped last time. Nothing is saved until they press play.
+  const pendingSeek = useRef(0)
+  const lastSavedAt = useRef(0)
+  const [isResumed, setIsResumed] = useState(false)
+  useEffect(() => {
+    const saved = readListenProgress(tracks.length)
+    if (!saved) return
+    pendingSeek.current = saved.seconds
+    setIndex(saved.index)
+    setPosition(saved.seconds)
+    setIsResumed(true)
+  }, [tracks.length])
+
+  // Warm the next section shortly before the current one ends to shorten the gap.
+  const warmed = useRef<HTMLAudioElement | null>(null)
+  useEffect(
+    () => () => {
+      warmed.current?.removeAttribute('src')
+      warmed.current?.load()
+    },
+    []
+  )
+  const trackProgress = (el: HTMLAudioElement) => {
+    const seconds = el.currentTime
+    setPosition(seconds)
+    if (Math.abs(seconds - lastSavedAt.current) >= SAVE_INTERVAL_SECONDS) {
+      lastSavedAt.current = seconds
+      saveListenProgress({ index, seconds })
+    }
+    const next = tracks[index + 1]
+    const isNearEnd = el.duration - seconds < PRELOAD_LEAD_SECONDS
+    if (next && isNearEnd && warmed.current?.src !== next.url) {
+      const preload = new Audio()
+      if (useCors) preload.crossOrigin = 'anonymous'
+      preload.preload = 'auto'
+      preload.src = next.url
+      warmed.current = preload
+    }
+  }
+
   // The mini player is portaled inside the article theme scope so its colour tokens resolve.
   useEffect(() => {
     setPortalTarget(
@@ -333,11 +381,15 @@ export function ArticleListen({
   const goTo = (next: number, keepPlaying = playing) => {
     if (next === index || next < 0 || next > lastIndex) return
     continuePlaying.current = keepPlaying
+    pendingSeek.current = 0
+    lastSavedAt.current = 0
+    setIsResumed(false)
     setLive(false)
     setPosition(0)
     setDuration(0)
     setError('')
     setIndex(next)
+    if (hasStarted.current) saveListenProgress({ index: next, seconds: 0 })
   }
   const toggle = () => {
     const el = audio.current
@@ -430,8 +482,14 @@ export function ArticleListen({
   const totalSeconds = hasDurations
     ? segments.reduce((sum, segment) => sum + (segment.duration ?? 0), 0)
     : 0
-  const progress = duration ? Math.min(100, (position / duration) * 100) : 0
+  const progress = shownDuration
+    ? Math.min(100, (position / shownDuration) * 100)
+    : 0
   const progressStyle = { '--listen-progress': `${progress}%` } as CSSProperties
+  const idleEyebrow = isResumed
+    ? 'Continue listening'
+    : 'Listen to this article'
+  const eyebrow = playing ? 'Now playing' : idleEyebrow
   const playLabel = playing ? 'Pause narration' : 'Play narration'
   const scrubber = (
     <input
@@ -473,11 +531,23 @@ export function ArticleListen({
           onWaiting={() => setLive(false)}
           onPause={(e) => {
             setLive(false)
+            if (!e.currentTarget.ended)
+              saveListenProgress({
+                index,
+                seconds: e.currentTarget.currentTime
+              })
             if (!(e.currentTarget.ended && index < lastIndex)) setPlaying(false)
           }}
-          onTimeUpdate={(e) => setPosition(e.currentTarget.currentTime)}
+          onTimeUpdate={(e) => trackProgress(e.currentTarget)}
           onLoadedMetadata={(e) => {
             setDuration(e.currentTarget.duration)
+            if (pendingSeek.current > 0) {
+              e.currentTarget.currentTime = Math.min(
+                pendingSeek.current,
+                Math.max(0, e.currentTarget.duration - 1)
+              )
+              pendingSeek.current = 0
+            }
             e.currentTarget.defaultPlaybackRate = rate
             e.currentTarget.playbackRate = rate
           }}
@@ -496,6 +566,7 @@ export function ArticleListen({
           onEnded={() => {
             if (index < lastIndex) goTo(index + 1, true)
             else {
+              clearListenProgress()
               setPlaying(false)
               setLive(false)
               setPosition(0)
@@ -515,9 +586,7 @@ export function ArticleListen({
             <Icon name={playing ? 'pause' : 'play'} size={28} />
           </button>
           <div className='listen-now'>
-            <p className='listen-eyebrow'>
-              {playing ? 'Now playing' : 'Listen to this article'}
-            </p>
+            <p className='listen-eyebrow'>{eyebrow}</p>
             <h2 className='listen-title'>{active.label}</h2>
             <p className='listen-meta'>
               Section {active.sectionOrdinal} of {sectionCount}

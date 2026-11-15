@@ -15,6 +15,8 @@ export interface BlogPost {
   seoDescription?: string;
   date: string;
   category: string;
+  /** BCP 47 language of the article: `en` (default) or `nb` for Norwegian. */
+  lang: 'en' | 'nb';
   content: string;
 }
 
@@ -86,6 +88,7 @@ export async function getPost(slug: string): Promise<BlogPost | null> {
       date: metadata.date,
       category:
         metadata.category || (slug.startsWith('appsec-') ? 'AppSec Brief' : 'Field Notes'),
+      lang: /^(no|nb|nn)\b/i.test(metadata.lang ?? metadata.language ?? '') ? 'nb' : 'en',
       content,
     };
   } catch (error) {

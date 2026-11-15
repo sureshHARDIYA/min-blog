@@ -37,24 +37,58 @@ function toSegment(value: unknown, baseUrl: string): ListenSegment | null {
   return hasDuration ? { id, text, url, duration } : { id, text, url }
 }
 
-/**
- * Narration segments for an article, or an empty list when audio is absent or stale.
- * A missing manifest is normal (audio pending). A corrupt one is logged, never thrown,
- * so the visual article always renders.
- */
+/** One MP3 holding the whole narrated article, used by the podcast feed. */
+export interface ArticleEpisode {
+  url: string
+  bytes: number
+  duration: number
+}
+
+export interface ArticleAudio {
+  segments: ListenSegment[]
+  episode: ArticleEpisode | null
+}
+
+const NO_AUDIO: ArticleAudio = { segments: [], episode: null }
+
+function toEpisode(value: unknown, baseUrl: string): ArticleEpisode | null {
+  if (typeof value !== 'object' || value === null) return null
+  const { url, bytes, duration } = value as Record<string, unknown>
+  const isValid =
+    typeof url === 'string' &&
+    url.startsWith(`${baseUrl}/`) &&
+    typeof bytes === 'number' &&
+    bytes > 0 &&
+    typeof duration === 'number' &&
+    duration > 0
+  return isValid ? { url, bytes, duration } : null
+}
+
+/** Narration segments for an article, or an empty list when audio is absent or stale. */
 export async function getArticleAudio(
   slug: string,
   content: string
 ): Promise<ListenSegment[]> {
+  return (await getArticleAudioDetails(slug, content)).segments
+}
+
+/**
+ * Narration for an article. A missing manifest is normal (audio pending). A corrupt one
+ * is logged, never thrown, so the visual article always renders.
+ */
+export async function getArticleAudioDetails(
+  slug: string,
+  content: string
+): Promise<ArticleAudio> {
   try {
     const raw = await readOptional(
       path.join(CONTENT_DIR, 'audio', `${slug}.json`)
     )
-    if (raw === null) return []
+    if (raw === null) return NO_AUDIO
     const data: unknown = JSON.parse(raw)
     if (typeof data !== 'object' || data === null)
       throw new Error('manifest is not an object')
-    const { contentHash, publicBaseUrl, segments } = data as Record<
+    const { contentHash, publicBaseUrl, segments, episode } = data as Record<
       string,
       unknown
     >
@@ -67,7 +101,7 @@ export async function getArticleAudio(
       .update(String.raw`\nNARRATION\n`)
       .update(overrides)
       .digest('hex')
-    if (contentHash !== hash) return []
+    if (contentHash !== hash) return NO_AUDIO
     if (
       typeof publicBaseUrl !== 'string' ||
       !publicBaseUrl.startsWith('https://') ||
@@ -77,12 +111,15 @@ export async function getArticleAudio(
     const valid = segments.map((segment) => toSegment(segment, publicBaseUrl))
     if (valid.includes(null))
       throw new Error('manifest contains an invalid segment')
-    return valid as ListenSegment[]
+    return {
+      segments: valid as ListenSegment[],
+      episode: toEpisode(episode, publicBaseUrl)
+    }
   } catch (error: unknown) {
     console.error(
       `[article-audio] Ignoring narration manifest for "${slug}":`,
       error
     )
-    return []
+    return NO_AUDIO
   }
 }

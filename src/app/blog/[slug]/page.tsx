@@ -159,7 +159,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
         type='application/ld+json'
       />
-      <article className='mx-auto max-w-[55.2rem] px-6 pb-16 pt-9 sm:px-8 sm:pt-12'>
+      <article className='mx-auto max-w-[55.2rem] px-6 pb-16 pt-9 sm:px-8 sm:pt-12' lang={post.lang}>
         <Link
           className='inline-flex items-center gap-2 text-sm font-medium text-[var(--article-muted)] transition-colors hover:text-[var(--article-accent)] hover:underline'
           href='/blogs'

@@ -3,7 +3,7 @@
     "home": "Home",
     "label": "Privacy",
     "title": "Privacy notice",
-    "updated": "Last updated 9 September 2026",
+    "updated": "Last updated 15 November 2026",
     "sections": [
       [
         "Optional analytics",
@@ -16,6 +16,10 @@
       [
         "Your choice",
         "Your analytics preference is stored locally in your browser. You can withdraw or reset the choice by clearing this site’s browser storage, then revisiting the site and selecting a new option."
+      ],
+      [
+        "Listening position",
+        "If you play an article's narration, your browser remembers where you stopped so you can continue later. This is kept only in your browser for up to 30 days, is never sent to the website or to third parties, and is removed when you clear this site's browser storage."
       ],
       [
         "Other services",
@@ -31,7 +35,7 @@
     "home": "Hjem",
     "label": "Personvern",
     "title": "Personvernerklæring",
-    "updated": "Sist oppdatert 9. september 2026",
+    "updated": "Sist oppdatert 15. november 2026",
     "sections": [
       [
         "Valgfri analyse",
@@ -46,6 +50,10 @@
         "Analysevalget lagres lokalt i nettleseren. Du kan trekke tilbake eller nullstille valget ved å slette nettstedets nettleserdata, besøke siden på nytt og velge et nytt alternativ."
       ],
       [
+        "Lytteposisjon",
+        "Hvis du spiller av opplesingen av en artikkel, husker nettleseren hvor du stoppet, slik at du kan fortsette senere. Dette lagres bare i nettleseren din i opptil 30 dager, sendes aldri til nettstedet eller tredjeparter, og fjernes når du sletter nettstedets nettleserlagring."
+      ],
+      [
         "Andre tjenester",
         "Kontaktskjemaer kan bruke sikkerhetskontroller som reCAPTCHA for å hindre misbruk. Eksterne lenker, blant annet GitHub og LinkedIn, følger personvernpraksisen til den aktuelle tjenesten når du åpner dem."
       ],
@@ -56,4 +64,3 @@
     ]
   }
 }
-
