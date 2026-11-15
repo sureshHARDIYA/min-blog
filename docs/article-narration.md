@@ -1,27 +1,43 @@
-# Article narration (Google Chirp 3 HD)
+# Article narration: Google Chirp 3 HD + Cloudflare R2
 
-The blog uses pre-generated, section-level MP3 files. Readers never call Google TTS.
+The blog generates section-level MP3s once using Google Cloud Text-to-Speech and stores them in Cloudflare R2 Standard storage. Readers fetch public MP3s directly from R2; no per-listen synthesis. Oracle Cloud Object Storage is a viable alternative, but R2 is preferred for public audio delivery.
 
-## Google Cloud setup
+## Google Cloud (synthesis only)
 
-1. Create or choose a Google Cloud project with billing enabled. Enable **Cloud Text-to-Speech API** and **Cloud Storage API**.
-2. Create a dedicated GCS bucket for audio. Give public **read-only** access to audio objects (if public access prevention is enforced, use a CDN or signed delivery instead). Avoid putting credentials or private data in the bucket.
-3. Create a service account with Text-to-Speech permission and **Storage Object Creator** plus **Storage Object Viewer** on the audio bucket. Configure GitHub Actions Workload Identity Federation, restricted to this repository and its main branch. Do not upload a JSON key.
-4. Configure repository secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` and `GCP_AUDIO_SERVICE_ACCOUNT`, and repository variable `ARTICLE_AUDIO_BUCKET` (bucket name only).
-5. Trigger **Generate article narration** via Actions → Run workflow. The job generates `src/content/audio/<slug>.json` manifests and commits them, causing a normal deployment. On subsequent edits to `src/content/blog/*.md`, the workflow runs automatically.
+1. Enable billing and the **Cloud Text-to-Speech API** for a Google Cloud project.
+2. Create a dedicated service account permitted to invoke Text-to-Speech, and configure **GitHub Actions Workload Identity Federation** with trust restricted to this repository and the main branch.
+3. Add GitHub Actions secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` and `GCP_AUDIO_SERVICE_ACCOUNT`. No long-lived Google service-account JSON key is needed.
 
-## Updates and billing
+## Cloudflare R2 (storage and delivery)
 
-- Each article's Markdown body is SHA-256 hashed. Unchanged articles are skipped.
-- Each section's narration text plus voice is hashed to form an immutable object name; unchanged sections are reused across edits.
-- The player appears only when the matching manifest exists. During regeneration, the page temporarily hides stale narration.
-- Section-level highlighting follows the active MP3, not individual words. Word-level highlighting requires timestamps from a separate forced-alignment step.
-- Cloud billing must be enabled even if usage is within a free allowance. Set a budget alert and monitor TTS character usage and GCS storage/egress. A budget alert **does not** automatically stop spending.
-- Long Markdown sections over 4500 UTF-8 bytes currently fail with an actionable error. Split large sections before generating; never silently truncate narration.
-- The pipeline currently uses the English voice `en-US-Chirp3-HD-Leda`. For Norwegian posts, add language metadata and voice selection before enabling those articles.
+1. Create a Cloudflare R2 **Standard** bucket, e.g. `blog-audio`. R2 Standard has a free monthly allowance; usage beyond free limits may be charged.
+2. Attach a public **custom domain** such as `audio.skmukhiya.com.np` to this bucket. Do not use a development `r2.dev` endpoint for production traffic.
+3. Create an R2 API token scoped to **this bucket only** with Object Read & Write. Store the generated access key ID and secret access key in GitHub Actions secrets. Never expose these credentials in browser code.
+4. Configure the following GitHub repository settings:
 
-## Operations
+| Type | Name | Value |
+| --- | --- | --- |
+| Secret | `R2_ACCOUNT_ID` | Cloudflare account ID |
+| Secret | `R2_ACCESS_KEY_ID` | Bucket-scoped R2 access key |
+| Secret | `R2_SECRET_ACCESS_KEY` | Bucket-scoped R2 secret key |
+| Variable | `R2_BUCKET` | Bucket name, e.g. `blog-audio` |
+| Variable | `R2_PUBLIC_BASE_URL` | Public HTTPS URL, e.g. `https://audio.skmukhiya.com.np` |
 
-- To change the voice, edit `ARTICLE_AUDIO_VOICE` in the workflow and rerun the job. Old immutable objects can be lifecycle-deleted after a retention period.
-- For a one-off regeneration, use workflow_dispatch. It is idempotent for unchanged content.
-- To remove narration for a post, delete its manifest. Remove obsolete audio objects using a bucket lifecycle policy after a suitable delay.
+5. Merge the PR, then trigger **Generate article narration** manually once from GitHub Actions. The workflow scans existing articles and commits audio manifests. Subsequent changes to blog Markdown trigger automatic generation.
+
+## How updates work
+
+- SHA-256 of the Markdown body controls whether a manifest is current. SEO/frontmatter-only changes do not regenerate narration.
+- Each section uses a deterministic key derived from its voice and spoken text. Unchanged sections reuse existing audio.
+- Manifests in `src/content/audio/<slug>.json` contain only URLs and metadata, not MP3s. A new manifest commit triggers a site deployment.
+- The player is hidden when a manifest is absent or stale. Highlighting is section-level, not word-level.
+- A section longer than 4,500 UTF-8 bytes currently causes an explicit error rather than truncation; split the section before generating.
+- English Chirp voice is the current default. Norwegian articles require language/voice selection before generation.
+
+## Cost and operations
+
+- Google Chirp TTS usage and Cloudflare R2 storage/requests are **separate**. Check current free-tier pricing and configure billing alerts; free-tier eligibility is not a guarantee of zero cost.
+- Use the R2 Standard storage class to qualify for its free allowance. Direct R2 egress is free, but excessive read requests can incur charges.
+- Configure a bucket lifecycle rule to clean up superseded immutable MP3s after an appropriate retention period. Avoid a rule that deletes currently referenced audio.
+- To regenerate with a new voice, change `ARTICLE_AUDIO_VOICE` in the workflow and rerun.
+- No storage provider credentials are used by the website at runtime.
