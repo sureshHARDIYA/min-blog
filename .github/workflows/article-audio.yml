@@ -25,9 +25,15 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_AUDIO_SERVICE_ACCOUNT }}
       - uses: google-github-actions/setup-gcloud@v2
+      - name: Install R2 client
+        run: python3 -m pip install --disable-pip-version-check boto3==1.35.99
       - name: Generate and upload section audio
         env:
-          ARTICLE_AUDIO_BUCKET: ${{ vars.ARTICLE_AUDIO_BUCKET }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
           ARTICLE_AUDIO_VOICE: en-US-Chirp3-HD-Leda
         run: python3 scripts/generate-article-audio.py
       - name: Commit updated manifests
