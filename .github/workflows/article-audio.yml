@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/content/blog/**'
       - 'scripts/generate-article-audio.py'
+      - 'scripts/narration.py'
+      - 'src/content/narration/**'
 permissions:
   contents: write
   id-token: write
