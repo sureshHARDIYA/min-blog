@@ -38,7 +38,7 @@ def chunks(text, max_bytes=4200):
     if current:
         yield ' '.join(current)
 
-def synthesize(text):
+def synthesize(text, *, allow_sentence_retry=True):
     payload = json.dumps({"input":{"text":text},"voice":{"languageCode":VOICE[:5],"name":VOICE},"audioConfig":{"audioEncoding":"MP3"}}).encode()
     request = urllib.request.Request(
         "https://texttospeech.googleapis.com/v1/text:synthesize",
@@ -62,6 +62,18 @@ def synthesize(text):
             details.get("status", error.reason),
         )
         message = details.get("message", "Google returned no error details.")
+        if (
+            allow_sentence_retry
+            and error.code == 400
+            and "sentences that are too long" in message.lower()
+        ):
+            shorter = []
+            for sentence in re.split(r"(?<=[.!?])\s+", text):
+                for part in chunks(sentence, max_bytes=250):
+                    shorter.append(part if part.endswith((".", "!", "?")) else part + ".")
+            revised = " ".join(shorter)
+            if revised != text and len(revised.encode("utf-8")) <= 4500:
+                return synthesize(revised, allow_sentence_retry=False)
         raise RuntimeError(
             f"Cloud Text-to-Speech failed for project {PROJECT_ID} "
             f"(HTTP {error.code}, {reason}): {message}"
