@@ -7,7 +7,7 @@ const SECURITY_HEADERS = [
   {
     key: 'Permissions-Policy',
     value:
-      'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()'
+      'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
   },
   // Allows the reCAPTCHA popup flow while isolating the page from other openers.
   { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' }
