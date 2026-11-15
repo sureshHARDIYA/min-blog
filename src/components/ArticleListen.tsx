@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 function PlayerIcon({ name, size = 20 }: { name: 'headphones' | 'back' | 'forward' | 'play' | 'pause' | 'volume' | 'list' | 'chevron'; size?: number }) {
   const paths: Record<string, React.ReactNode> = {
@@ -23,6 +24,8 @@ const formatTime = (seconds: number) => {
 export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const audio = useRef<HTMLAudioElement>(null)
   const anchor = useRef<HTMLDivElement>(null)
+  const playerSection = useRef<HTMLElement>(null)
+  const [mounted, setMounted] = useState(false)
   const [compact, setCompact] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [headerBottom, setHeaderBottom] = useState(0)
@@ -36,10 +39,11 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const [error, setError] = useState('')
   const [showOptions, setShowOptions] = useState(false)
   useEffect(() => {
+    setMounted(true)
     const update = () => {
       const bottom = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
       setHeaderBottom(Math.max(0, bottom))
-      if (anchor.current) setCompact(anchor.current.getBoundingClientRect().top < -bottom - 24)
+      if (playerSection.current) setCompact(playerSection.current.getBoundingClientRect().bottom <= Math.max(0, bottom))
     }
     update()
     window.addEventListener('scroll', update, { passive: true })
@@ -87,7 +91,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const sectionLabel = (segment: ListenSegment, number: number) =>
     `Section ${number + 1}: ${segment.text.trim().slice(0, 65) || 'Narration'}`
 
-  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section className='article-listen' aria-label='Listen to this article'>
+  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section ref={playerSection} className='article-listen' aria-label='Listen to this article'>
     <audio ref={audio} src={active.url} preload='metadata'
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
       onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
@@ -130,7 +134,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
     <p className='article-listen-status'>Section {index + 1} of {segments.length} · Highlights follow narration</p>
     {error && <p className='article-listen-error' role='alert'>{error}</p>}
   </section>
-    {compact && <aside className='article-listen-floating' style={{ top: headerBottom }} aria-label='Floating audio controls'>
+    {mounted && compact && createPortal(<aside className='article-listen-floating' style={{ top: headerBottom }} aria-label='Floating audio controls'>
       <div className='article-listen-floating-row'>
         <button type='button' onClick={() => seek(-15)} aria-label='Back 15 seconds'><PlayerIcon name='back' size={20} /></button>
         <button type='button' className='article-listen-floating-play' onClick={play} aria-label={playing ? 'Pause narration' : 'Play narration'}><PlayerIcon name={playing ? 'pause' : 'play'} size={20} /></button>
@@ -144,6 +148,6 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
         <label>Speed <select aria-label='Floating playback speed' value={rate} onChange={e => { const next = Number(e.target.value); setRate(next); if (audio.current) audio.current.playbackRate = next }}>{[0.75,1,1.25,1.5,2].map(n => <option key={n} value={n}>{n}×</option>)}</select></label>
         <label>Section <select aria-label='Floating section selection' value={index} onChange={e => selectSection(Number(e.target.value))}>{segments.map((segment,i) => <option key={segment.id} value={i}>{sectionLabel(segment,i)}</option>)}</select></label>
       </div>}
-    </aside>}
+    </aside>, document.body)}
   </>
 }
