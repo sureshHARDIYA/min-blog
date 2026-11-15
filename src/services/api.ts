@@ -286,7 +286,7 @@ const MOCK_RESEARCH_PAPERS: ResearchPaper[] = [
     authors: ['Suresh Kumar Mukhiya', 'Jon Atle Gulla (Supervisor)', 'Jon Espen Ingvaldsen (Supervisor)'],
     citations: 35,
     abstract: 'Proposes a methodology for revealing deep content interaction models from real-life web log data of Adresseavisen, a regional news publisher in Norway.',
-    url: 'http://hdl.handle.net/11250/2411539',
+    url: 'https://hdl.handle.net/11250/2411539',
     topics: ['Master Thesis', 'Process Mining', 'Web Logs', 'NTNU', 'User Modeling'],
   },
   {
