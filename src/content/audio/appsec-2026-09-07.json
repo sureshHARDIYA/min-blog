@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "54729e5fb0720d2dcdf3226434bd210253bcbed4ba2804c200c8b50bbc2b1532",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -33,5 +34,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/7f0cbf3a8ade0c24d3bf.mp3",
       "duration": 26.328
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-07/episode-139deccfeb1ea2ee6195.mp3",
+    "bytes": 675456,
+    "duration": 168.864
+  }
 }

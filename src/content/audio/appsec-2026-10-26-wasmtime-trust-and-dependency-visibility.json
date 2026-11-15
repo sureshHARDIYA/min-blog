@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "c18764a7c04282ae25099423f93e0caedb7a2edfc44f7fa8ef0a0a51bb615e17",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -82,5 +83,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/1e99f2d2da1637d1fd60.mp3",
       "duration": 95.856
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-26-wasmtime-trust-and-dependency-visibility/episode-9ecc344451a4d6cb2490.mp3",
+    "bytes": 4098720,
+    "duration": 1024.68
+  }
 }

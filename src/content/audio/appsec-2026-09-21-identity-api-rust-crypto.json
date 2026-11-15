@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "b47ad7c14102fa9fdca5578e603d963948049118622ee1afd0fbf8dc064fbdb8",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -89,5 +90,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/dda0ce4185f010189bb1.mp3",
       "duration": 30.048
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-21-identity-api-rust-crypto/episode-71280d59623d229e9a77.mp3",
+    "bytes": 4491552,
+    "duration": 1122.888
+  }
 }

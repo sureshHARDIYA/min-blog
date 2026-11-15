@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "ab5a3a9839b74a6f6e9d094c5e2ad9cb64053c8c7a47df027692965773e6e4af",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -131,5 +132,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/435ba1770fe0b182d6a4.mp3",
       "duration": 30.048
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/the-api-knew-who-i-was-authorization/episode-43cecb7d8db8ec3aafa6.mp3",
+    "bytes": 6821376,
+    "duration": 1705.344
+  }
 }

@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "6d68485e5228e02747eb81071a138e57e47d51160b4e89d37740097a9d0f8171",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -82,5 +83,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/3a120ea52e9709efa7f0.mp3",
       "duration": 86.496
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/episode-6dc92a39edb478e936b9.mp3",
+    "bytes": 3040800,
+    "duration": 760.2
+  }
 }

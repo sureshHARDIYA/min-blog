@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "b19894e5aa26febc02396d6ab22ed4b936a39629f034599a2fdd48033bcd7466",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -82,5 +83,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/04b2d63d7885f0e6a433.mp3",
       "duration": 76.584
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-09-build-identity-and-http-boundaries/episode-ba97c06bda175cc0c526.mp3",
+    "bytes": 4246080,
+    "duration": 1061.52
+  }
 }

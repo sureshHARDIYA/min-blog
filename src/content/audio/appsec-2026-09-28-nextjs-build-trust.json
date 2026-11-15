@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "9e8455ea352b20bc6bb9ce03ec00d583fe66899d17e1a24c99167894fce26c39",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -103,5 +104,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/13fb06089a0d3fd9e017.mp3",
       "duration": 71.688
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/episode-f8025ef2720e357bf066.mp3",
+    "bytes": 3946464,
+    "duration": 986.616
+  }
 }

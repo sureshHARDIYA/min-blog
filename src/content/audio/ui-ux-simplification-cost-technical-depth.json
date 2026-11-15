@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "77cb500dff73500991bd4370939e20b4ae643ca023ad3eca3006bc216122a62f",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -124,5 +125,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/b9ab8b3d8f3bab45dbc9.mp3",
       "duration": 30.048
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ui-ux-simplification-cost-technical-depth/episode-d9808653b988ceaba765.mp3",
+    "bytes": 9943392,
+    "duration": 2485.848
+  }
 }

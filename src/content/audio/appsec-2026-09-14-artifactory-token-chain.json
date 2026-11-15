@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "3ec5fccb99da7791c8b24687f6691c20713e13e97ac159a8a728474a74c79a94",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -75,5 +76,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/1b09bdd7f4d8acd6a4ca.mp3",
       "duration": 61.056
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-14-artifactory-token-chain/episode-51bbe6c714858bebc7f8.mp3",
+    "bytes": 4099200,
+    "duration": 1024.8
+  }
 }

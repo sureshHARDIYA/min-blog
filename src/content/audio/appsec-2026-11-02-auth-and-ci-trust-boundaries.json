@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "36a8beaeefbb3363bcfb6bc445e7562c6e987622be44d910ea700dbb5071012a",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -75,5 +76,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/8019a10030df3f4b8bc4.mp3",
       "duration": 30.048
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/episode-22f1023103ab06e78c6e.mp3",
+    "bytes": 3818688,
+    "duration": 954.672
+  }
 }

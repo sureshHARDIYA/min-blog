@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "08a366ea71081a108eb9a832127051fb482c354d2ce63b062e652544477df9be",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -61,5 +62,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/452556663e2c9aee2bf6.mp3",
       "duration": 27.216
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/ai-that-cannot-sign-the-audit/episode-1332a6fa8375e83fc067.mp3",
+    "bytes": 1765152,
+    "duration": 441.288
+  }
 }

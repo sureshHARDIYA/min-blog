@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "4d0ca089c6128b6211f75adf465fd27dfce97a6dbbe564f77b14b09313c8fef2",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -75,5 +76,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/54906b4a5c901f45ce52.mp3",
       "duration": 50.976
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/episode-06911b116cb950e4dba0.mp3",
+    "bytes": 3148224,
+    "duration": 787.056
+  }
 }

@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "f8f7b340ede07e022b2d9954465d0b7d2836cf061829efe8e33b081f26d2fbd7",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -89,5 +90,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/f5b7ae7dbd246e965f8f.mp3",
       "duration": 80.664
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-19-untrusted-input-boundaries/episode-b4d805eaa205c21d41dc.mp3",
+    "bytes": 3532416,
+    "duration": 883.104
+  }
 }

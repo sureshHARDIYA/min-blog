@@ -1,7 +1,8 @@
 {
-  "version": 2,
+  "version": 3,
   "contentHash": "184c8bf445c817c99067c973642cfa6abae06f2ce39082fcd74ee35a9940319a",
   "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
   "storage": "r2",
   "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
   "segments": [
@@ -82,5 +83,10 @@
       "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/2d3daabd5d66e2fcde9d.mp3",
       "duration": 171.648
     }
-  ]
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/episode-a338718008f439866c8c.mp3",
+    "bytes": 5174208,
+    "duration": 1293.552
+  }
 }
