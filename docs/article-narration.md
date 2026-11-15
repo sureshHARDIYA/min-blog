@@ -34,7 +34,7 @@ The blog generates section-level MP3s once using Google Cloud Text-to-Speech and
 - Long sections are automatically divided at word boundaries into synthesis-safe chunks, while the player continues highlighting the containing article section.
 - Manifests record each segment's duration, so the player shows listening time without fetching audio. Nothing is requested from R2 until the reader hovers, focuses or taps the player.
 - One failing article does not block the others: finished manifests are still committed and the run is marked failed with the reason in the job summary. Fix the article and rerun; uploaded audio is reused.
-- The `generate` job holds the cloud credentials and cannot write to the repository. The separate `publish` job commits manifests and rebases if `main` moved during generation.
+- The `generate` job holds the cloud credentials and cannot write to the repository. The separate `publish` job commits manifests and rebases if `main` moved during generation. It pushes with the `NARRATION_DEPLOY_KEY` deploy key, which is the only bypass actor on the "Protect main" ruleset; if that key is rotated, update both the deploy key and the secret.
 - English Chirp voice is the current default. Norwegian articles require language/voice selection before generation.
 
 ## Cost and operations

@@ -63,17 +63,19 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
-  # Can write to the repository but never sees cloud credentials or third-party install steps.
+  # Pushes manifests with a dedicated deploy key, the only actor allowed to bypass the
+  # "Protect main" ruleset. Never sees cloud credentials or third-party install steps.
   publish:
     needs: generate
     if: ${{ !cancelled() && needs.generate.result != 'skipped' }}
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
+          ssh-key: ${{ secrets.NARRATION_DEPLOY_KEY }}
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: narration-manifests
