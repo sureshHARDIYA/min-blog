@@ -55,7 +55,7 @@ function DonutChart({
                 strokeWidth={hoveredIndex === index ? 10 : 8}
                 tabIndex={0}
               >
-                <title>{segment.label}: {segment.value} {valueSuffix}</title>
+                <title>{`${segment.label}: ${segment.value} ${valueSuffix}`}</title>
               </circle>
             ))}
           </svg>
@@ -161,7 +161,7 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
               stroke="#00FF41"
               tabIndex={0}
             >
-              <title>{chart[index].label}: {commits} commits</title>
+              <title>{`${chart[index].label}: ${commits} commits`}</title>
             </circle>
           );
         })}
