@@ -9,6 +9,9 @@ const formatTime = (seconds: number) => {
 }
 export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const audio = useRef<HTMLAudioElement>(null)
+  const anchor = useRef<HTMLDivElement>(null)
+  const [compact, setCompact] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   const continuePlaying = useRef(false)
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
@@ -17,6 +20,13 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
   const [error, setError] = useState('')
+  useEffect(() => {
+    const update = () => { if (anchor.current) setCompact(anchor.current.getBoundingClientRect().top < -100) }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
+  }, [])
   const active = segments[index]
   const estimatedDuration = segments.reduce((sum, segment) => sum + (segment.duration || 0), 0)
 
@@ -58,7 +68,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const sectionLabel = (segment: ListenSegment, number: number) =>
     `Section ${number + 1}: ${segment.text.trim().slice(0, 65) || 'Narration'}`
 
-  return <section className='article-listen' aria-label='Listen to this article'>
+  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section className={`article-listen${compact ? ' article-listen-compact' : ''}${expanded ? ' article-listen-expanded' : ''}`} aria-label='Listen to this article'>
     <audio ref={audio} src={active.url} preload='metadata'
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
       onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
@@ -66,6 +76,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
       onError={() => { setPlaying(false); setError('This audio segment is unavailable right now.') }}
       onEnded={() => { if (index < segments.length - 1) { continuePlaying.current = true; setPosition(0); setDuration(0); setIndex(i => i + 1) } else { setPlaying(false); setPosition(0); setIndex(0) } }}
     />
+    {compact && <button type='button' className='article-listen-expand' onClick={() => setExpanded(value => !value)} aria-label={expanded ? 'Collapse audio player' : 'Expand audio player'} aria-expanded={expanded}>{expanded ? '⌃' : '⌄'}</button>}
     <div className='article-listen-header'>
       <div className='article-listen-heading'>
         <span className='article-listen-headphones' aria-hidden='true'>♫</span>
@@ -98,5 +109,5 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
     </div>
     <p className='article-listen-status'>Section {index + 1} of {segments.length} · Article highlights follow narration</p>
     {error && <p className='article-listen-error' role='alert'>{error}</p>}
-  </section>
+  </section></>
 }
