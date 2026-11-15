@@ -21,6 +21,19 @@ def plain(markdown):
     markdown = re.sub(r"[`*_>#]", "", markdown)
     return re.sub(r"\s+", " ", markdown).strip()
 
+def chunks(text, max_bytes=4200):
+    # Split at word boundaries so existing long articles can be narrated safely.
+    current = []
+    for word in text.split():
+        candidate = ' '.join(current + [word])
+        if len(candidate.encode('utf-8')) > max_bytes and current:
+            yield ' '.join(current)
+            current = [word]
+        else:
+            current.append(word)
+    if current:
+        yield ' '.join(current)
+
 def synthesize(text):
     payload = json.dumps({"input":{"text":text},"voice":{"languageCode":VOICE[:5],"name":VOICE},"audioConfig":{"audioEncoding":"MP3"}}).encode()
     request = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize",data=payload,headers={"Authorization":"Bearer "+TOKEN,"Content-Type":"application/json"})
@@ -41,25 +54,25 @@ def main():
         sections = [section for section in re.split(r"(?=^## )", content, flags=re.M) if section]
         for index, section in enumerate(sections):
             text = plain(section)
-            if not text: continue
-            # REST synthesis has input size limits; skip oversized sections rather than silently truncate.
-            if len(text.encode("utf-8")) > 4500:
-                raise ValueError(f"{article.name} section {index} exceeds synthesis limit; split into smaller sections")
-            section_hash = hashlib.sha256((VOICE+"\n"+text).encode()).hexdigest()[:20]
-            object_name = f"articles/{article.stem}/{section_hash}.mp3"
-            url = f"{PUBLIC_BASE}/{object_name}"
-            # Generation is idempotent across edits and retries.
-            try:
-                R2.head_object(Bucket=BUCKET, Key=object_name)
-                exists = True
-            except ClientError as error:
-                if error.response["Error"]["Code"] not in ("404", "NoSuchKey", "NotFound"):
-                    raise
-                exists = False
-            if not exists:
-                audio = synthesize(text)
-                R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")
-            segments.append({"id":f"listen-section-{index}","text":text[:100],"url":url})
+            if not text:
+                continue
+            for chunk in chunks(text):
+                if len(chunk.encode("utf-8")) > 4500:
+                    raise ValueError(f"{article.name} has a single oversized word in section {index}")
+                section_hash = hashlib.sha256((VOICE+"\\n"+chunk).encode()).hexdigest()[:20]
+                object_name = f"articles/{article.stem}/{section_hash}.mp3"
+                url = f"{PUBLIC_BASE}/{object_name}"
+                try:
+                    R2.head_object(Bucket=BUCKET, Key=object_name)
+                    exists = True
+                except ClientError as error:
+                    if error.response["Error"]["Code"] not in ("404", "NoSuchKey", "NotFound"):
+                        raise
+                    exists = False
+                if not exists:
+                    audio = synthesize(chunk)
+                    R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")
+                segments.append({"id":f"listen-section-{index}","text":chunk[:100],"url":url})
         destination.write_text(json.dumps({"contentHash":fingerprint,"voice":VOICE,"storage":"r2","segments":segments},indent=2)+"\n")
 
 if __name__ == "__main__":
