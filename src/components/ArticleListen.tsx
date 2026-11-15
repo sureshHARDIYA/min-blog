@@ -25,6 +25,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const anchor = useRef<HTMLDivElement>(null)
   const [compact, setCompact] = useState(false)
   const [expanded, setExpanded] = useState(false)
+  const [headerBottom, setHeaderBottom] = useState(0)
   const continuePlaying = useRef(false)
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
@@ -35,7 +36,11 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const [error, setError] = useState('')
   const [showOptions, setShowOptions] = useState(false)
   useEffect(() => {
-    const update = () => { if (anchor.current) setCompact(anchor.current.getBoundingClientRect().top < -100) }
+    const update = () => {
+      const bottom = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
+      setHeaderBottom(Math.max(0, bottom))
+      if (anchor.current) setCompact(anchor.current.getBoundingClientRect().top < -bottom - 24)
+    }
     update()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
@@ -55,7 +60,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
     if (!playing || !active) return
     const el = document.getElementById(active.id)
     el?.setAttribute('data-listen-active', 'true')
-    el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    // Do not scroll the document automatically when narration begins.
     return () => { el?.removeAttribute('data-listen-active') }
   }, [index, playing, active])
 
@@ -82,7 +87,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const sectionLabel = (segment: ListenSegment, number: number) =>
     `Section ${number + 1}: ${segment.text.trim().slice(0, 65) || 'Narration'}`
 
-  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section className={`article-listen${compact ? ' article-listen-compact' : ''}${expanded ? ' article-listen-expanded' : ''}`} aria-label='Listen to this article'>
+  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section className='article-listen' aria-label='Listen to this article'>
     <audio ref={audio} src={active.url} preload='metadata'
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
       onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
@@ -90,7 +95,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
       onError={() => { setPlaying(false); setError('This audio segment is unavailable right now.') }}
       onEnded={() => { if (index < segments.length - 1) { continuePlaying.current = true; setPosition(0); setDuration(0); setIndex(i => i + 1) } else { setPlaying(false); setPosition(0); setIndex(0) } }}
     />
-    {compact && <button type='button' className='article-listen-expand' onClick={() => setExpanded(value => !value)} aria-label={expanded ? 'Collapse audio player' : 'Expand audio player'} aria-expanded={expanded}><PlayerIcon name='chevron' /></button>}
+
     <div className='article-listen-header'>
       <div className='article-listen-heading'>
         <span className='article-listen-headphones'><PlayerIcon name='headphones' size={27} /></span>
@@ -124,5 +129,21 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
     </div>
     <p className='article-listen-status'>Section {index + 1} of {segments.length} · Highlights follow narration</p>
     {error && <p className='article-listen-error' role='alert'>{error}</p>}
-  </section></>
+  </section>
+    {compact && <aside className='article-listen-floating' style={{ top: headerBottom }} aria-label='Floating audio controls'>
+      <div className='article-listen-floating-row'>
+        <button type='button' onClick={() => seek(-15)} aria-label='Back 15 seconds'><PlayerIcon name='back' size={20} /></button>
+        <button type='button' className='article-listen-floating-play' onClick={play} aria-label={playing ? 'Pause narration' : 'Play narration'}><PlayerIcon name={playing ? 'pause' : 'play'} size={20} /></button>
+        <button type='button' onClick={() => seek(15)} aria-label='Forward 15 seconds'><PlayerIcon name='forward' size={20} /></button>
+        <span className='article-listen-floating-time'>{formatTime(position)}</span>
+        <input type='range' aria-label='Seek within current section' min={0} max={duration || 1} step={0.1} value={Math.min(position, duration || 1)} onChange={e => { if (audio.current) audio.current.currentTime = Number(e.target.value) }} />
+        <span className='article-listen-floating-time'>{formatTime(duration)}</span>
+        <button type='button' onClick={() => setExpanded(v => !v)} aria-label={expanded ? 'Hide player options' : 'Show player options'} aria-expanded={expanded}><PlayerIcon name='chevron' size={18} /></button>
+      </div>
+      {expanded && <div className='article-listen-floating-options'>
+        <label>Speed <select aria-label='Floating playback speed' value={rate} onChange={e => { const next = Number(e.target.value); setRate(next); if (audio.current) audio.current.playbackRate = next }}>{[0.75,1,1.25,1.5,2].map(n => <option key={n} value={n}>{n}×</option>)}</select></label>
+        <label>Section <select aria-label='Floating section selection' value={index} onChange={e => selectSection(Number(e.target.value))}>{segments.map((segment,i) => <option key={segment.id} value={i}>{sectionLabel(segment,i)}</option>)}</select></label>
+      </div>}
+    </aside>}
+  </>
 }
