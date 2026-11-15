@@ -149,6 +149,44 @@
 }
 
 /* Long-form blog layout */
+.blog-article-page {
+  --article-accent: #00ff41;
+  --article-accent-ink: #0c0c0c;
+  --article-accent-hover: #59ff81;
+  --article-border: rgb(255 255 255 / 10%);
+  --article-surface: #141414;
+  --article-text: #f5f5f5;
+  --article-muted: #a3a3a3;
+}
+
+html.light .blog-article-page {
+  --article-accent: #008822;
+  --article-accent-ink: #fff;
+  --article-accent-hover: #006b1b;
+  --article-border: #cbd5e1;
+  --article-surface: #fff;
+  --article-text: #0f172a;
+  --article-muted: #475569;
+}
+
+.article-accent {
+  color: var(--article-accent);
+}
+
+.article-panel {
+  border: 1px solid var(--article-border);
+  background-color: var(--article-surface);
+}
+
+.article-nav-link:hover,
+.article-nav-link:focus-visible {
+  border-color: var(--article-accent);
+}
+
+.blog-article-page :focus-visible {
+  outline-color: var(--article-accent);
+}
+
 .blog-prose > section > :not(figure, img) {
   max-width: 64rem;
   margin-inline: auto;
@@ -207,13 +245,13 @@
 }
 
 .blog-prose a {
-  color: #22d3ee;
+  color: var(--article-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .blog-prose blockquote {
   margin-block: 2rem;
-  border-left: 3px solid #22d3ee;
+  border-left: 3px solid var(--article-accent);
   padding: 0.25rem 0 0.25rem 1.5rem;
   color: var(--text-on-dark-muted);
   font-size: 1.2rem;
@@ -291,11 +329,11 @@
   cursor: pointer;
 }
 .blog-copy-button:hover {
-  border-color: #22d3ee;
-  color: #cffafe;
+  border-color: var(--article-accent);
+  color: #f5f5f5;
 }
 .blog-copy-button:focus-visible {
-  outline: 2px solid #22d3ee;
+  outline: 2px solid var(--article-accent);
   outline-offset: 2px;
 }
 .blog-code-block pre {
@@ -366,7 +404,7 @@
   height: 1.05rem;
   flex: none;
   margin-top: 0.4rem;
-  accent-color: #22d3ee;
+  accent-color: var(--article-accent);
   opacity: 1;
 }
 .blog-task-item span {
@@ -427,7 +465,11 @@ html.light .blog-theme-page .text-white\/50 { color: #475569; }
 html.light .blog-theme-page .border-white\/10 { border-color: #cbd5e1; }
 html.light .blog-prose h2, html.light .blog-prose h3 { color: #0f172a; }
 html.light .blog-prose blockquote { color: #475569; }
-html.light .blog-prose a { color: #0369a1; }
+html.light .blog-inline-code {
+  border-color: var(--article-border);
+  background: var(--article-surface);
+  color: var(--article-text);
+}
 html.light .blog-ai-playbook { background: #ecfdf5; }
 html.light .blog-task-item { background: #fff; border-color: #cbd5e1; }
 
@@ -447,33 +489,34 @@ html.light .blog-theme-page .text-white\/60 { color: #475569; }
 .agentbaiting-stat { display: flex; flex-direction: column; gap: .4rem; text-align: left; border: 1px solid #334155; border-radius: .7rem; padding: .8rem; color: #cbd5e1; background: #17212e; cursor: pointer; }
 .agentbaiting-stat strong { font-size: clamp(1.2rem,2.6vw,2rem); color: #f8fafc; }
 .agentbaiting-stat span { font-size: .78rem; line-height: 1.3; }
-.agentbaiting-stat.is-active, .agentbaiting-stat:focus-visible { outline: 2px solid #22d3ee; outline-offset: 1px; }
+.agentbaiting-stat.is-active, .agentbaiting-stat:focus-visible { outline: 2px solid var(--article-accent); outline-offset: 1px; }
 .agentbaiting-bars { margin-top: 1.6rem; display: grid; gap: 1.2rem; }
 .agentbaiting-bar-heading { display: flex; justify-content: space-between; gap: .75rem; font-size: .88rem; line-height: 1.4; }
 .agentbaiting-track { height: 1rem; margin-top: .45rem; overflow: hidden; border-radius: 99px; background: #293548; }
-.agentbaiting-fill { height: 100%; border-radius: 99px; background: #0891b2; transition: width .2s, background .2s; }
-.agentbaiting-fill.is-active { background: #67e8f9; }
+.agentbaiting-fill { height: 100%; border-radius: 99px; background: var(--article-accent); opacity: 0.65; transition: width .2s, background .2s; }
+.agentbaiting-fill.is-active { opacity: 1; }
 .agentbaiting-chart-note { min-height: 3rem; margin-top: 1.5rem !important; color: #e2e8f0; font-size: .95rem; }
 .agentbaiting-chart-source { font-size: .75rem; color: #94a3b8; }
 .agentbaiting-accordion { max-width: 64rem; margin: 1rem auto; border: 1px solid rgba(148,163,184,.3); border-radius: .75rem; background: rgba(148,163,184,.05); }
 .agentbaiting-accordion > summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 1.35rem; cursor: pointer; font-weight: 750; list-style: none; }
 .agentbaiting-accordion > summary::-webkit-details-marker { display: none; }
-.agentbaiting-accordion > summary span { color: #22d3ee; font-size: 1.4rem; }
+.agentbaiting-accordion > summary span { color: var(--article-accent); font-size: 1.4rem; }
 .agentbaiting-accordion[open] > summary span { transform: rotate(45deg); }
-.agentbaiting-accordion > summary:focus-visible { outline: 2px solid #22d3ee; outline-offset: 3px; }
+.agentbaiting-accordion > summary:focus-visible { outline: 2px solid var(--article-accent); outline-offset: 3px; }
 .agentbaiting-accordion-body { padding: .1rem 1.35rem 1.35rem; overflow-x: auto; }
 .agentbaiting-accordion-body table { display: block; max-width: 100%; overflow-x: auto; }
 html.light .agentbaiting-chart { background: #fff; border-color: #cbd5e1; }
 html.light .agentbaiting-chart-title, html.light .agentbaiting-stat strong { color: #0f172a; }
 html.light .agentbaiting-stat { background: #f1f5f9; color: #334155; }
-html.light .agentbaiting-chart-note { color: #334155; }
+html.light .agentbaiting-chart-note, html.light .agentbaiting-chart-source { color: #334155; }
+html.light .agentbaiting-track { background: #e2e8f0; }
 html.light .agentbaiting-accordion { background: #fff; border-color: #cbd5e1; }
 @media(max-width: 600px) { .agentbaiting-chart-stats { grid-template-columns: 1fr; } .agentbaiting-stat { flex-direction: row; align-items: center; justify-content: space-between; } }
 @media print { .agentbaiting-chart { break-inside: avoid; } }
 
 /* Responsive evidence tables in enterprise research reports */
 .agentbaiting-table-scroll { max-width: 64rem; margin: 1.5rem auto; overflow-x: auto; border: 1px solid #334155; border-radius: .65rem; }
-.agentbaiting-table-scroll:focus-visible { outline: 2px solid #22d3ee; outline-offset: 3px; }
+.agentbaiting-table-scroll:focus-visible { outline: 2px solid var(--article-accent); outline-offset: 3px; }
 .agentbaiting-data-table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .9rem; line-height: 1.5; }
 .agentbaiting-data-table th { text-align: left; font-weight: 700; background: #1e293b; color: #f1f5f9; }
 .agentbaiting-data-table th, .agentbaiting-data-table td { padding: .8rem 1rem; border-bottom: 1px solid #334155; vertical-align: top; }

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReactMarkdown, { type Components } from 'react-markdown'
 
+import { BlogPostMetadata } from '../../../components/BlogPostMetadata'
 import { BlogCode, BlogList, BlogListItem } from '../../../components/BlogCode'
 import { AppSecSubscribeForm } from '../../../components/AppSecSubscribeForm'
 import { ArticleRecommendation } from '../../../components/ArticleRecommendation'
@@ -150,37 +151,30 @@ async function BlogPostContent({ slug }: { slug: string }) {
   }
 
   return (
-    <main className='blog-theme-page min-h-screen bg-[#0C0C0C] px-5 py-16 text-[#F5F5F5] sm:px-8 lg:px-12 lg:py-20'>
+    <main className='blog-article-page blog-theme-page dot-grid min-h-screen bg-[#0C0C0C] pt-16 text-[#F5F5F5] md:pt-20'>
       <script
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
         type='application/ld+json'
       />
-      <article className='mx-auto max-w-6xl'>
-        <div className='mx-auto max-w-5xl'>
-          <Link className='text-sm text-cyan-400 hover:underline' href='/blogs'>
-            ← All posts
-          </Link>
+      <article className='mx-auto max-w-[1120px] px-6 pb-16 pt-10 sm:pt-16'>
+        <Link
+          className='article-accent inline-flex items-center gap-2 font-code text-xs font-bold uppercase tracking-widest hover:underline'
+          href='/blogs'
+        >
+          <span aria-hidden='true'>←</span> All posts
+        </Link>
 
-          <header className='mt-10 border-b border-white/10 pb-10'>
-            <p className='text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400'>
-              Architecture &amp; AppSec
-            </p>
-            <h1 className='mt-4 text-[2.025rem] font-bold tracking-tight sm:text-[2.7rem] lg:text-[4.05rem]'>
-              {post.title}
-            </h1>
-            <time
-              className='mt-5 block text-lg text-white/65'
-              dateTime={post.date}
-            >
-              {new Intl.DateTimeFormat('en-GB', {
-                dateStyle: 'long',
-                timeZone: 'UTC'
-              }).format(new Date(`${post.date}T00:00:00Z`))}
-            </time>
-          </header>
-        </div>
+        <header className='article-panel mt-6 p-6 sm:p-10'>
+          <BlogPostMetadata date={post.date} category={post.category} />
+          <h1 className='font-display mt-5 max-w-5xl wrap-break-word'>
+            {post.title}
+          </h1>
+          <p className='font-body-md mt-5 max-w-3xl text-white/65'>
+            {post.description}
+          </p>
+        </header>
 
-        <div className='blog-prose mt-12 text-lg leading-8 text-white/80'>
+        <div className='blog-prose mx-auto mt-10 w-full max-w-[72ch] wrap-break-word text-white/80 sm:mt-12'>
           {markdownSections(post.content).map((section) => {
             const title = sectionTitle(section)
             return (
@@ -213,13 +207,13 @@ async function BlogPostContent({ slug }: { slug: string }) {
         {post.slug.startsWith('appsec-') ? (
           <aside
             aria-labelledby='appsec-subscribe-title'
-            className='mx-auto mt-16 max-w-5xl border border-cyan-400/30 bg-cyan-400/[0.06] p-6 sm:p-8'
+            className='article-panel mx-auto mt-16 max-w-[72ch] p-6 sm:p-8'
           >
-            <p className='font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400'>
+            <p className='article-accent font-code text-xs font-semibold uppercase tracking-[0.2em]'>
               Weekly engineering signal
             </p>
             <h2
-              className='mt-3 text-2xl font-bold tracking-tight sm:text-3xl'
+              className='font-headline-md mt-3'
               id='appsec-subscribe-title'
             >
               Get the Monday AppSec Brief
@@ -239,15 +233,15 @@ async function BlogPostContent({ slug }: { slug: string }) {
         ) : null}
         <nav
           aria-label='Article navigation'
-          className='mt-16 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
+          className='mx-auto mt-12 grid max-w-[72ch] gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
         >
           <div>
             {olderPost ? (
               <Link
-                className='block h-full border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-cyan-400/60'
+                className='article-panel article-nav-link block h-full p-5 transition-colors'
                 href={articleHref(olderPost.slug)}
               >
-                <span className='font-mono text-[10px] uppercase tracking-widest text-cyan-400'>
+                <span className='article-accent font-code text-[10px] font-bold uppercase tracking-widest'>
                   ← Previous article
                 </span>
                 <strong className='mt-3 block text-lg leading-6'>
@@ -259,10 +253,10 @@ async function BlogPostContent({ slug }: { slug: string }) {
           <div>
             {newerPost ? (
               <Link
-                className='block h-full border border-white/10 bg-white/[0.03] p-5 text-right transition-colors hover:border-cyan-400/60'
+                className='article-panel article-nav-link block h-full p-5 transition-colors sm:text-right'
                 href={articleHref(newerPost.slug)}
               >
-                <span className='font-mono text-[10px] uppercase tracking-widest text-cyan-400'>
+                <span className='article-accent font-code text-[10px] font-bold uppercase tracking-widest'>
                   Next article →
                 </span>
                 <strong className='mt-3 block text-lg leading-6'>

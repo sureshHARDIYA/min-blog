@@ -52,7 +52,7 @@ export function ArticleRecommendation({
                   ]
                 }
           }
-          className='fixed bottom-20 right-6 z-40 hidden w-[min(19rem,calc(100vw-3rem))] border border-[#00FF41]/55 bg-[#101510]/95 px-4 py-3 text-white backdrop-blur-md md:block'
+          className='fixed bottom-20 right-6 z-40 hidden w-[min(19rem,calc(100vw-3rem))] border border-[var(--article-accent)] bg-[var(--article-surface)] px-4 py-3 text-[var(--article-text)] backdrop-blur-md md:block'
           exit={reduceMotion ? undefined : { opacity: 0, x: 360 }}
           initial={
             reduceMotion ? false : { opacity: 0, scale: 0.9, x: 80, y: 12 }
@@ -77,7 +77,7 @@ export function ArticleRecommendation({
         >
           <button
             aria-label='Close recommendation'
-            className='absolute right-2 top-1 text-lg leading-none text-white/45 hover:text-white'
+            className='absolute right-2 top-1 text-lg leading-none text-[var(--article-muted)] hover:text-[var(--article-text)]'
             onClick={() => setDismissed(true)}
             type='button'
           >
@@ -85,11 +85,11 @@ export function ArticleRecommendation({
           </button>
           <Link
             aria-label={`Read next: ${title}`}
-            className='block pr-5 text-sm font-semibold leading-5 transition-colors hover:text-[#00FF41]'
+            className='block pr-5 text-sm font-semibold leading-5 transition-colors hover:text-[var(--article-accent)]'
             href={href}
           >
             {title}{' '}
-            <span aria-hidden='true' className='text-[#00FF41]'>
+            <span aria-hidden='true' className='article-accent'>
               →
             </span>
           </Link>

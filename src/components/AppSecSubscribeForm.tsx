@@ -8,9 +8,9 @@ interface SubscribeResponse {
 }
 
 export function AppSecSubscribeForm() {
-  const [status, setStatus] = useState<'idle' | 'pending' | 'success' | 'error'>(
-    'idle'
-  )
+  const [status, setStatus] = useState<
+    'idle' | 'pending' | 'success' | 'error'
+  >('idle')
   const [message, setMessage] = useState('')
 
   async function subscribe(event: FormEvent<HTMLFormElement>) {
@@ -27,13 +27,16 @@ export function AppSecSubscribeForm() {
       const result = (await response.json()) as SubscribeResponse
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || 'Subscription could not be completed.')
+        throw new Error(
+          result.message || 'Subscription could not be completed.'
+        )
       }
 
       form.reset()
       setStatus('success')
       setMessage(
-        result.message || 'One last step: check your email and click the confirmation link.'
+        result.message ||
+          'One last step: check your email and click the confirmation link.'
       )
     } catch (error) {
       setStatus('error')
@@ -56,7 +59,7 @@ export function AppSecSubscribeForm() {
         </label>
         <input
           autoComplete='email'
-          className='min-h-12 flex-1 border border-white/20 bg-[#0C0C0C] px-4 text-base text-white outline-none placeholder:text-white/40 focus:border-cyan-400'
+          className='min-h-12 min-w-0 flex-1 border border-[var(--article-border)] bg-transparent px-4 text-base text-[var(--article-text)] placeholder:text-[var(--article-muted)] focus:border-[var(--article-accent)]'
           disabled={status === 'pending'}
           id='appsec-subscribe-email'
           name='email'
@@ -73,7 +76,7 @@ export function AppSecSubscribeForm() {
           type='text'
         />
         <button
-          className='min-h-12 bg-cyan-400 px-5 py-3 font-semibold text-[#071013] transition-colors hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 disabled:cursor-wait disabled:opacity-60'
+          className='min-h-12 bg-[var(--article-accent)] px-5 py-3 font-semibold text-[var(--article-accent-ink)] transition-colors hover:bg-[var(--article-accent-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 disabled:cursor-wait disabled:opacity-60'
           disabled={status === 'pending'}
           type='submit'
         >
