@@ -24,6 +24,11 @@ jobs:
       - run: pnpm install --frozen-lockfile --strict-peer-dependencies
       - run: pnpm build
 
+      - name: Test narration generator (stubbed, no cloud access)
+        run: |
+          python3 -m pip install --disable-pip-version-check --only-binary ':all:' pytest==8.3.4
+          python3 -m pytest -q scripts/test_generate_article_audio.py
+
       # TODO Enable those lines below if you use a Redis cache, you'll also need to configure GitHub Repository Secrets
       # env:
       #   REDIS_HOST: ${{ secrets.REDIS_HOST }}

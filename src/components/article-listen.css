@@ -10,7 +10,7 @@
 }
 
 /* Section-level reading focus while narration plays. */
-.blog-prose section[data-listen-active='true'] {
+.blog-prose > [data-listen-active='true'] {
   border-radius: 0.4rem;
   background: color-mix(in srgb, var(--article-accent) 7%, transparent);
   box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--article-accent) 7%, transparent);
