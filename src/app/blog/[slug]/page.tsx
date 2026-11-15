@@ -151,30 +151,30 @@ async function BlogPostContent({ slug }: { slug: string }) {
   }
 
   return (
-    <main className='blog-article-page blog-theme-page dot-grid min-h-screen bg-[#0C0C0C] pt-16 text-[#F5F5F5] md:pt-20'>
+    <main className='blog-article-page blog-theme-page min-h-screen bg-[#111111] pt-16 text-[#F5F5F5] md:pt-20'>
       <script
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
         type='application/ld+json'
       />
-      <article className='mx-auto max-w-[1120px] px-6 pb-16 pt-10 sm:pt-16'>
+      <article className='mx-auto max-w-[46rem] px-6 pb-16 pt-9 sm:px-8 sm:pt-12'>
         <Link
-          className='article-accent inline-flex items-center gap-2 font-code text-xs font-bold uppercase tracking-widest hover:underline'
+          className='inline-flex items-center gap-2 text-sm font-medium text-[var(--article-muted)] transition-colors hover:text-[var(--article-accent)] hover:underline'
           href='/blogs'
         >
           <span aria-hidden='true'>←</span> All posts
         </Link>
 
-        <header className='article-panel mt-6 p-6 sm:p-10'>
+        <header className='article-intro mt-8 border-b border-[var(--article-border)] pb-7'>
           <BlogPostMetadata date={post.date} category={post.category} />
-          <h1 className='font-display mt-5 max-w-5xl wrap-break-word'>
+          <h1 className='article-title mt-4 wrap-break-word'>
             {post.title}
           </h1>
-          <p className='font-body-md mt-5 max-w-3xl text-white/65'>
+          <p className='mt-4 text-base leading-relaxed text-[var(--article-muted)] sm:text-lg'>
             {post.description}
           </p>
         </header>
 
-        <div className='blog-prose mx-auto mt-10 w-full max-w-[72ch] wrap-break-word text-white/80 sm:mt-12'>
+        <div className='blog-prose mt-7 wrap-break-word text-white/80 sm:mt-9'>
           {markdownSections(post.content).map((section) => {
             const title = sectionTitle(section)
             return (
@@ -207,7 +207,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
         {post.slug.startsWith('appsec-') ? (
           <aside
             aria-labelledby='appsec-subscribe-title'
-            className='article-panel mx-auto mt-16 max-w-[72ch] p-6 sm:p-8'
+            className='article-panel mt-16 p-6 sm:p-8'
           >
             <p className='article-accent font-code text-xs font-semibold uppercase tracking-[0.2em]'>
               Weekly engineering signal
@@ -233,7 +233,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
         ) : null}
         <nav
           aria-label='Article navigation'
-          className='mx-auto mt-12 grid max-w-[72ch] gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
+          className='mt-12 grid gap-4 border-t border-white/10 pt-8 sm:grid-cols-2'
         >
           <div>
             {olderPost ? (

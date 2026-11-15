@@ -150,9 +150,9 @@
 
 /* Long-form blog layout */
 .blog-article-page {
-  --article-accent: #00ff41;
+  --article-accent: #8ed9a1;
   --article-accent-ink: #0c0c0c;
-  --article-accent-hover: #59ff81;
+  --article-accent-hover: #b0e8bd;
   --article-border: rgb(255 255 255 / 10%);
   --article-surface: #141414;
   --article-text: #f5f5f5;
@@ -160,13 +160,25 @@
 }
 
 html.light .blog-article-page {
-  --article-accent: #008822;
+  --article-accent: #267140;
   --article-accent-ink: #fff;
   --article-accent-hover: #006b1b;
   --article-border: #cbd5e1;
   --article-surface: #fff;
   --article-text: #0f172a;
   --article-muted: #475569;
+}
+
+.article-title {
+  color: var(--article-text);
+  font-size: clamp(1.875rem, 1.45rem + 1.5vw, 2.625rem);
+  font-weight: 700;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.article-intro time {
+  color: var(--article-muted);
 }
 
 .article-accent {
@@ -194,20 +206,20 @@ html.light .blog-article-page {
 
 .blog-prose {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.7142857143rem + 0.446429vw, 1.25rem);
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.5;
+  letter-spacing: 0;
+  line-height: 1.75;
 }
 
 .blog-prose h2 {
-  margin-top: 4rem;
-  margin-bottom: 1.25rem;
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
   color: var(--text-on-dark);
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 0.25rem + 2.34375vw, 3.0625rem);
-  font-weight: 900;
-  line-height: 1.1;
+  font-size: clamp(1.375rem, 1.15rem + 0.7vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.25;
   letter-spacing: -0.03em;
 }
 
@@ -216,9 +228,9 @@ html.light .blog-article-page {
   margin-bottom: 0.85rem;
   color: var(--text-on-dark);
   font-family: var(--font-heading);
-  font-size: clamp(1.3125rem, 0.5625rem + 1.171875vw, 1.96875rem);
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  font-weight: 700;
+  line-height: 1.3;
   letter-spacing: -0.02em;
 }
 
@@ -273,7 +285,7 @@ html.light .blog-article-page {
 
 .blog-ai-playbook > h2:first-child {
   margin-top: 0;
-  color: #00ff41;
+  color: var(--article-accent);
 }
 .blog-prose img {
   display: block;
