@@ -1,0 +1,58 @@
+{
+  "contentHash": "36a8beaeefbb3363bcfb6bc445e7562c6e987622be44d910ea700dbb5071012a",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "text": "Executive summary The most important engineering decision this week is to stop treating protocol sta",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/5797a85c62e4de50eeaa.mp3"
+    },
+    {
+      "id": "listen-section-1",
+      "text": "Risk at a glance - Act now if exposed \u2014 Better Auth account takeover: better-auth 1.4.0-beta.18 thro",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/2a086de205242530d058.mp3"
+    },
+    {
+      "id": "listen-section-2",
+      "text": "Better Auth: OAuth state is not proof of mailbox access What changed. The Better Auth advisory for C",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/07313a5fbabc5e15a003.mp3"
+    },
+    {
+      "id": "listen-section-3",
+      "text": "Authlib: an empty signature list can pass verification What changed. CVE-2026-96760 / GHSA-6v38-4h7w",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/d64869feee32671f7940.mp3"
+    },
+    {
+      "id": "listen-section-4",
+      "text": "Supply-chain watch: publishing, test recordings and build caches Python publishing trust The PyPA ad",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/3ca3c584044c13f26b31.mp3"
+    },
+    {
+      "id": "listen-section-5",
+      "text": "AI-assisted development watch Agents amplify the same trust mistakes when they consume issue attachm",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/ca9824e29e5903108687.mp3"
+    },
+    {
+      "id": "listen-section-6",
+      "text": "Developer checklist Today - [ ] Better Auth: confirm the resolved version and all five relevant Magi",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/52986f4c4ce1f5b62df3.mp3"
+    },
+    {
+      "id": "listen-section-7",
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/b1696f943b98a66fb87b.mp3"
+    },
+    {
+      "id": "listen-section-8",
+      "text": "Monday action plan 1. Identity lead: establish whether the Better Auth configuration is reachable; c",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/9b2593be361bd397ac7b.mp3"
+    },
+    {
+      "id": "listen-section-9",
+      "text": "References - Better Auth / GitHub Advisory Database \u2014 CVE-2026-114607, updated 27 October 2026 - Aut",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-02-auth-and-ci-trust-boundaries/8019a10030df3f4b8bc4.mp3"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "contentHash": "6d68485e5228e02747eb81071a138e57e47d51160b4e89d37740097a9d0f8171",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "text": "Executive assessment Assessment: substantiated threat, with important limits on the reported numbers",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/0372aa47d17e0eed6a13.mp3"
+    },
+    {
+      "id": "listen-section-1",
+      "text": "Evidence dashboard A table compares Indicator, Reported quantity, Interpretation / limitation across",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/4d981dcca6411d5a0c6f.mp3"
+    },
+    {
+      "id": "listen-section-2",
+      "text": "Verified findings and confidence A table compares Finding, Evidence, Confidence across 8 rows. Consu",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/060a5f302e20d02ab462.mp3"
+    },
+    {
+      "id": "listen-section-3",
+      "text": "Attack-chain model This section contains a code example. Refer to the written article for the implem",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/ff574415c1b2b354ce85.mp3"
+    },
+    {
+      "id": "listen-section-4",
+      "text": "How the mechanism works 1. Trust laundering through familiar distribution A repository can imitate a",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/8b06ef73d64c7ab07b4d.mp3"
+    },
+    {
+      "id": "listen-section-5",
+      "text": "Enterprise threat model A table compares Asset / boundary, Exposure path, Control priority across 7 ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/5521056abce7ee3d213d.mp3"
+    },
+    {
+      "id": "listen-section-6",
+      "text": "Detection engineering: actionable hypotheses These are defensive hypotheses to validate, not vendor-",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/89fe077aee0e835e1bb4.mp3"
+    },
+    {
+      "id": "listen-section-7",
+      "text": "Immediate response playbook First 24 hours: Inventory installed agent skills, MCP servers, IDE exten",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/533faa9e48639351fb0b.mp3"
+    },
+    {
+      "id": "listen-section-8",
+      "text": "Technical evidence appendix Published sample indicators RH-ISAC reproduces campaign-associated SHA-2",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/ee5c7d03de666a1652cd.mp3"
+    },
+    {
+      "id": "listen-section-9",
+      "text": "Limitations and methodology Research cutoff: 14 November 2026. This article evaluates Island's origi",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/77c42b1e0100f1c16537.mp3"
+    },
+    {
+      "id": "listen-section-10",
+      "text": "References 1. Island Security \u2014 AgentBaiting: How 800+ Fake AI Skills and MCP Servers Delivered Malw",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/agentbaiting-malicious-ai-tools-enterprise-security-2026/3a120ea52e9709efa7f0.mp3"
+    }
+  ]
+}

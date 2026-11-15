@@ -1,0 +1,78 @@
+{
+  "contentHash": "9e8455ea352b20bc6bb9ce03ec00d583fe66899d17e1a24c99167894fce26c39",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "text": "Executive summary Check dynamic social-image routes today: Next.js has released an emergency fix for",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/2d6ec74e76a963aad622.mp3"
+    },
+    {
+      "id": "listen-section-1",
+      "text": "Risk at a glance - Act now \u2014 Next.js: versions 16.2.0 through 16.3.5, Node.js next/og with untrusted",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/82628084323fe12af6e8.mp3"
+    },
+    {
+      "id": "listen-section-2",
+      "text": "Next.js: establish the image route, runtime and input source What changed and evidence. On 22 Septem",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/5ce20b34b29e89bffaa5.mp3"
+    },
+    {
+      "id": "listen-section-3",
+      "text": "TeamCity: ransomware changes the response What changed and evidence. CISA\u2019s 23 September catalog cha",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/26f6ec38a239a225df18.mp3"
+    },
+    {
+      "id": "listen-section-4",
+      "text": "API gateways: WSO2 joins KEV What changed and evidence. CISA added CVE-2026-5430 on 24 September. It",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/db3f2482f7dcd527b678.mp3"
+    },
+    {
+      "id": "listen-section-5",
+      "text": "Entra ID: close unnecessary device-code paths What changed and evidence. On 22 September, Microsoft ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/7cb5989f509898a43870.mp3"
+    },
+    {
+      "id": "listen-section-6",
+      "text": "Rust: include parsers below the application layer What changed and evidence. RUSTSEC-2026-0310, date",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/e0998fa38b5f5c1274e7.mp3"
+    },
+    {
+      "id": "listen-section-7",
+      "text": "Supply-chain watch and a correction The immediate supply-chain finding is TeamCity\u2019s changed ransomw",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/191e2a35edadc864a2f8.mp3"
+    },
+    {
+      "id": "listen-section-8",
+      "text": "AI-assisted development watch EvilTokens demonstrates AI helping attackers interpret already-stolen ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/71dc61cb783c5f837d00.mp3"
+    },
+    {
+      "id": "listen-section-9",
+      "text": "Other stack developments No additional consequential core Python/FastAPI, PostgreSQL or Microsoft SQ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/30e96239c34d324a0855.mp3"
+    },
+    {
+      "id": "listen-section-10",
+      "text": "Developer checklist Today - [ ] Trace Next.js next/og routes, runtime and untrusted inputs; save exa",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/5f73e3407a685ff0c065.mp3"
+    },
+    {
+      "id": "listen-section-11",
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/b1696f943b98a66fb87b.mp3"
+    },
+    {
+      "id": "listen-section-12",
+      "text": "Monday action plan 1. Web lead: close the Next.js exposure check with a route trace and deployed-ver",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/8a740030484b34df975f.mp3"
+    },
+    {
+      "id": "listen-section-13",
+      "text": "References - Next.js, 22 September 2026: ImageResponse advisory and release announcement. - Next.js,",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-09-28-nextjs-build-trust/13fb06089a0d3fd9e017.mp3"
+    }
+  ]
+}

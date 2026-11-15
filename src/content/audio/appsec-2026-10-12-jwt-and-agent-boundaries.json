@@ -1,0 +1,63 @@
+{
+  "contentHash": "184c8bf445c817c99067c973642cfa6abae06f2ce39082fcd74ee35a9940319a",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "text": "Executive summary This week\u2019s most useful engineering decision is to verify authentication and sandb",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/d4acfd565f4aa6d96545.mp3"
+    },
+    {
+      "id": "listen-section-1",
+      "text": "Risk at a glance - Act now if present \u2014 fast-jwt: versions below 6.3.4 can be affected by one or mor",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/f5ea42d50502a1956751.mp3"
+    },
+    {
+      "id": "listen-section-2",
+      "text": "fast-jwt: several safe-looking options weaken verification What changed. Four related advisories ent",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/33795ce58559b155360a.mp3"
+    },
+    {
+      "id": "listen-section-3",
+      "text": "Docling: untrusted HTML can disclose local files during rendering What changed. CVE-2026-105750 / GH",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/6a50445cbdbb4b932aed.mp3"
+    },
+    {
+      "id": "listen-section-4",
+      "text": "vm2: do not make an in-process sandbox the final boundary What changed and evidence. Two vm2 advisor",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/972b22a1bda83152e4d4.mp3"
+    },
+    {
+      "id": "listen-section-5",
+      "text": "Supply-chain watch Dependency-Track 5.2 improves machine identity and outbound control Dependency-Tr",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/77f94e5349d9019a6563.mp3"
+    },
+    {
+      "id": "listen-section-6",
+      "text": "AI-assisted development watch This week\u2019s issues converge on two review questions. First, can genera",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/3158bf0b1478e95744f0.mp3"
+    },
+    {
+      "id": "listen-section-7",
+      "text": "Developer checklist Today - [ ] Run pnpm why fast-jwt (or the repository equivalent) across Node.js ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/1d727f835f0692fb8f05.mp3"
+    },
+    {
+      "id": "listen-section-8",
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/b1696f943b98a66fb87b.mp3"
+    },
+    {
+      "id": "listen-section-9",
+      "text": "Monday action plan 1. Application identity lead: prove whether fast-jwt is deployed and close any ex",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/8ddc0ce11031822edcb0.mp3"
+    },
+    {
+      "id": "listen-section-10",
+      "text": "References - NearForm, fast-jwt unsigned-token advisory, GHSA-8wpc-h4q6-8fxv, published 7 October 20",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-12-jwt-and-agent-boundaries/2d3daabd5d66e2fcde9d.mp3"
+    }
+  ]
+}

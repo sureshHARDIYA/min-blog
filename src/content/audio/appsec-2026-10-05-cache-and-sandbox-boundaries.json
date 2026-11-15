@@ -1,0 +1,58 @@
+{
+  "contentHash": "4d0ca089c6128b6211f75adf465fd27dfce97a6dbbe564f77b14b09313c8fef2",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "text": "Executive summary This week, check the boundaries your application relies on: shared caches, server-",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/e37c5042cdacbd9def7b.mp3"
+    },
+    {
+      "id": "listen-section-1",
+      "text": "Risk at a glance - Act now \u2014 Next.js image optimization: vulnerable 16.x deployments with attacker-c",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/88e10ab390456b451691.mp3"
+    },
+    {
+      "id": "listen-section-2",
+      "text": "Next.js: the patch is available, but scope still matters What changed and evidence. The 30 September",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/4d348311e6a3248808c8.mp3"
+    },
+    {
+      "id": "listen-section-3",
+      "text": "Wasmtime: prioritize untrusted component execution What changed and evidence. On 2 October, GHSA-32h",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/972344aa6e532592042f.mp3"
+    },
+    {
+      "id": "listen-section-4",
+      "text": "AI-assisted development watch Plan: include local development tooling in the Next.js upgrade. CVE-20",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/d9f8dbac089e2d2ecae0.mp3"
+    },
+    {
+      "id": "listen-section-5",
+      "text": "Supply-chain and stack watch No new Dependency-Track release was found after the previously covered ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/8adbbb886589dfb8de78.mp3"
+    },
+    {
+      "id": "listen-section-6",
+      "text": "Developer checklist Today - [ ] Record the deployed Next.js version and relevant image/cache configu",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/503fb1278ecc4c8c3726.mp3"
+    },
+    {
+      "id": "listen-section-7",
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/b1696f943b98a66fb87b.mp3"
+    },
+    {
+      "id": "listen-section-8",
+      "text": "Monday action plan 1. Web lead: deliver the Next.js version/configuration assessment and patch recor",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/097df8cf1387754f03b1.mp3"
+    },
+    {
+      "id": "listen-section-9",
+      "text": "References - Next.js, 30 September 2026: security release. - Next.js, 30 September 2026: image SSRF,",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-10-05-cache-and-sandbox-boundaries/54906b4a5c901f45ce52.mp3"
+    }
+  ]
+}
