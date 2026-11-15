@@ -10,6 +10,8 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
   const [rate, setRate] = useState(1)
   const [position, setPosition] = useState(0)
   const [duration, setDuration] = useState(0)
+  const continuePlaying = useRef(false)
+  useEffect(() => { if (continuePlaying.current && audio.current) { continuePlaying.current = false; void audio.current.play().catch(() => setPlaying(false)) } }, [index])
   const active = segments[index]
   useEffect(() => {
     document.querySelectorAll('[data-listen-active]').forEach(el => el.removeAttribute('data-listen-active'))
@@ -34,7 +36,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
       onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
       onLoadedMetadata={e => { setDuration(e.currentTarget.duration); e.currentTarget.playbackRate = rate }}
-      onEnded={() => { if (index < segments.length - 1) { setIndex(i => i + 1) } else { setPlaying(false); setIndex(0) } }}
+      onEnded={() => { if (index < segments.length - 1) { continuePlaying.current = true; setIndex(i => i + 1) } else { setPlaying(false); setIndex(0) } }}
     />
     <div className='article-listen-controls'>
       <span className='article-listen-label'>LISTEN TO ARTICLE</span>
