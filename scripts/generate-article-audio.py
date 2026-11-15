@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Generate changed article sections using Google Chirp 3 HD; upload immutable MP3s to GCS."""
+"""Generate changed article sections using Google Chirp 3 HD; upload immutable MP3s to Cloudflare R2."""
 import base64, hashlib, json, os, pathlib, re, subprocess, urllib.request
+import boto3
+from botocore.exceptions import ClientError
 ROOT = pathlib.Path("src/content")
 ARTICLES = ROOT / "blog"
 OUT = ROOT / "audio"
-BUCKET = os.environ["ARTICLE_AUDIO_BUCKET"]
+BUCKET = os.environ["R2_BUCKET"]
+PUBLIC_BASE = os.environ["R2_PUBLIC_BASE_URL"].rstrip("/")
+R2 = boto3.client("s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com", aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"], region_name="auto")
 VOICE = os.environ.get("ARTICLE_AUDIO_VOICE", "en-US-Chirp3-HD-Leda")
 TOKEN = subprocess.check_output(["gcloud", "auth", "print-access-token"], text=True).strip()
 
@@ -31,7 +35,7 @@ def main():
         fingerprint = hashlib.sha256(content.encode()).hexdigest()
         destination = OUT / (article.stem + ".json")
         previous = json.loads(destination.read_text()) if destination.exists() else {}
-        if previous.get("contentHash") == fingerprint and previous.get("voice") == VOICE:
+        if previous.get("contentHash") == fingerprint and previous.get("voice") == VOICE and previous.get("storage") == "r2":
             continue
         segments = []
         sections = [section for section in re.split(r"(?=^## )", content, flags=re.M) if section]
@@ -43,17 +47,20 @@ def main():
                 raise ValueError(f"{article.name} section {index} exceeds synthesis limit; split into smaller sections")
             section_hash = hashlib.sha256((VOICE+"\n"+text).encode()).hexdigest()[:20]
             object_name = f"articles/{article.stem}/{section_hash}.mp3"
-            url = f"https://storage.googleapis.com/{BUCKET}/{object_name}"
+            url = f"{PUBLIC_BASE}/{object_name}"
             # Generation is idempotent across edits and retries.
-            exists = subprocess.run(["gcloud","storage","ls",f"gs://{BUCKET}/{object_name}"],capture_output=True).returncode == 0
+            try:
+                R2.head_object(Bucket=BUCKET, Key=object_name)
+                exists = True
+            except ClientError as error:
+                if error.response["Error"]["Code"] not in ("404", "NoSuchKey", "NotFound"):
+                    raise
+                exists = False
             if not exists:
                 audio = synthesize(text)
-                import tempfile
-                with tempfile.NamedTemporaryFile(suffix=".mp3") as tmp:
-                    tmp.write(audio); tmp.flush()
-                    subprocess.run(["gcloud","storage","cp",tmp.name,f"gs://{BUCKET}/{object_name}"],check=True)
+                R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")
             segments.append({"id":f"listen-section-{index}","text":text[:100],"url":url})
-        destination.write_text(json.dumps({"contentHash":fingerprint,"voice":VOICE,"segments":segments},indent=2)+"\n")
+        destination.write_text(json.dumps({"contentHash":fingerprint,"voice":VOICE,"storage":"r2","segments":segments},indent=2)+"\n")
 
 if __name__ == "__main__":
     main()
