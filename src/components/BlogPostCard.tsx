@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useTheme } from '../context/ThemeContext'
+import { BlogPostMetadata } from './BlogPostMetadata'
 
 export interface BlogPostSummary {
   slug: string
@@ -10,14 +11,6 @@ export interface BlogPostSummary {
   date: string
   category?: string
 }
-
-const formatDate = (date: string, locale: string) =>
-  new Intl.DateTimeFormat(locale, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC'
-  }).format(new Date(`${date}T00:00:00Z`))
 
 export const blogPostGridClassName =
   'grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3'
@@ -56,26 +49,12 @@ export function BlogPostCard({
           {featuredLabel}
         </p>
       )}
-      <div className='mb-6 flex flex-wrap items-center gap-x-3 gap-y-2'>
-        <time
-          className={`font-code text-xs font-bold uppercase tracking-wider ${
-            theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
-          }`}
-          dateTime={post.date}
-        >
-          {formatDate(post.date, locale)}
-        </time>
-        {post.category && (
-          <span
-            className={`border px-2 py-0.5 font-code text-[10px] leading-4 ${
-              theme === 'light'
-                ? 'border-slate-200 bg-slate-50 text-slate-600'
-                : 'border-white/10 bg-white/5 text-white/65'
-            }`}
-          >
-            {post.category}
-          </span>
-        )}
+      <div className='mb-6'>
+        <BlogPostMetadata
+          date={post.date}
+          category={post.category}
+          locale={locale}
+        />
       </div>
 
       <Heading
