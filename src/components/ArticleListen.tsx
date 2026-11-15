@@ -1,153 +1,296 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-function PlayerIcon({ name, size = 20 }: { name: 'headphones' | 'back' | 'forward' | 'play' | 'pause' | 'volume' | 'list' | 'chevron'; size?: number }) {
-  const paths: Record<string, React.ReactNode> = {
-    headphones: <><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><rect x="2" y="13" width="4" height="8" rx="2"/><rect x="18" y="13" width="4" height="8" rx="2"/></>,
-    back: <><path d="M3 11a9 9 0 1 1 2.4 6.1"/><path d="M3 4v7h7"/><text x="12" y="16" fontSize="8" textAnchor="middle" stroke="none" fill="currentColor" fontWeight="700">15</text></>,
-    forward: <><path d="M21 11a9 9 0 1 0-2.4 6.1"/><path d="M21 4v7h-7"/><text x="12" y="16" fontSize="8" textAnchor="middle" stroke="none" fill="currentColor" fontWeight="700">15</text></>,
-    play: <path d="m8 5 11 7-11 7z" fill="currentColor" stroke="none"/>,
-    pause: <><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" stroke="none"/></>,
-    volume: <><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/></>,
-    list: <><path d="M9 6h12M9 12h12M9 18h12"/><path d="M3 6h.01M3 12h.01M3 18h.01" strokeWidth="3"/></>,
-    chevron: <path d="m6 9 6 6 6-6"/>
-  }
-  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
+import './article-listen.css'
+import { useAudioBeats, useAudioSyncMode } from './useAudioBeats'
+
+export interface ListenSegment {
+  id: string
+  text: string
+  url: string
+  duration?: number
 }
-export interface ListenSegment { id: string; text: string; url: string; duration?: number }
-const formatTime = (seconds: number) => {
+
+interface ArticleListenProps {
+  segments: ListenSegment[]
+  /** Section headings indexed like the `listen-section-N` ids on the page. */
+  titles?: string[]
+}
+
+interface ListenTrack extends ListenSegment {
+  label: string
+  sectionOrdinal: number
+}
+
+type IconName = 'back' | 'forward' | 'play' | 'pause' | 'previous' | 'next' | 'volume' | 'muted'
+
+const RATES = [0.75, 1, 1.25, 1.5, 2]
+const SKIP_SECONDS = 15
+const BEAT_COUNT = 32
+const MINI_BEAT_COUNT = 4
+const PLAY_ERROR = 'Audio could not be played. Please try again.'
+const LOAD_ERROR = 'This audio segment is unavailable right now.'
+
+/** Deterministic pseudo-random bar shapes so server and client markup match. */
+const BEATS: CSSProperties[] = Array.from({ length: BEAT_COUNT }, (_, i) => ({
+  '--h': (0.35 + 0.65 * Math.abs(Math.sin(i * 1.7))).toFixed(2),
+  '--t': `${(0.55 + ((i * 37) % 9) * 0.07).toFixed(2)}s`,
+  '--d': `${(-((i * 53) % 11) * 0.09).toFixed(2)}s`
+}) as CSSProperties)
+
+const ICONS: Record<IconName, ReactNode> = {
+  back: <><path d='M3 11a9 9 0 1 1 2.4 6.1' /><path d='M3 4v7h7' /><text x='12.5' y='15.5' fontSize='7.5' textAnchor='middle' stroke='none' fill='currentColor' fontWeight='700'>15</text></>,
+  forward: <><path d='M21 11a9 9 0 1 0-2.4 6.1' /><path d='M21 4v7h-7' /><text x='11.5' y='15.5' fontSize='7.5' textAnchor='middle' stroke='none' fill='currentColor' fontWeight='700'>15</text></>,
+  play: <path d='M8 5.2v13.6a1 1 0 0 0 1.5.8l11-6.8a1 1 0 0 0 0-1.6l-11-6.8A1 1 0 0 0 8 5.2z' fill='currentColor' stroke='none' />,
+  pause: <><rect x='6' y='5' width='4.2' height='14' rx='1.2' fill='currentColor' stroke='none' /><rect x='13.8' y='5' width='4.2' height='14' rx='1.2' fill='currentColor' stroke='none' /></>,
+  previous: <><path d='M18 6v12l-9-6z' fill='currentColor' /><path d='M6 6v12' /></>,
+  next: <><path d='M6 6v12l9-6z' fill='currentColor' /><path d='M18 6v12' /></>,
+  volume: <><path d='M11 5 6 9H3v6h3l5 4z' /><path d='M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12' /></>,
+  muted: <><path d='M11 5 6 9H3v6h3l5 4z' /><path d='m16 9 5 6M21 9l-5 6' /></>
+}
+
+function Icon({ name, size = 20 }: Readonly<{ name: IconName; size?: number }>) {
+  return (
+    <svg width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'>
+      {ICONS[name]}
+    </svg>
+  )
+}
+
+/** Equalizer bars: animated only while audio is actually producing sound. */
+function Beats({ live, synced, count = BEAT_COUNT, className = '' }: Readonly<{ live: boolean; synced: boolean; count?: number; className?: string }>) {
+  return (
+    <span className={`listen-beats ${className}`} data-live={live} data-synced={synced} aria-hidden='true'>
+      {BEATS.slice(0, count).map((style, i) => <i key={i} style={style} />)}
+    </span>
+  )
+}
+
+function formatTime(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds < 0) return '0:00'
   return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`
 }
-export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
+
+/** Long sections are synthesized in several chunks that share one section id. */
+function buildTracks(segments: ListenSegment[], titles: string[]): ListenTrack[] {
+  const totals = new Map<string, number>()
+  segments.forEach(segment => totals.set(segment.id, (totals.get(segment.id) ?? 0) + 1))
+  const seen = new Map<string, number>()
+  const ordinals = new Map<string, number>()
+  return segments.map(segment => {
+    const part = (seen.get(segment.id) ?? 0) + 1
+    seen.set(segment.id, part)
+    if (!ordinals.has(segment.id)) ordinals.set(segment.id, ordinals.size + 1)
+    const sectionIndex = Number(/(\d+)$/.exec(segment.id)?.[1] ?? Number.NaN)
+    const title = titles[sectionIndex]?.trim() || (sectionIndex === 0 ? 'Introduction' : segment.text.trim().slice(0, 60) || 'Narration')
+    const label = (totals.get(segment.id) ?? 1) > 1 ? `${title} (part ${part})` : title
+    return { ...segment, label, sectionOrdinal: ordinals.get(segment.id) ?? 1 }
+  })
+}
+
+export function ArticleListen({ segments, titles = [] }: Readonly<ArticleListenProps>) {
   const audio = useRef<HTMLAudioElement>(null)
-  const anchor = useRef<HTMLDivElement>(null)
   const playerSection = useRef<HTMLElement>(null)
-  const [mounted, setMounted] = useState(false)
-  const [compact, setCompact] = useState(false)
-  const [expanded, setExpanded] = useState(false)
-  const [headerBottom, setHeaderBottom] = useState(0)
   const continuePlaying = useRef(false)
+  const [portalTarget, setPortalTarget] = useState<Element | null>(null)
+  const [compact, setCompact] = useState(false)
+  const [headerHeight, setHeaderHeight] = useState(0)
   const [index, setIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const [live, setLive] = useState(false)
   const [rate, setRate] = useState(1)
   const [position, setPosition] = useState(0)
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
+  const [muted, setMuted] = useState(false)
   const [error, setError] = useState('')
-  const [showOptions, setShowOptions] = useState(false)
+  const syncMode = useAudioSyncMode(segments[0]?.url)
+  const { connect, isSynced } = useAudioBeats(audio, syncMode === 'cors', live, compact)
+
+  const tracks = useMemo(() => buildTracks(segments, titles), [segments, titles])
+  const sectionCount = useMemo(() => new Set(segments.map(segment => segment.id)).size, [segments])
+  const lastIndex = tracks.length - 1
+  const active = tracks[index]
+
+  // The mini player is portaled inside the article theme scope so its colour tokens resolve.
   useEffect(() => {
-    setMounted(true)
-    const update = () => {
-      const bottom = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
-      setHeaderBottom(Math.max(0, bottom))
-      if (playerSection.current) setCompact(playerSection.current.getBoundingClientRect().bottom <= Math.max(0, bottom))
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
-    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update) }
+    setPortalTarget(playerSection.current?.closest('.blog-article-page') ?? document.body)
+    const header = document.querySelector('header')
+    if (!header) return
+    const measure = () => setHeaderHeight(header.offsetHeight)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(header)
+    return () => observer.disconnect()
   }, [])
-  const active = segments[index]
-  const estimatedDuration = segments.reduce((sum, segment) => sum + (segment.duration || 0), 0)
+
+  // Show the mini player only once the full player has scrolled up behind the fixed header.
+  useEffect(() => {
+    const section = playerSection.current
+    if (!section) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setCompact(!entry.isIntersecting && entry.boundingClientRect.top < headerHeight),
+      { rootMargin: `-${headerHeight}px 0px 0px 0px` }
+    )
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [headerHeight])
+
+  // Resume automatically after a section change that happened during playback.
+  useEffect(() => {
+    if (!continuePlaying.current || !audio.current) return
+    continuePlaying.current = false
+    audio.current.play().catch(() => { setPlaying(false); setError(PLAY_ERROR) })
+  }, [index])
 
   useEffect(() => {
-    if (continuePlaying.current && audio.current) {
-      continuePlaying.current = false
-      void audio.current.play().catch(() => { setPlaying(false); setError('Audio could not be played. Please try again.') })
-    }
-  }, [index])
-  useEffect(() => {
-    document.querySelectorAll('[data-listen-active]').forEach(el => el.removeAttribute('data-listen-active'))
     if (!playing || !active) return
     const el = document.getElementById(active.id)
-    el?.setAttribute('data-listen-active', 'true')
-    // Do not scroll the document automatically when narration begins.
-    return () => { el?.removeAttribute('data-listen-active') }
-  }, [index, playing, active])
+    if (!el) return
+    el.dataset.listenActive = 'true'
+    return () => { delete el.dataset.listenActive }
+  }, [playing, active])
 
-  if (!segments.length) return null
-  const play = async () => {
-    if (!audio.current) return
-    if (playing) { audio.current.pause(); return }
-    setError('')
-    try { await audio.current.play() } catch { setPlaying(false); setError('Audio could not be played. Please try again.') }
-  }
-  const seek = (seconds: number) => {
-    if (!audio.current || !Number.isFinite(audio.current.duration)) return
-    audio.current.currentTime = Math.max(0, Math.min(audio.current.duration, audio.current.currentTime + seconds))
-  }
-  const selectSection = (next: number) => {
-    if (next === index) return
-    continuePlaying.current = playing
-    setPlaying(false)
+  const goTo = (next: number, keepPlaying = playing) => {
+    if (next === index || next < 0 || next > lastIndex) return
+    continuePlaying.current = keepPlaying
+    setLive(false)
     setPosition(0)
     setDuration(0)
     setError('')
     setIndex(next)
   }
-  const sectionLabel = (segment: ListenSegment, number: number) =>
-    `Section ${number + 1}: ${segment.text.trim().slice(0, 65) || 'Narration'}`
+  const toggle = () => {
+    const el = audio.current
+    if (!el) return
+    if (!el.paused) { el.pause(); return }
+    connect()
+    setError('')
+    el.play().catch(() => { setPlaying(false); setError(PLAY_ERROR) })
+  }
+  const seekTo = (seconds: number) => {
+    const el = audio.current
+    if (!el || !Number.isFinite(el.duration)) return
+    const next = Math.max(0, Math.min(el.duration, seconds))
+    el.currentTime = next
+    setPosition(next)
+  }
+  const skip = (delta: number) => seekTo((audio.current?.currentTime ?? 0) + delta)
+  const cycleRate = () => {
+    const next = RATES[(RATES.indexOf(rate) + 1) % RATES.length]
+    setRate(next)
+    if (audio.current) { audio.current.defaultPlaybackRate = next; audio.current.playbackRate = next }
+  }
+  const changeVolume = (next: number) => {
+    setVolume(next)
+    setMuted(next === 0)
+    if (audio.current) { audio.current.volume = next; audio.current.muted = next === 0 }
+  }
+  const toggleMuted = () => {
+    const next = !muted
+    setMuted(next)
+    if (audio.current) audio.current.muted = next
+  }
 
-  return <><div ref={anchor} className='article-listen-anchor' aria-hidden='true' /><section ref={playerSection} className='article-listen' aria-label='Listen to this article'>
-    <audio ref={audio} src={active.url} preload='metadata'
-      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
-      onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
-      onLoadedMetadata={e => { setDuration(e.currentTarget.duration); e.currentTarget.playbackRate = rate; e.currentTarget.volume = volume }}
-      onError={() => { setPlaying(false); setError('This audio segment is unavailable right now.') }}
-      onEnded={() => { if (index < segments.length - 1) { continuePlaying.current = true; setPosition(0); setDuration(0); setIndex(i => i + 1) } else { setPlaying(false); setPosition(0); setIndex(0) } }}
-    />
+  // Lock-screen / hardware media keys.
+  const controls = useRef({ toggle, skip, goTo, index })
+  controls.current = { toggle, skip, goTo, index }
+  useEffect(() => {
+    if (!active || !('mediaSession' in navigator)) return
+    const session = navigator.mediaSession
+    session.metadata = new MediaMetadata({ title: active.label, artist: document.title, album: 'Article narration' })
+    const handlers: [MediaSessionAction, () => void][] = [
+      ['play', () => controls.current.toggle()],
+      ['pause', () => controls.current.toggle()],
+      ['seekbackward', () => controls.current.skip(-SKIP_SECONDS)],
+      ['seekforward', () => controls.current.skip(SKIP_SECONDS)],
+      ['previoustrack', () => controls.current.goTo(controls.current.index - 1)],
+      ['nexttrack', () => controls.current.goTo(controls.current.index + 1)]
+    ]
+    handlers.forEach(([action, handler]) => { try { session.setActionHandler(action, handler) } catch { /* action unsupported by this browser */ } })
+    return () => handlers.forEach(([action]) => { try { session.setActionHandler(action, null) } catch { /* action unsupported by this browser */ } })
+  }, [active])
 
-    <div className='article-listen-header'>
-      <div className='article-listen-heading'>
-        <span className='article-listen-headphones'><PlayerIcon name='headphones' size={27} /></span>
-        <div><h2>Listen to this article</h2><p>A narrated version for easy, hands-free reading.</p></div>
-      </div>
-      <span className='article-listen-badge'><span className='article-listen-wave' aria-hidden='true'>▂▅▇▅▂</span>{segments.length} sections{estimatedDuration > 0 ? ` · ${Math.ceil(estimatedDuration / 60)} min` : ''}</span>
-    </div>
-    <div className='article-listen-main'>
-      <div className='article-listen-transport'>
-        <button className='article-listen-skip' type='button' onClick={() => seek(-15)} aria-label='Back 15 seconds'><PlayerIcon name='back' size={24} /></button>
-        <button className='article-listen-play' type='button' onClick={play} aria-label={playing ? 'Pause narration' : 'Play narration'}>{<PlayerIcon name={playing ? 'pause' : 'play'} size={26} />}</button>
-        <button className='article-listen-skip' type='button' onClick={() => seek(15)} aria-label='Forward 15 seconds'><PlayerIcon name='forward' size={24} /></button>
-      </div>
-      <div className='article-listen-timeline'>
-        <span className='article-listen-time'>{formatTime(position)}</span>
-        <input aria-label='Seek within current section' type='range' min={0} max={duration || 1} step={0.1} value={Math.min(position, duration || 1)}
-          style={{ background: `linear-gradient(to right, var(--article-accent) ${duration ? position / duration * 100 : 0}%, var(--article-border) 0%)` }}
-          onChange={e => { if (audio.current) audio.current.currentTime = Number(e.target.value) }} />
-        <span className='article-listen-time'>{formatTime(duration)}</span>
-      </div>
-    </div>
-    <button className='article-listen-mobile-options' type='button' aria-expanded={showOptions} onClick={() => setShowOptions(v => !v)}>{showOptions ? 'Hide options' : 'Playback options'} <PlayerIcon name='chevron' size={16} /></button>
-    <div className={`article-listen-footer${showOptions ? ' article-listen-footer-open' : ''}`}>
-      <label className='article-listen-field'><span>Speed</span><select aria-label='Playback speed' value={rate} onChange={e => { const r = Number(e.target.value); setRate(r); if (audio.current) audio.current.playbackRate = r }}>
-        {[0.75,1,1.25,1.5,2].map(n => <option value={n} key={n}>{n}×</option>)}
-      </select></label>
-      <label className='article-listen-field article-listen-section'><span>Section</span><select aria-label='Choose narration section' value={index} onChange={e => selectSection(Number(e.target.value))}>
-        {segments.map((segment, i) => <option value={i} key={segment.id}>{sectionLabel(segment, i)}</option>)}
-      </select></label>
-      <label className='article-listen-field article-listen-volume'><PlayerIcon name='volume' size={20} /><span className='article-listen-visually-hidden'>Volume</span><input aria-label='Volume' type='range' min={0} max={1} step={0.05} value={volume} onChange={e => { const v = Number(e.target.value); setVolume(v); if (audio.current) audio.current.volume = v }} /></label>
-    </div>
-    <p className='article-listen-status'>Section {index + 1} of {segments.length} · Highlights follow narration</p>
-    {error && <p className='article-listen-error' role='alert'>{error}</p>}
-  </section>
-    {mounted && compact && createPortal(<aside className='article-listen-floating' style={{ top: headerBottom }} aria-label='Floating audio controls'>
-      <div className='article-listen-floating-row'>
-        <button type='button' onClick={() => seek(-15)} aria-label='Back 15 seconds'><PlayerIcon name='back' size={20} /></button>
-        <button type='button' className='article-listen-floating-play' onClick={play} aria-label={playing ? 'Pause narration' : 'Play narration'}><PlayerIcon name={playing ? 'pause' : 'play'} size={20} /></button>
-        <button type='button' onClick={() => seek(15)} aria-label='Forward 15 seconds'><PlayerIcon name='forward' size={20} /></button>
-        <span className='article-listen-floating-time'>{formatTime(position)}</span>
-        <input type='range' aria-label='Seek within current section' min={0} max={duration || 1} step={0.1} value={Math.min(position, duration || 1)} onChange={e => { if (audio.current) audio.current.currentTime = Number(e.target.value) }} />
-        <span className='article-listen-floating-time'>{formatTime(duration)}</span>
-        <button type='button' onClick={() => setExpanded(v => !v)} aria-label={expanded ? 'Hide player options' : 'Show player options'} aria-expanded={expanded}><PlayerIcon name='chevron' size={18} /></button>
-      </div>
-      {expanded && <div className='article-listen-floating-options'>
-        <label>Speed <select aria-label='Floating playback speed' value={rate} onChange={e => { const next = Number(e.target.value); setRate(next); if (audio.current) audio.current.playbackRate = next }}>{[0.75,1,1.25,1.5,2].map(n => <option key={n} value={n}>{n}×</option>)}</select></label>
-        <label>Section <select aria-label='Floating section selection' value={index} onChange={e => selectSection(Number(e.target.value))}>{segments.map((segment,i) => <option key={segment.id} value={i}>{sectionLabel(segment,i)}</option>)}</select></label>
-      </div>}
-    </aside>, document.body)}
-  </>
+  if (!active) return null
+
+  const progress = duration ? Math.min(100, (position / duration) * 100) : 0
+  const progressStyle = { '--listen-progress': `${progress}%` } as CSSProperties
+  const playLabel = playing ? 'Pause narration' : 'Play narration'
+  const scrubber = (
+    <input className='listen-scrubber' style={progressStyle} aria-label='Seek within current section' aria-valuetext={`${formatTime(position)} of ${formatTime(duration)}`}
+      type='range' min={0} max={duration || 1} step={0.1} value={Math.min(position, duration || 1)} disabled={!duration}
+      onChange={e => seekTo(Number(e.target.value))} />
+  )
+
+  return (
+    <>
+      <section ref={playerSection} className='article-listen' data-playing={playing} aria-label='Listen to this article'>
+        <audio ref={audio} src={syncMode === 'pending' ? undefined : active.url} crossOrigin={syncMode === 'cors' ? 'anonymous' : undefined} preload='metadata'
+          onPlay={() => setPlaying(true)}
+          onPlaying={() => setLive(true)}
+          onWaiting={() => setLive(false)}
+          onPause={e => { setLive(false); if (!(e.currentTarget.ended && index < lastIndex)) setPlaying(false) }}
+          onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
+          onLoadedMetadata={e => { setDuration(e.currentTarget.duration); e.currentTarget.defaultPlaybackRate = rate; e.currentTarget.playbackRate = rate }}
+          onError={() => { setPlaying(false); setLive(false); setError(LOAD_ERROR) }}
+          onEnded={() => { if (index < lastIndex) goTo(index + 1, true); else { setPlaying(false); setLive(false); setPosition(0); setIndex(0) } }}
+        />
+
+        <div className='listen-top'>
+          <button className='listen-play' type='button' data-live={live} onClick={toggle} aria-label={playLabel}>
+            <Icon name={playing ? 'pause' : 'play'} size={28} />
+          </button>
+          <div className='listen-now'>
+            <p className='listen-eyebrow'>{playing ? 'Now playing' : 'Listen to this article'}</p>
+            <h2 className='listen-title'>{active.label}</h2>
+            <p className='listen-meta'>Section {active.sectionOrdinal} of {sectionCount} · Highlights follow narration</p>
+          </div>
+          <Beats live={live} synced={isSynced} className='listen-visualizer' />
+        </div>
+
+        <div className='listen-timeline'>
+          <span className='listen-time'>{formatTime(position)}</span>
+          {scrubber}
+          <span className='listen-time'>{formatTime(duration)}</span>
+        </div>
+
+        <div className='listen-controls'>
+          <div className='listen-transport' role='group' aria-label='Playback controls'>
+            <button className='listen-icon-button' type='button' onClick={() => goTo(index - 1)} disabled={index === 0} aria-label='Previous section'><Icon name='previous' /></button>
+            <button className='listen-icon-button' type='button' onClick={() => skip(-SKIP_SECONDS)} aria-label={`Back ${SKIP_SECONDS} seconds`}><Icon name='back' size={22} /></button>
+            <button className='listen-icon-button' type='button' onClick={() => skip(SKIP_SECONDS)} aria-label={`Forward ${SKIP_SECONDS} seconds`}><Icon name='forward' size={22} /></button>
+            <button className='listen-icon-button' type='button' onClick={() => goTo(index + 1)} disabled={index === lastIndex} aria-label='Next section'><Icon name='next' /></button>
+          </div>
+          <button className='listen-rate' type='button' onClick={cycleRate} aria-label={`Playback speed ${rate}×. Change speed`}>{rate}×</button>
+          <label className='listen-section-picker'>
+            <span className='listen-visually-hidden'>Choose narration section</span>
+            <select value={index} onChange={e => goTo(Number(e.target.value))}>
+              {tracks.map((track, i) => <option value={i} key={track.url}>{track.sectionOrdinal}. {track.label}</option>)}
+            </select>
+          </label>
+          <div className='listen-volume'>
+            <button className='listen-icon-button' type='button' onClick={toggleMuted} aria-pressed={muted} aria-label={muted ? 'Unmute' : 'Mute'}><Icon name={muted ? 'muted' : 'volume'} /></button>
+            <input className='listen-scrubber' style={{ '--listen-progress': `${muted ? 0 : volume * 100}%` } as CSSProperties} aria-label='Volume' type='range' min={0} max={1} step={0.05} value={muted ? 0 : volume} onChange={e => changeVolume(Number(e.target.value))} />
+          </div>
+        </div>
+        {error && <p className='listen-error' role='alert'>{error}</p>}
+      </section>
+
+      {portalTarget && compact && createPortal(
+        <aside className='article-listen-floating' style={{ top: headerHeight }} aria-label='Mini audio player'>
+          <button className='listen-play listen-play-small' type='button' onClick={toggle} aria-label={playLabel}><Icon name={playing ? 'pause' : 'play'} size={18} /></button>
+          <Beats live={live} synced={isSynced} count={MINI_BEAT_COUNT} className='listen-mini-beats' />
+          <p className='listen-mini-title'>{active.label}</p>
+          <span className='listen-time'>{formatTime(position)} / {formatTime(duration)}</span>
+          <button className='listen-icon-button' type='button' onClick={() => skip(-SKIP_SECONDS)} aria-label={`Back ${SKIP_SECONDS} seconds`}><Icon name='back' /></button>
+          <button className='listen-icon-button' type='button' onClick={() => skip(SKIP_SECONDS)} aria-label={`Forward ${SKIP_SECONDS} seconds`}><Icon name='forward' /></button>
+          <button className='listen-rate listen-mini-rate' type='button' onClick={cycleRate} aria-label={`Playback speed ${rate}×. Change speed`}>{rate}×</button>
+          {scrubber}
+        </aside>,
+        portalTarget
+      )}
+    </>
+  )
 }

@@ -113,8 +113,10 @@ def main():
                 section_hash = hashlib.sha256((VOICE+"\\n"+chunk).encode()).hexdigest()[:20]
                 object_name = f"articles/{article.stem}/{section_hash}.mp3"
                 url = f"{PUBLIC_BASE}/{object_name}"
+                # Cloudflare R2 does not implement ExpectedBucketOwner; the account-scoped
+                # endpoint URL already pins every request to this account's buckets.
                 try:
-                    R2.head_object(Bucket=BUCKET, Key=object_name)
+                    R2.head_object(Bucket=BUCKET, Key=object_name)  # NOSONAR python:S7608
                     exists = True
                 except ClientError as error:
                     if error.response["Error"]["Code"] not in ("404", "NoSuchKey", "NotFound"):
@@ -124,7 +126,7 @@ def main():
                     reused_segments += 1
                 else:
                     audio = synthesize(chunk)
-                    R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")
+                    R2.put_object(Bucket=BUCKET, Key=object_name, Body=audio, ContentType="audio/mpeg", CacheControl="public, max-age=31536000, immutable")  # NOSONAR python:S7608
                     generated_segments += 1
                     generated_characters += len(chunk)
                 segments.append({"id":f"listen-section-{index}","text":chunk[:100],"url":url})

@@ -30,7 +30,7 @@ jobs:
       - name: Audit article narration compatibility
         run: python3 scripts/check-article-narration.py
       - name: Install R2 client
-        run: python3 -m pip install --disable-pip-version-check boto3==1.35.99
+        run: python3 -m pip install --disable-pip-version-check --only-binary :all: boto3==1.35.99
       - name: Generate and upload section audio
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}

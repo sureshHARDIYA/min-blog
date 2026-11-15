@@ -177,7 +177,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
           </p>
         </header>
 
-        <ArticleListen segments={audioSegments} />
+        <ArticleListen segments={audioSegments} titles={markdownSections(post.content).map(sectionTitle)} />
         <div className='blog-prose mt-7 wrap-break-word text-white/80 sm:mt-9'>
           {markdownSections(post.content).map((section, sectionIndex) => {
             const title = sectionTitle(section)
