@@ -4,6 +4,7 @@ description: "Why we are building Revios, audit software for Nordic audit firms,
 seoTitle: "AI in Audit Software: Human Approval by Design"
 seoDescription: "How Revios, a Norwegian audit software (revisjonsprogram), uses explainable ML and human-approved AI suggestions, a signed hash-chained audit log, and row-level security."
 date: "2026-11-07"
+category: AI Governance
 ---
 
 ## The question an auditor actually asks

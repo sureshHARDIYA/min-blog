@@ -4,6 +4,7 @@ description: "A principal architect's guide to the hidden state, security, relia
 seoTitle: "The Hidden Technical Cost of Simple UI/UX"
 seoDescription: "How apparently simple UI/UX moves complexity into state, authorization, concurrency, failure recovery and service boundaries—and how to design for it."
 date: "2026-09-09"
+category: Engineering
 ---
 
 ## The simple screen that was not simple

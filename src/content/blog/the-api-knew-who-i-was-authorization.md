@@ -4,6 +4,7 @@ description: "A practical AppSec story about broken object-level authorization, 
 seoTitle: "API Authorization: Authentication Is Not Enough"
 seoDescription: "See how a valid identity can still cross tenant boundaries, where object authorization fails, and what tests prove a secure API blocks the request."
 date: "2026-09-11"
+category: API Security
 ---
 
 ## The request that looked completely legitimate

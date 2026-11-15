@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { NAV_TAB_PATHS, NavTab } from '../types'
@@ -6,8 +7,8 @@ import { useTheme } from '../context/ThemeContext'
 import { EASE_OUT_EXPO } from './motion-primitives'
 
 interface HeaderProps {
-  activeTab: NavTab
-  setActiveTab: (tab: NavTab) => void
+  activeTab: NavTab | 'blogs'
+  setActiveTab?: (tab: NavTab) => void
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
@@ -25,6 +26,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
       : 'text-[#F5F5F5]/70 hover:bg-white/5 hover:text-[#F5F5F5]'
 
+  const isBlogPage = activeTab === 'blogs'
+  const activePageLinkClass =
+    theme === 'light' ? 'font-bold text-[#008822]' : 'font-bold text-[#00FF41]'
+
   const navItems: { id: NavTab; label: string }[] = [
     { id: 'architecture', label: t.nav.architecture },
     { id: 'trajectory', label: t.nav.trajectory },
@@ -33,7 +38,24 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'stack', label: t.nav.stack }
   ]
 
-  const handleNavClick = (tab: NavTab) => {
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    tab: NavTab
+  ) => {
+    setMobileMenuOpen(false)
+
+    if (
+      !setActiveTab ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return
+    }
+
+    event.preventDefault()
     const nextPath = NAV_TAB_PATHS[tab]
 
     if (window.location.pathname !== nextPath || window.location.hash) {
@@ -45,7 +67,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     }
 
     setActiveTab(tab)
-    setMobileMenuOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -61,8 +82,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       }`}
     >
       <div className='flex justify-between items-center px-6 py-4 max-w-[1120px] mx-auto'>
-        <button
-          onClick={() => handleNavClick('architecture')}
+        <Link
+          href='/'
+          onClick={(event) => handleNavClick(event, 'architecture')}
           className={`font-headline-md uppercase text-left transition-colors cursor-pointer flex flex-col items-start ${
             theme === 'light'
               ? 'text-slate-900 hover:text-[#008822]'
@@ -84,16 +106,20 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           >
             ENGINEERING SINCE {careerStartYear} · {careerYears} YEARS
           </span>
-        </button>
+        </Link>
 
         {/* Desktop Navigation & Theme Toggle */}
-        <div className='hidden md:flex items-center gap-6'>
-          <nav className='flex gap-5 font-code text-[11px] uppercase tracking-[0.15em]'>
+        <div className='hidden lg:flex items-center gap-6'>
+          <nav
+            aria-label='Main navigation'
+            className='flex gap-4 font-code xl:gap-5 text-[11px] uppercase tracking-[0.15em]'
+          >
             {navItems.map((item, index) => {
               const isActive = activeTab === item.id
               return (
-                <motion.button
+                <motion.a
                   key={item.id}
+                  href={NAV_TAB_PATHS[item.id]}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
@@ -101,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                     delay: 0.15 + index * 0.06,
                     ease: EASE_OUT_EXPO
                   }}
-                  onClick={() => handleNavClick(item.id)}
+                  onClick={(event) => handleNavClick(event, item.id)}
                   className={`relative cursor-pointer pb-1 transition-colors duration-200 ${
                     isActive
                       ? theme === 'light'
@@ -122,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       }`}
                     />
                   )}
-                </motion.button>
+                </motion.a>
               )
             })}
             <motion.a
@@ -130,7 +156,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.45, ease: EASE_OUT_EXPO }}
               className={`relative pb-1 transition-colors duration-200 ${desktopPageLinkClass}`}
-              href="/security"
+              href='/security'
             >
               Security
             </motion.a>
@@ -138,11 +164,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.45, ease: EASE_OUT_EXPO }}
-              className={`relative pb-1 transition-colors duration-200 ${desktopPageLinkClass}`}
-              href="/blogs"
+              className={`relative pb-1 transition-colors duration-200 ${isBlogPage ? activePageLinkClass + ' border-b-2 border-current' : desktopPageLinkClass}`}
+              aria-current={isBlogPage ? 'page' : undefined}
+              href='/blogs'
             >
               Blogs
             </motion.a>
+            {isBlogPage && (
+              <Link href='/vulnerabilities' className={desktopPageLinkClass}>
+                VulnIntel
+              </Link>
+            )}
           </nav>
 
           {/* System Button - Toggles Light & Dark Theme */}
@@ -164,7 +196,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         </div>
 
         {/* Mobile Toggle Controls */}
-        <div className='md:hidden flex items-center gap-3'>
+        <div className='lg:hidden flex items-center gap-3'>
           {/* Quick Theme Toggle Mobile Button */}
           <button
             onClick={toggleTheme}
@@ -184,6 +216,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`p-2 focus:outline-none cursor-pointer ${theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'}`}
+            aria-expanded={mobileMenuOpen}
             aria-label='Toggle Navigation Menu'
           >
             <span className='material-symbols-outlined text-2xl'>
@@ -201,20 +234,24 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
-            className={`md:hidden border-b overflow-hidden shadow-2xl ${
+            className={`lg:hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-b shadow-2xl ${
               theme === 'light'
                 ? 'bg-white border-slate-200'
                 : 'bg-[#141414] border-white/10'
             }`}
           >
             <div className='px-6 py-4'>
-              <nav className='flex flex-col gap-3 font-code text-xs uppercase tracking-widest mb-4'>
+              <nav
+                aria-label='Mobile navigation'
+                className='flex flex-col gap-3 font-code text-xs uppercase tracking-widest mb-4'
+              >
                 {navItems.map((item) => {
                   const isActive = activeTab === item.id
                   return (
-                    <button
+                    <Link
                       key={item.id}
-                      onClick={() => handleNavClick(item.id)}
+                      href={NAV_TAB_PATHS[item.id]}
+                      onClick={(event) => handleNavClick(event, item.id)}
                       className={`text-left py-2.5 px-3 min-h-[44px] rounded flex items-center justify-between cursor-pointer ${
                         isActive
                           ? theme === 'light'
@@ -231,29 +268,39 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                           chevron_right
                         </span>
                       )}
-                    </button>
+                    </Link>
                   )
                 })}
                 <a
                   className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${mobilePageLinkClass}`}
-                  href="/security"
+                  href='/security'
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span>Security</span>
-                  <span className="material-symbols-outlined text-sm">
+                  <span className='material-symbols-outlined text-sm'>
                     shield
                   </span>
                 </a>
                 <a
-                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${mobilePageLinkClass}`}
-                  href="/blogs"
+                  className={`flex min-h-[44px] items-center justify-between rounded px-3 py-2.5 ${isBlogPage ? activePageLinkClass : mobilePageLinkClass}`}
+                  aria-current={isBlogPage ? 'page' : undefined}
+                  href='/blogs'
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span>Blogs</span>
-                  <span className="material-symbols-outlined text-sm">
+                  <span className='material-symbols-outlined text-sm'>
                     arrow_outward
                   </span>
                 </a>
+                {isBlogPage && (
+                  <Link
+                    href='/vulnerabilities'
+                    className={`min-h-[44px] rounded px-3 py-2.5 ${mobilePageLinkClass}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    VulnIntel
+                  </Link>
+                )}
               </nav>
 
               <div className='pt-3 border-t border-white/10 space-y-3 font-mono text-xs'>
