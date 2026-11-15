@@ -1,6 +1,11 @@
 name: Generate article narration
 on:
   workflow_dispatch:
+    inputs:
+      max_characters:
+        description: 'Override the per-run synthesis ceiling (characters), e.g. for a backfill or voice change'
+        required: false
+        type: string
   push:
     branches: [main]
     paths:
@@ -8,20 +13,22 @@ on:
       - 'scripts/generate-article-audio.py'
       - 'scripts/narration.py'
       - 'src/content/narration/**'
-permissions:
-  contents: write
-  id-token: write
+permissions: {}
 concurrency:
   group: article-audio
   cancel-in-progress: false
 jobs:
+  # Holds the cloud credentials but cannot write to the repository.
   generate:
-    if: github.ref == 'refs/heads/main' && github.actor != 'github-actions[bot]'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
@@ -30,7 +37,7 @@ jobs:
       - name: Audit article narration compatibility
         run: python3 scripts/check-article-narration.py
       - name: Install R2 client
-        run: python3 -m pip install --disable-pip-version-check --only-binary :all: boto3==1.35.99
+        run: python3 -m pip install --disable-pip-version-check --only-binary ':all:' boto3==1.35.99
       - name: Generate and upload section audio
         env:
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
@@ -40,13 +47,53 @@ jobs:
           R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
           ARTICLE_AUDIO_GCP_PROJECT: skmukhiya-com-np-514815
           ARTICLE_AUDIO_VOICE: en-US-Chirp3-HD-Leda
+          # Spend guards: synthesis stops before a request that would pass either ceiling.
+          ARTICLE_AUDIO_MAX_CHARS_PER_RUN: ${{ inputs.max_characters || vars.ARTICLE_AUDIO_MAX_CHARS_PER_RUN }}
+          ARTICLE_AUDIO_MAX_CHARS_PER_MONTH: ${{ vars.ARTICLE_AUDIO_MAX_CHARS_PER_MONTH }}
         run: python3 scripts/generate-article-audio.py
+      # Publish whatever finished even when one article failed, so a bad article cannot block the rest.
+      - name: Hand manifests to the publish job
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: narration-manifests
+          path: |
+            src/content/audio/
+            src/content/audio-usage.json
+          if-no-files-found: ignore
+          retention-days: 1
+
+  # Can write to the repository but never sees cloud credentials or third-party install steps.
+  publish:
+    needs: generate
+    if: ${{ !cancelled() && needs.generate.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: narration-manifests
+          path: src/content
       - name: Commit updated manifests
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/content/audio
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: refresh article narration manifests"
-            git push
+          git add src/content/audio src/content/audio-usage.json 2>/dev/null || git add src/content/audio
+          if git diff --cached --quiet; then
+            echo "No manifest changes to publish."
+            exit 0
           fi
+          git commit -m "chore: refresh article narration manifests"
+          # main may have moved while audio was generated: rebase and retry instead of failing.
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            git pull --rebase origin main
+          done
+          echo "::error::Could not publish narration manifests after 5 attempts."
+          exit 1

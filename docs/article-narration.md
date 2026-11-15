@@ -32,6 +32,9 @@ The blog generates section-level MP3s once using Google Cloud Text-to-Speech and
 - Manifests in `src/content/audio/<slug>.json` contain only URLs and metadata, not MP3s. A new manifest commit triggers a site deployment.
 - The player is hidden when a manifest is absent or stale. Highlighting is section-level, not word-level.
 - Long sections are automatically divided at word boundaries into synthesis-safe chunks, while the player continues highlighting the containing article section.
+- Manifests record each segment's duration, so the player shows listening time without fetching audio. Nothing is requested from R2 until the reader hovers, focuses or taps the player.
+- One failing article does not block the others: finished manifests are still committed and the run is marked failed with the reason in the job summary. Fix the article and rerun; uploaded audio is reused.
+- The `generate` job holds the cloud credentials and cannot write to the repository. The separate `publish` job commits manifests and rebases if `main` moved during generation.
 - English Chirp voice is the current default. Norwegian articles require language/voice selection before generation.
 
 ## Cost and operations
@@ -39,6 +42,7 @@ The blog generates section-level MP3s once using Google Cloud Text-to-Speech and
 - Google Chirp TTS usage and Cloudflare R2 storage/requests are **separate**. Check current free-tier pricing and configure billing alerts; free-tier eligibility is not a guarantee of zero cost.
 - Use the R2 Standard storage class to qualify for its free allowance. Direct R2 egress is free, but excessive read requests can incur charges.
 - Configure a bucket lifecycle rule to clean up superseded immutable MP3s after an appropriate retention period. Avoid a rule that deletes currently referenced audio.
+- **Spend guards.** Synthesis stops before any request that would pass a ceiling: 60,000 characters per run and 900,000 per calendar month by default. Override with the repository variables `ARTICLE_AUDIO_MAX_CHARS_PER_RUN` and `ARTICLE_AUDIO_MAX_CHARS_PER_MONTH`, or pass `max_characters` when running the workflow manually (needed for a full backfill or a voice change). Monthly usage is tracked in `src/content/audio-usage.json`; it only counts runs made after this guard was added. These ceilings are a safety net, not a billing control: also set a Cloud Billing budget alert.
 - To regenerate with a new voice, change `ARTICLE_AUDIO_VOICE` in the workflow and rerun.
 - No storage provider credentials are used by the website at runtime.
 
@@ -69,3 +73,9 @@ Editing an override invalidates the manifest and regenerates affected narration.
 ## Instructions for future writing agents
 
 Read `AGENTS.md` (and the tool-specific `CLAUDE.md` / `.github/copilot-instructions.md`) before drafting an article. Use `python3 scripts/check-article-narration.py` to audit the entire archive, or pass article paths to check only new work. The audit is advisory by default; `--strict` makes warnings fail. The audio workflow runs the advisory audit before synthesis. Review warnings against source material; the script cannot understand React-only components or certify factual correctness.
+
+## Player, CORS and Content Security Policy
+
+- **Audio-synced equalizer.** The bars follow the real audio spectrum only when the bucket allows cross-origin reads. Add a CORS policy to the R2 bucket allowing `GET` and `HEAD` from the site origins with the `Range` request header. Without it the player falls back to a decorative animation; playback is unaffected. Touch devices always use the fallback so lock-screen listening keeps working.
+- **CSP.** `src/proxy.ts` only allows audio from the bucket's public origin. When the bucket moves to a custom domain, set the `ARTICLE_AUDIO_ORIGINS` environment variable (space-separated HTTPS origins) in the hosting platform, or playback will be blocked.
+- **Tests.** `python3 -m pytest scripts/test_generate_article_audio.py` exercises the generator with stubbed storage and synthesis; it needs no credentials.

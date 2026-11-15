@@ -184,7 +184,7 @@ async function BlogPostContent({ slug }: { slug: string }) {
             return (
               post.slug === 'agentbaiting-malicious-ai-tools-enterprise-security-2026' &&
               new Set(['Technical evidence appendix', 'Limitations and methodology', 'References', 'Detection engineering: actionable hypotheses', 'Enterprise threat model']).has(title) ? (
-                <details className='agentbaiting-accordion' key={title}>
+                <details className='agentbaiting-accordion' id={`listen-section-${sectionIndex}`} key={title}>
                   <summary>{title}<span aria-hidden='true'>＋</span></summary>
                   <div className='agentbaiting-accordion-body'>
                     {renderArticleMarkdown(section.slice(section.indexOf('\n') + 1))}
