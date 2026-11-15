@@ -34,7 +34,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'architecture', label: t.nav.architecture },
     { id: 'trajectory', label: t.nav.trajectory },
     { id: 'research', label: t.nav.research },
-    { id: 'connect', label: t.nav.connect },
     { id: 'stack', label: t.nav.stack }
   ]
 
@@ -81,22 +80,25 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           : 'bg-[#0C0C0C]/90 border-white/10 text-[#F5F5F5]'
       }`}
     >
-      <div className='flex justify-between items-center px-6 py-4 max-w-[1120px] mx-auto'>
+      <div className='mx-auto flex max-w-[1120px] items-center justify-between gap-4 px-6 py-4'>
         <Link
           href='/'
           onClick={(event) => handleNavClick(event, 'architecture')}
-          className={`font-headline-md uppercase text-left transition-colors cursor-pointer flex flex-col items-start ${
+          className={`font-headline-md uppercase text-left transition-colors cursor-pointer flex min-w-0 flex-col items-start lg:shrink-0 ${
             theme === 'light'
               ? 'text-slate-900 hover:text-[#008822]'
               : 'text-[#F5F5F5] hover:text-[#00FF41]'
           }`}
         >
-          <span className='flex items-center gap-2'>
-            <span>Suresh K. Mukhiya</span>
-            <span
-              className={`font-mono text-xs font-normal ${theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}`}
-            >
-              .PhD
+          <span className='lg:whitespace-nowrap'>
+            Suresh K.{' '}
+            <span className='whitespace-nowrap'>
+              Mukhiya{' '}
+              <span
+                className={`ml-0.5 align-middle font-mono text-xs font-normal ${theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'}`}
+              >
+                .PhD
+              </span>
             </span>
           </span>
           <span
@@ -196,7 +198,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         </div>
 
         {/* Mobile Toggle Controls */}
-        <div className='lg:hidden flex items-center gap-3'>
+        <div className='lg:hidden flex shrink-0 items-center gap-3'>
           {/* Quick Theme Toggle Mobile Button */}
           <button
             onClick={toggleTheme}
