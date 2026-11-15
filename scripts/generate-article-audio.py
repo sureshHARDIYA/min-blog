@@ -2,6 +2,8 @@
 """Generate changed article sections using Google Chirp 3 HD; upload immutable MP3s to Cloudflare R2."""
 import base64, hashlib, json, os, pathlib, re, subprocess, urllib.request
 from narration import narration_text
+from urllib.error import HTTPError
+
 import boto3
 from botocore.exceptions import ClientError
 ROOT = pathlib.Path("src/content")
@@ -11,6 +13,7 @@ BUCKET = os.environ["R2_BUCKET"]
 PUBLIC_BASE = os.environ["R2_PUBLIC_BASE_URL"].rstrip("/")
 R2 = boto3.client("s3", endpoint_url=f"https://{os.environ['R2_ACCOUNT_ID']}.r2.cloudflarestorage.com", aws_access_key_id=os.environ["R2_ACCESS_KEY_ID"], aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"], region_name="auto")
 VOICE = os.environ.get("ARTICLE_AUDIO_VOICE", "en-US-Chirp3-HD-Leda")
+PROJECT_ID = os.environ["ARTICLE_AUDIO_GCP_PROJECT"]
 TOKEN = subprocess.check_output(["gcloud", "auth", "print-access-token"], text=True).strip()
 
 def plain(markdown):
@@ -37,9 +40,32 @@ def chunks(text, max_bytes=4200):
 
 def synthesize(text):
     payload = json.dumps({"input":{"text":text},"voice":{"languageCode":VOICE[:5],"name":VOICE},"audioConfig":{"audioEncoding":"MP3"}}).encode()
-    request = urllib.request.Request("https://texttospeech.googleapis.com/v1/text:synthesize",data=payload,headers={"Authorization":"Bearer "+TOKEN,"Content-Type":"application/json"})
-    with urllib.request.urlopen(request, timeout=120) as response:
-        return base64.b64decode(json.load(response)["audioContent"])
+    request = urllib.request.Request(
+        "https://texttospeech.googleapis.com/v1/text:synthesize",
+        data=payload,
+        headers={
+            "Authorization": "Bearer " + TOKEN,
+            "Content-Type": "application/json",
+            "x-goog-user-project": PROJECT_ID,
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=120) as response:
+            return base64.b64decode(json.load(response)["audioContent"])
+    except HTTPError as error:
+        try:
+            details = json.load(error).get("error", {})
+        except (ValueError, UnicodeError):
+            details = {}
+        reason = next(
+            (item["reason"] for item in details.get("details", []) if item.get("reason")),
+            details.get("status", error.reason),
+        )
+        message = details.get("message", "Google returned no error details.")
+        raise RuntimeError(
+            f"Cloud Text-to-Speech failed for project {PROJECT_ID} "
+            f"(HTTP {error.code}, {reason}): {message}"
+        ) from None
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)

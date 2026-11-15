@@ -38,6 +38,7 @@ jobs:
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET: ${{ vars.R2_BUCKET }}
           R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+          ARTICLE_AUDIO_GCP_PROJECT: skmukhiya-com-np-514815
           ARTICLE_AUDIO_VOICE: en-US-Chirp3-HD-Leda
         run: python3 scripts/generate-article-audio.py
       - name: Commit updated manifests
