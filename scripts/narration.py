@@ -14,6 +14,30 @@ IMAGE = re.compile(r"!\[([^\]]*)\]\(([^)]*)\)")
 VIDEO = re.compile(r"(?im)^\s*(?:<video\b[^>]*>|<iframe\b[^>]*>|\[([^]]*video[^]]*)\]\(([^)]+)\))")
 TABLE_SEPARATOR = re.compile(r"^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$")
 
+# Spoken stand-ins for media the narrator cannot read aloud, per article language.
+PHRASES = {
+    "en": {
+        "code": "This section contains a code example. Refer to the written article for the implementation.",
+        "image": "Image: {alt}",
+        "image_unknown": "An image is shown in the article; no verified description is available.",
+        "video": "A video is embedded in the article. See the page to watch it.",
+        "table": "Table.",
+        "missing_cell": "not provided",
+        "large_table": "A table compares {headers} across {rows} rows. Consult the visual table for details.",
+        "chart": "An interactive chart appears here. Consult the visual article for the data.",
+    },
+    "nb": {
+        "code": "Denne delen inneholder et kodeeksempel. Se den skriftlige artikkelen for implementasjonen.",
+        "image": "Bilde: {alt}",
+        "image_unknown": "Et bilde vises i artikkelen; ingen bekreftet beskrivelse er tilgjengelig.",
+        "video": "En video er innebygd i artikkelen. Se siden for å spille den av.",
+        "table": "Tabell.",
+        "missing_cell": "ikke oppgitt",
+        "large_table": "En tabell sammenligner {headers} over {rows} rader. Se den visuelle tabellen for detaljer.",
+        "chart": "Et interaktivt diagram vises her. Se den visuelle artikkelen for dataene.",
+    },
+}
+
 
 def clean(value):
     value = re.sub(r"\[([^]]+)\]\([^)]*\)", r"\1", value)
@@ -31,7 +55,8 @@ def _load(slug):
     return data.get("sections", {})
 
 
-def narration_text(section, slug, section_index):
+def narration_text(section, slug, section_index, language="en"):
+    phrases = PHRASES.get(language, PHRASES["en"])
     config = _load(slug).get(str(section_index), {})
     if not isinstance(config, dict):
         raise ValueError(f"Invalid section narration config: {slug} {section_index}")
@@ -48,9 +73,9 @@ def narration_text(section, slug, section_index):
         return " " + fallback + " "
 
     # Process media before ordinary Markdown links, avoiding URL narration.
-    section = FENCE.sub(lambda match: describe("code", "This section contains a code example. Refer to the written article for the implementation."), section)
-    section = IMAGE.sub(lambda match: describe("images", "Image: " + clean(match.group(1)) if match.group(1).strip() else "An image is shown in the article; no verified description is available."), section)
-    section = VIDEO.sub(lambda match: describe("videos", "A video is embedded in the article. See the page to watch it."), section)
+    section = FENCE.sub(lambda match: describe("code", phrases["code"]), section)
+    section = IMAGE.sub(lambda match: describe("images", phrases["image"].format(alt=clean(match.group(1))) if match.group(1).strip() else phrases["image_unknown"]), section)
+    section = VIDEO.sub(lambda match: describe("videos", phrases["video"]), section)
 
     lines = section.splitlines()
     result = []
@@ -65,18 +90,18 @@ def narration_text(section, slug, section_index):
                 i += 1
             # Narrate small tables exactly, without inventing trends or conclusions.
             if len(rows) <= 5 and len(headers) <= 4:
-                fallback = "Table. " + " ".join(
-                    "; ".join(f"{header}: {row[j] if j < len(row) else 'not provided'}" for j, header in enumerate(headers))
+                fallback = phrases["table"] + " " + " ".join(
+                    "; ".join(f"{header}: {row[j] if j < len(row) else phrases['missing_cell']}" for j, header in enumerate(headers))
                     for row in rows
                 )
             else:
-                fallback = "A table compares " + ", ".join(headers) + f" across {len(rows)} rows. Consult the visual table for details."
+                fallback = phrases["large_table"].format(headers=", ".join(headers), rows=len(rows))
             result.append(describe("tables", fallback))
             continue
         line = lines[i]
         # Explicit chart markers are author-controlled; never infer data from visuals.
         if re.search(r"<(?:Chart|AgentBaitingChart)\b|\{\{chart:", line):
-            result.append(describe("charts", "An interactive chart appears here. Consult the visual article for the data."))
+            result.append(describe("charts", phrases["chart"]))
         elif not re.match(r"^\s*(?:<[^>]+>|\|[-: |]+\|)\s*$", line):
             result.append(clean(line))
         i += 1

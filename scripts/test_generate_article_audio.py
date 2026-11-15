@@ -21,6 +21,7 @@ _spec.loader.exec_module(gen)
 FRAME_HEADER = bytes.fromhex("fff344c4")
 FAKE_AUDIO = FRAME_HEADER + b"\0" * 3996  # 4000 bytes at 32 kbit/s is exactly one second
 VOICE = "en-US-Chirp3-HD-Leda"
+VOICE_NB = "nb-NO-Chirp3-HD-Leda"
 BASE = "https://audio.example"
 
 
@@ -39,9 +40,10 @@ class FakeStorage:
             raise MissingObject()
         return {"ContentLength": len(self.objects[Key])}
 
-    def get_object(self, Bucket, Key, Range):
+    def get_object(self, Bucket, Key, Range=None):
         self.calls.append(("get", Key))
-        return {"Body": io.BytesIO(self.objects[Key][:4])}
+        body = self.objects[Key]
+        return {"Body": io.BytesIO(body[:4] if Range else body)}
 
     def put_object(self, Bucket, Key, Body, **_):
         self.calls.append(("put", Key))
@@ -51,12 +53,14 @@ class FakeStorage:
 class FakeSynthesizer:
     def __init__(self, fail_on=None):
         self.texts = []
+        self.voices = []
         self.fail_on = fail_on
 
-    def synthesize(self, text):
+    def synthesize(self, text, voice):
         if self.fail_on and self.fail_on in text:
             raise gen.SynthesisError("boom")
         self.texts.append(text)
+        self.voices.append(voice)
         return FAKE_AUDIO
 
 
@@ -68,15 +72,15 @@ def workspace(tmp_path, monkeypatch):
     return tmp_path
 
 
-def write_article(slug, body):
+def write_article(slug, body, extra_frontmatter=""):
     path = gen.ARTICLES / f"{slug}.md"
-    path.write_text(f"---\ntitle: {slug}\n---\n{body}\n")
+    path.write_text(f"---\ntitle: {slug}\n{extra_frontmatter}---\n{body}\n")
     return path
 
 
 def make_generator(storage, synthesizer, *, per_run=10_000, per_month=100_000, public_base=BASE):
     return gen.Generator(
-        storage=storage, bucket="b", public_base=public_base, voice=VOICE,
+        storage=storage, bucket="b", public_base=public_base, voices={"en": VOICE, "nb": VOICE_NB},
         synthesizer=synthesizer, budget=gen.Budget(per_run, per_month),
     )
 
@@ -135,6 +139,58 @@ def test_manifest_records_version_duration_and_chunk_parts(workspace):
     assert data["version"] == gen.MANIFEST_VERSION
     assert [(s["id"], s["part"]) for s in data["segments"]] == [("listen-section-0", 0), ("listen-section-0", 1)]
     assert all(s["duration"] == 1.0 for s in data["segments"])
+
+
+def test_episode_joins_segments_and_is_reused_on_the_next_run(workspace):
+    article = write_article("a", "Intro text.\n\n## One\nFirst section.")
+    storage = FakeStorage()
+
+    make_generator(storage, FakeSynthesizer()).run([article])
+
+    episode = manifest("a")["episode"]
+    key = episode["url"].removeprefix(BASE + "/")
+    assert key.startswith("articles/a/episode-") and storage.objects[key] == FAKE_AUDIO * 2
+    assert episode["bytes"] == 8000 and episode["duration"] == 2.0
+
+    (gen.OUT / "a.json").unlink()
+    storage.calls.clear()
+    make_generator(storage, FakeSynthesizer()).run([article])
+
+    assert ("put", key) not in storage.calls
+    assert manifest("a")["episode"] == episode
+
+
+def test_episode_is_rebuilt_from_stored_segments_when_missing(workspace):
+    article = write_article("a", "Intro text.\n\n## One\nFirst section.")
+    storage = FakeStorage()
+    make_generator(storage, FakeSynthesizer()).run([article])
+    key = manifest("a")["episode"]["url"].removeprefix(BASE + "/")
+    del storage.objects[key]
+    (gen.OUT / "a.json").unlink()
+    synth = FakeSynthesizer()
+
+    make_generator(storage, synth).run([article])
+
+    assert synth.texts == [] and storage.objects[key] == FAKE_AUDIO * 2
+
+
+def test_norwegian_article_uses_norwegian_voice_and_phrases(workspace):
+    article = write_article("a", "Innledning.\n\n```js\nconst a = 1\n```", extra_frontmatter="lang: nb\n")
+    synth = FakeSynthesizer()
+
+    make_generator(FakeStorage(), synth).run([article])
+
+    assert synth.voices == [VOICE_NB]
+    assert "Denne delen inneholder et kodeeksempel" in synth.texts[0]
+    assert manifest("a")["voice"] == VOICE_NB and manifest("a")["language"] == "nb"
+
+
+def test_english_is_the_default_language(workspace):
+    synth = FakeSynthesizer()
+
+    make_generator(FakeStorage(), synth).run([write_article("a", "Intro text.")])
+
+    assert synth.voices == [VOICE] and manifest("a")["language"] == "en"
 
 
 def test_reused_segments_get_duration_from_stored_object(workspace):
@@ -227,13 +283,13 @@ def make_synthesizer(script, tokens=None):
     opener = ScriptedOpener(script)
     sleeps = []
     tokens = tokens or gen.TokenSource(fetch=lambda: "token")
-    return gen.Synthesizer(VOICE, "project", tokens, opener=opener, sleep=sleeps.append), opener, sleeps
+    return gen.Synthesizer("project", tokens, opener=opener, sleep=sleeps.append), opener, sleeps
 
 
 def test_synthesizer_retries_rate_limits_with_backoff():
     synth, opener, sleeps = make_synthesizer([http_error(429), http_error(503), b"ok"])
 
-    assert synth.synthesize("hello") == b"ok"
+    assert synth.synthesize("hello", VOICE) == b"ok"
     assert len(opener.requests) == 3 and sleeps == [2, 4]
 
 
@@ -241,7 +297,7 @@ def test_synthesizer_refreshes_token_after_401():
     issued = iter(["old", "new"])
     synth, opener, _ = make_synthesizer([http_error(401), b"ok"], gen.TokenSource(fetch=lambda: next(issued)))
 
-    assert synth.synthesize("hello") == b"ok"
+    assert synth.synthesize("hello", VOICE) == b"ok"
     assert [r.get_header("Authorization") for r in opener.requests] == ["Bearer old", "Bearer new"]
 
 
@@ -249,7 +305,7 @@ def test_synthesizer_does_not_retry_permanent_errors():
     synth, opener, _ = make_synthesizer([http_error(403, "API disabled", "PERMISSION_DENIED")])
 
     with pytest.raises(gen.SynthesisError, match="PERMISSION_DENIED"):
-        synth.synthesize("hello")
+        synth.synthesize("hello", VOICE)
     assert len(opener.requests) == 1
 
 
@@ -258,7 +314,7 @@ def test_long_sentence_rejection_is_retried_with_shorter_sentences():
     rejection = http_error(400, "This request contains sentences that are too long.", "INVALID_ARGUMENT")
     synth, opener, _ = make_synthesizer([rejection, b"ok"])
 
-    assert synth.synthesize(long_sentence) == b"ok"
+    assert synth.synthesize(long_sentence, VOICE) == b"ok"
     retried_text = json.loads(opener.requests[1].data)["input"]["text"]
     assert all(len(s.encode()) <= gen.SHORT_SENTENCE_BYTES + 1 for s in retried_text.split(". "))
 

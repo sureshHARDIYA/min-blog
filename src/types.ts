@@ -27,6 +27,23 @@ export const BOOK_ROUTE_SLUGS: Record<string, string> = {
   'book-4': 'hands-on-big-data-modeling',
 };
 
+/** Paths served by the single-page app behind the catch-all route. Anything else is a 404. */
+export const isKnownAppPath = (segments: readonly string[]): boolean => {
+  const [first, second, third] = segments;
+  const isTabPath = Object.values(NAV_TAB_PATHS).includes(`/${first}`);
+
+  if (segments.length === 1) {
+    return isTabPath;
+  }
+
+  return (
+    segments.length === 3 &&
+    first === 'research' &&
+    second === 'book' &&
+    Object.values(BOOK_ROUTE_SLUGS).includes(third)
+  );
+};
+
 export const getBookSlug = (bookId: string): string => BOOK_ROUTE_SLUGS[bookId] || bookId;
 
 export const getBookIdFromSlug = (slug: string): string => {
