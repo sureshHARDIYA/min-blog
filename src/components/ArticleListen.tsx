@@ -32,7 +32,7 @@ export function ArticleListen({ segments }: { segments: ListenSegment[] }) {
     audio.current.currentTime = Math.max(0, Math.min(audio.current.duration || 0, audio.current.currentTime + seconds))
   }
   return <div className='article-listen' aria-label='Listen to this article'>
-    <audio ref={audio} src={active.url} preload='none' playbackRate={rate}
+    <audio ref={audio} src={active.url} preload='none'
       onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
       onTimeUpdate={e => setPosition(e.currentTarget.currentTime)}
       onLoadedMetadata={e => { setDuration(e.currentTarget.duration); e.currentTarget.playbackRate = rate }}
