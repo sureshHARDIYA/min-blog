@@ -14,6 +14,7 @@ export interface BlogPost {
   seoTitle?: string;
   seoDescription?: string;
   date: string;
+  category: string;
   content: string;
 }
 
@@ -83,6 +84,8 @@ export async function getPost(slug: string): Promise<BlogPost | null> {
       seoTitle: metadata.seoTitle || undefined,
       seoDescription: metadata.seoDescription || undefined,
       date: metadata.date,
+      category:
+        metadata.category || (slug.startsWith('appsec-') ? 'AppSec Brief' : 'Field Notes'),
       content,
     };
   } catch (error) {

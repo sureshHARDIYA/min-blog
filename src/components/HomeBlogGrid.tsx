@@ -3,24 +3,16 @@
 import Link from 'next/link'
 import React from 'react'
 import { useTheme } from '../context/ThemeContext'
+import {
+  BlogPostCard,
+  blogPostGridClassName,
+  type BlogPostSummary
+} from './BlogPostCard'
 import { Reveal, Stagger, StaggerItem } from './motion-primitives'
 
-export interface HomeBlogPost {
-  slug: string
-  title: string
-  description: string
-  date: string
-}
-
-const formatDate = (date: string) =>
-  new Intl.DateTimeFormat('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC'
-  }).format(new Date(`${date}T00:00:00Z`))
-
-export const HomeBlogGrid: React.FC<{ posts: HomeBlogPost[] }> = ({ posts }) => {
+export const HomeBlogGrid: React.FC<{ posts: BlogPostSummary[] }> = ({
+  posts
+}) => {
   const { theme } = useTheme()
 
   return (
@@ -66,74 +58,10 @@ export const HomeBlogGrid: React.FC<{ posts: HomeBlogPost[] }> = ({ posts }) => 
         </Link>
       </Reveal>
 
-      <Stagger
-        gap={0.1}
-        className='grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3'
-      >
-        {posts.slice(0, 6).map((post, index) => (
+      <Stagger gap={0.1} className={blogPostGridClassName}>
+        {posts.slice(0, 6).map((post) => (
           <StaggerItem key={post.slug} className='h-full'>
-            <article
-              className={`group relative flex h-full min-h-72 flex-col border p-6 shadow-sm transition-all duration-300 ${
-                theme === 'light'
-                  ? 'border-slate-200 bg-white hover:border-[#008822] hover:shadow-md'
-                  : 'border-white/10 bg-[#141414] hover:border-[#00FF41]'
-              }`}
-            >
-              <div className='mb-7 flex items-center justify-between gap-4'>
-                <time
-                  className={`font-code text-xs font-bold uppercase tracking-wider ${
-                    theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
-                  }`}
-                  dateTime={post.date}
-                >
-                  {formatDate(post.date)}
-                </time>
-                <span
-                  aria-hidden='true'
-                  className={`font-code text-xs ${
-                    theme === 'light' ? 'text-slate-400' : 'text-white/30'
-                  }`}
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </div>
-
-              <h3
-                className={`font-headline-md transition-colors ${
-                  theme === 'light'
-                    ? 'text-slate-900 group-hover:text-[#008822]'
-                    : 'text-[#F5F5F5] group-hover:text-[#00FF41]'
-                }`}
-              >
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className='after:absolute after:inset-0'
-                >
-                  {post.title}
-                </Link>
-              </h3>
-              <p
-                className={`mt-4 line-clamp-3 text-sm leading-6 ${
-                  theme === 'light' ? 'text-slate-600' : 'text-white/60'
-                }`}
-              >
-                {post.description}
-              </p>
-
-              <span
-                className={`mt-auto flex items-center gap-2 pt-8 font-code text-xs font-bold uppercase tracking-widest ${
-                  theme === 'light' ? 'text-slate-700' : 'text-white/75'
-                }`}
-              >
-                Read note
-                <span
-                  aria-hidden='true'
-                  className='material-symbols-outlined text-sm transition-transform group-hover:translate-x-1'
-                >
-                  arrow_forward
-                </span>
-              </span>
-            </article>
+            <BlogPostCard post={post} heading='h3' />
           </StaggerItem>
         ))}
       </Stagger>

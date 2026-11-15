@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { getNavTabFromPath, NavTab } from './types';
+import type { BlogPostSummary } from './components/BlogPostCard';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ArchitectureView } from './views/ArchitectureView';
@@ -44,16 +45,9 @@ const queryClient = new QueryClient({
   },
 });
 
-interface HomeBlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-}
-
 interface AppProps {
   initialTab?: NavTab;
-  latestPosts?: HomeBlogPost[];
+  latestPosts?: BlogPostSummary[];
 }
 
 const MainLayout: React.FC<AppProps> = ({

@@ -4,6 +4,7 @@ seoTitle: "AgentBaiting: Malicious MCP Servers, AI Skills and Enterprise Defense
 description: "An evidence-led investigation of FakeGit, malicious AI agent tools, poisoned registries, and practical enterprise controls."
 seoDescription: "Verified 2026 research into malicious GitHub AI skills and MCP servers: FakeGit evidence, attack chains, exposure models, detection engineering, governance and references."
 date: "2026-11-14"
+category: AI Security
 author: "Suresh Kumar Mukhiya"
 tags: "appsec, ai-security, mcp, agent-security, software-supply-chain, threat-intelligence, github, detection-engineering"
 ---

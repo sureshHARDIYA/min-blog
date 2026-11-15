@@ -9,10 +9,8 @@ import { CyclingText } from '../components/CyclingText'
 import { GitHubTechnologyMap } from '../components/GitHubTechnologyMap'
 import { SecurityEvidence } from '../components/SecurityEvidence'
 import { SlowCarousel } from '../components/SlowCarousel'
-import {
-  HomeBlogGrid,
-  HomeBlogPost
-} from '../components/HomeBlogGrid'
+import { HomeBlogGrid } from '../components/HomeBlogGrid'
+import type { BlogPostSummary } from '../components/BlogPostCard'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import {
   EASE_OUT_EXPO,
@@ -22,7 +20,7 @@ import {
 } from '../components/motion-primitives'
 
 interface ArchitectureViewProps {
-  latestPosts?: HomeBlogPost[]
+  latestPosts?: BlogPostSummary[]
   setActiveTab: (tab: NavTab) => void
 }
 
