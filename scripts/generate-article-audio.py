@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate changed article sections using Google Chirp 3 HD; upload immutable MP3s to Cloudflare R2."""
 import base64, hashlib, json, os, pathlib, re, subprocess, urllib.request
+from narration import narration_text
 import boto3
 from botocore.exceptions import ClientError
 ROOT = pathlib.Path("src/content")
@@ -53,7 +54,7 @@ def main():
         segments = []
         sections = [section for section in re.split(r"(?=^## )", content, flags=re.M) if section]
         for index, section in enumerate(sections):
-            text = plain(section)
+            text = narration_text(section, article.stem, index)
             if not text:
                 continue
             for chunk in chunks(text):
