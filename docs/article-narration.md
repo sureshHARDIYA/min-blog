@@ -41,3 +41,27 @@ The blog generates section-level MP3s once using Google Cloud Text-to-Speech and
 - Configure a bucket lifecycle rule to clean up superseded immutable MP3s after an appropriate retention period. Avoid a rule that deletes currently referenced audio.
 - To regenerate with a new voice, change `ARTICLE_AUDIO_VOICE` in the workflow and rerun.
 - No storage provider credentials are used by the website at runtime.
+
+## Content-aware narration and editorial review
+
+The deterministic narration builder (`scripts/narration.py`) reads prose and headings, reads small Markdown tables cell-by-cell, summarizes large tables by column names and row count, reads image alt text, and announces embedded video and fenced code without spelling out URLs or source code. It does **not** invent chart trends or statistics.
+
+For meaningful summaries, create `src/content/narration/<slug>.json` with section-indexed overrides (zero-based index matching the article's `##` sections). Each media type uses zero-based occurrence order within its section:
+
+```json
+{
+  "sections": {
+    "2": {
+      "tables": ["The table compares three scanners. Scanner A has the lowest false-positive rate according to the reported measurements."],
+      "images": ["Architecture diagram showing the ingestion service connected to a queue and analysis worker."],
+      "charts": ["The chart shows 12 high and 4 critical findings in the source dataset."],
+      "code": ["The code validates the token before authorizing the request."],
+      "videos": ["A short demonstration of the workflow."]
+    }
+  }
+}
+```
+
+Descriptions must be reviewed against actual data and visuals. A chart inserted through React rather than Markdown (such as `AgentBaitingChart`) **is not automatically discoverable** by this Markdown-only extractor; add an explicit narrative in the article or extend the renderer with a linked narration marker. No vision model or LLM is invoked automatically, so there are no hidden AI-description costs.
+
+Editing an override invalidates the manifest and regenerates affected narration. This is **section-level** highlighting, not word-level or chart-point highlighting. Review articles containing complex custom components before generating the full back catalogue.
