@@ -1,109 +1,45 @@
 # Suresh Kumar Mukhiya, PhD
 
-Personal portfolio and academic website for Suresh Kumar Mukhiya, PhD. The site presents system architecture work, career trajectory, research publications, books, talks, technical stack, and contact information.
+Source code for my personal website: **[skmukhiya.com.np](https://www.skmukhiya.com.np/)**
 
-## Tech Stack
+## About me
 
-- Next.js 16 App Router
-- React 19
-- TypeScript
-- Tailwind CSS
-- TanStack Query
-- Formspree contact form
-- Google reCAPTCHA support
+I am a Tech Lead at Lerøy Seafood Group and have been building software since 2010. I hold a PhD and write about software architecture, application security, software supply chain security and AI engineering. I am also the author of four technical books on data science and frontend engineering.
 
-## Main Routes
+## Find me
 
-- `/` - Architecture and profile overview
-- `/trajectory` - Career timeline
-- `/research` - Books, research papers, and PhD thesis
-- `/research/book/statistics-for-data-scientists-and-analysts`
-- `/research/book/hands-on-exploratory-data-analysis`
-- `/research/book/redux-quick-start-guide`
-- `/research/book/hands-on-big-data-modeling`
-- `/stack` - Technology stack
-- `/connect` - Contact and collaboration form
-- `/sitemap.xml` - Generated sitemap
-- `/robots.txt` - Search engine crawl rules
+- Website: [skmukhiya.com.np](https://www.skmukhiya.com.np/)
+- Blog: [skmukhiya.com.np/blogs](https://www.skmukhiya.com.np/blogs)
+- GitHub: [@sureshHARDIYA](https://github.com/sureshHARDIYA)
+- LinkedIn: [sureshhardiya](https://www.linkedin.com/in/sureshhardiya/)
+- Google Scholar: [publications](https://scholar.google.com/citations?user=9-fxxeMAAAAJ)
+- YouTube: [@SureshKUMARMukhiya](https://www.youtube.com/@SureshKUMARMukhiya)
 
-## Local Development
+## What is on the site
 
-Prerequisites:
+- **Blog** with field notes and a weekly AppSec brief. Articles can also be listened to.
+- **Trajectory**: career timeline.
+- **Research**: books, papers and my PhD thesis.
+- **Stack**: the technologies I work with.
+- **Vulnerabilities**: a vulnerability intelligence feed.
+- **Connect**: contact form.
 
-- Node.js 18+
-- pnpm 10+
+## Built with
 
-Install dependencies:
+Next.js, React, TypeScript and Tailwind CSS, deployed on Vercel.
+
+## Run it locally
+
+You need Node.js 18 or newer and pnpm 10.
 
 ```bash
 pnpm install
-```
-
-Create `.env.local` from `.env.example` and fill in the values you use locally:
-
-```bash
 cp .env.example .env.local
-```
-
-Run the development server:
-
-```bash
 pnpm dev
 ```
 
-Open `http://localhost:3000`.
+Then open `http://localhost:3000`.
 
-## Environment Variables
+## License
 
-```bash
-NEXT_PUBLIC_FORMSPREE_ENDPOINT=
-NEXT_PUBLIC_RECAPTCHA_SITE_KEY=
-```
-
-Google Analytics is not currently wired in. If it is needed, add a GA4 measurement ID such as `G-XXXXXXXXXX` and mount the `gtag.js` scripts in `src/app/layout.tsx`.
-
-## SEO
-
-The site includes:
-
-- descriptive metadata in `src/app/layout.tsx`
-- route-level canonical metadata
-- Open Graph and Twitter metadata
-- `Person` and `WebSite` JSON-LD structured data
-- generated `sitemap.xml`
-- generated `robots.txt`
-- clean public routes for research and book pages
-
-After deployment, submit `https://skmukhiya.com.np/sitemap.xml` in Google Search Console.
-
-## Useful Commands
-
-```bash
-pnpm dev
-pnpm build
-pnpm start
-pnpm test:lint
-pnpm test:prettier
-```
-
-## Content Notes
-
-- Main mock content lives in `src/services/api.ts`.
-- Book markdown content lives in `src/content/books/index.ts`.
-- Navigation and readable book slugs live in `src/types.ts`.
-- Translations live in `src/i18n/translations.ts`.
-- Footer links live in `src/components/Footer.tsx`.
-
-## Deployment
-
-Build the production app:
-
-```bash
-pnpm build
-```
-
-Start the production server:
-
-```bash
-pnpm start
-```
+MIT
