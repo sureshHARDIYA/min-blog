@@ -80,10 +80,10 @@ export function SecurityScorecard({
   return (
     <section
       aria-labelledby='security-scorecard-title'
-      className='border-b border-white/10 px-6 py-20'
+      className='border-b border-[var(--s-ink)]/10 px-6 py-20'
     >
       <div className='mx-auto max-w-[1120px]'>
-        <p className='font-mono text-xs font-bold uppercase tracking-[0.25em] text-[#00FF41]'>
+        <p className='font-mono text-xs font-bold uppercase tracking-[0.25em] text-[var(--s-accent)]'>
           {text.label}
         </p>
         <h2
@@ -92,14 +92,14 @@ export function SecurityScorecard({
         >
           {text.title}
         </h2>
-        <p className='mt-5 max-w-2xl text-lg leading-8 text-white/75'>
+        <p className='mt-5 max-w-2xl text-lg leading-8 text-[var(--s-ink)]/75'>
           {text.intro}
         </p>
-        <ul className='mt-12 grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4'>
+        <ul className='mt-12 grid gap-px bg-[var(--s-ink)]/10 sm:grid-cols-2 lg:grid-cols-4'>
           {buildTiles(scores, text).map((tile) => (
-            <li className='bg-[#0C0C0C]' key={tile.title}>
+            <li className='bg-[var(--s-bg)]' key={tile.title}>
               <a
-                className='group flex h-full flex-col p-6 transition-colors hover:bg-[#101510] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#00FF41]'
+                className='group flex h-full flex-col p-6 transition-colors hover:bg-[var(--s-band)] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--s-accent)]'
                 href={tile.href}
                 rel={
                   tile.href.startsWith('http')
@@ -108,20 +108,20 @@ export function SecurityScorecard({
                 }
                 target={tile.href.startsWith('http') ? '_blank' : undefined}
               >
-                <span className='font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-white/60'>
+                <span className='font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-[var(--s-ink)]/60'>
                   {tile.title}
                 </span>
                 <strong
                   className={`mt-5 font-black leading-none tracking-tighter ${
-                    tile.value && tile.isGood ? 'text-[#00FF41]' : 'text-white'
+                    tile.value && tile.isGood ? 'text-[var(--s-accent)]' : 'text-[var(--s-ink)]'
                   } ${(tile.value?.length ?? 0) > 3 ? 'text-3xl md:text-4xl' : 'text-5xl'}`}
                 >
                   {tile.value ?? '—'}
                 </strong>
-                <span className='mt-4 text-sm leading-6 text-white/70'>
+                <span className='mt-4 text-sm leading-6 text-[var(--s-ink)]/70'>
                   {tile.value ? tile.detail : text.unavailable}
                 </span>
-                <span className='mt-auto pt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-white/45 transition-colors group-hover:text-[#00FF41]'>
+                <span className='mt-auto pt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--s-ink)]/45 transition-colors group-hover:text-[var(--s-accent)]'>
                   {tile.source} · {text.viewReport}{' '}
                   <span aria-hidden='true'>→</span>
                 </span>

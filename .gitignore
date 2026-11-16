@@ -40,3 +40,6 @@ yarn-error.log*
 
 # local AI agent tool state
 .claude-flow/
+
+# pnpm's local package store
+.pnpm-store/

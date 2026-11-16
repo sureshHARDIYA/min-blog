@@ -6,7 +6,7 @@
   "author": "Suresh Kumar Mukhiya <itsmeskm99@gmail.com>",
   "repository": "https://github.com/sureshHARDIYA/min-blog",
   "license": "MIT",
-  "packageManager": "pnpm@10.11.1",
+  "packageManager": "pnpm@10.34.9",
   "engines": {
     "node": ">=18"
   },
@@ -67,5 +67,15 @@
       "prettier --ignore-unknown --write",
       "eslint --fix"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "shell-quote@<1.11.0": "1.11.0",
+      "js-yaml@>=4.0.0 <4.3.2": "4.3.2",
+      "minimatch@>=10.0.0 <11.0.1": "11.0.1",
+      "brace-expansion@>=5.0.0 <5.0.12": "5.0.12",
+      "brace-expansion@<1.1.21": "1.1.21",
+      "eslint-plugin-react-hooks>zod": "^4.6.6"
+    }
   }
 }

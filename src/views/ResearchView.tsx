@@ -265,7 +265,18 @@ export const ResearchView: React.FC = () => {
                       theme === 'light' ? 'bg-[#008822]' : 'bg-[#00FF41]'
                     }`}></div>
 
-                    <div>
+                    <div className="flex gap-5">
+                      {book.cover && (
+                        <img
+                          alt={`Cover of ${book.title}`}
+                          className="h-40 w-auto shrink-0 self-start border border-current/10 shadow-md transition-transform duration-300 group-hover:-translate-y-1"
+                          height={160}
+                          loading="lazy"
+                          src={book.cover}
+                          width={130}
+                        />
+                      )}
+                      <div className="min-w-0">
                       <div className="flex justify-between items-center mb-3">
                         <span className={`font-code text-[11px] uppercase font-bold tracking-wider px-2 py-0.5 border ${
                           theme === 'light'
@@ -309,6 +320,7 @@ export const ResearchView: React.FC = () => {
                           </span>
                         ))}
                       </div>
+                      </div>
                     </div>
 
                     <div className={`flex items-center justify-between pt-4 border-t ${
@@ -317,7 +329,7 @@ export const ResearchView: React.FC = () => {
                       <span className={`font-code text-xs font-bold flex items-center gap-1.5 ${
                         theme === 'light' ? 'text-[#008822]' : 'text-[#00FF41]'
                       }`}>
-                        <span>Read Full Page &amp; MD</span>
+                        <span>Read more</span>
                         <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
                           arrow_forward
                         </span>
