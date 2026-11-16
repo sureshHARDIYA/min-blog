@@ -9,9 +9,14 @@ interface AudioGraph {
 }
 
 const FFT_SIZE = 256
-/** Bins 0..SPEECH_BINS cover roughly 0–6 kHz, where narration energy lives. */
-const SPEECH_BINS = 32
+/** Bins 1..SPEECH_BINS cover roughly 200 Hz–3.5 kHz, where a narrator's voice carries its energy. */
+const SPEECH_BINS = 18
 const MIN_BAR_SCALE = 0.08
+/** Loudness window in dB mapped onto the bars: quiet speech near the bottom, loud near the top. */
+const MIN_DECIBELS = -88
+const MAX_DECIBELS = -22
+/** Widens the gap between quiet and loud so pauses and emphasis are visible. */
+const CONTRAST = 1.7
 const BAR_SELECTOR = '.listen-beats'
 
 const SYNC_CACHE_KEY = 'article-listen-sync'
@@ -112,7 +117,9 @@ export function useAudioBeats(
         const context = new AudioContext()
         const analyser = context.createAnalyser()
         analyser.fftSize = FFT_SIZE
-        analyser.smoothingTimeConstant = 0.72
+        analyser.smoothingTimeConstant = 0.6
+        analyser.minDecibels = MIN_DECIBELS
+        analyser.maxDecibels = MAX_DECIBELS
         context.createMediaElementSource(audio.current).connect(analyser)
         analyser.connect(context.destination)
         graph.current = {
@@ -139,14 +146,15 @@ export function useAudioBeats(
     const draw = () => {
       current.analyser.getByteFrequencyData(current.data)
       for (const bars of groups) {
-        const span = SPEECH_BINS / bars.length
+        // Mirror the spectrum around the centre: the strongest voice bands sit in
+        // the middle and the quieter, higher bands fan out to both edges.
+        const middle = (bars.length - 1) / 2 || 1
         bars.forEach((bar, i) => {
-          const start = Math.floor(i * span)
-          const end = Math.max(start + 1, Math.floor((i + 1) * span))
-          let peak = 0
-          for (let bin = start; bin < end; bin++)
-            peak = Math.max(peak, current.data[bin])
-          bar.style.transform = `scaleY(${Math.max(MIN_BAR_SCALE, peak / 255).toFixed(3)})`
+          const distance = Math.abs(i - middle) / middle
+          const bin = 1 + Math.round(distance * (SPEECH_BINS - 1))
+          const peak = Math.max(current.data[bin], current.data[bin + 1] ?? 0)
+          const level = Math.pow(peak / 255, CONTRAST)
+          bar.style.transform = `scaleY(${Math.max(MIN_BAR_SCALE, level).toFixed(3)})`
         })
       }
       frame = requestAnimationFrame(draw)
