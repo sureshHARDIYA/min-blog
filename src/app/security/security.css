@@ -1,0 +1,20 @@
+/* Security page colours. Dark is the default; `html.light` swaps the tokens. */
+.security-page {
+  --s-bg: #0c0c0c;
+  --s-ink: #f5f5f5;
+  --s-surface: #141414;
+  --s-band: #101510;
+  --s-accent: #00ff41;
+  --s-accent-bg: #00ff41;
+  --s-on-accent: #071008;
+}
+
+html.light .security-page {
+  --s-bg: #f4f6f8;
+  --s-ink: #0f172a;
+  --s-surface: #fff;
+  --s-band: #e8f1ea;
+  --s-accent: #008822;
+  --s-accent-bg: #0b7a2a;
+  --s-on-accent: #fff;
+}
