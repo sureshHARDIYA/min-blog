@@ -1,18 +1,22 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBooks, fetchResearchPapers } from '../services/api';
 import { getBookIdFromSlug, getBookSlug, PublishedBook, ResearchPaper } from '../types';
 import { BookDetailView } from './BookDetailView';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-import { useEscapeKey } from '../components/useEscapeKey';
 
 export const ResearchView: React.FC = () => {
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'all' | 'books' | 'papers'>('all');
   const [showDissertationModal, setShowDissertationModal] = useState(false);
   const closeDissertationModal = useCallback(() => setShowDissertationModal(false), []);
-  useEscapeKey(closeDissertationModal, showDissertationModal);
+  const dissertationDialogRef = useRef<HTMLDialogElement>(null);
+
+  // A native modal dialog brings Escape, a focus trap and focus return with it.
+  useEffect(() => {
+    if (showDissertationModal) dissertationDialogRef.current?.showModal();
+  }, [showDissertationModal]);
   const [expandedPaperId, setExpandedPaperId] = useState<string | null>(null);
 
   const { t } = useLanguage();
@@ -534,17 +538,16 @@ export const ResearchView: React.FC = () => {
 
       {/* Dissertation Modal */}
       {showDissertationModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn"
-          onClick={(event) => {
-            if (event.target === event.currentTarget) closeDissertationModal();
-          }}
+        <dialog
+          ref={dissertationDialogRef}
+          aria-label="PhD dissertation"
+          // Lets a click on the backdrop close the dialog in browsers that support it.
+          closedby="any"
+          onClose={closeDissertationModal}
+          className="m-auto w-full max-w-[min(36rem,calc(100vw-2rem))] bg-transparent animate-fadeIn backdrop:bg-black/75 backdrop:backdrop-blur-sm"
         >
           <div
-            role="dialog"
-            aria-modal="true"
-            aria-label="PhD dissertation"
-            className={`border w-full max-w-xl p-6 md:p-8 relative shadow-2xl ${
+            className={`border w-full p-6 md:p-8 relative shadow-2xl ${
             theme === 'light'
               ? 'bg-white border-slate-300 text-slate-900'
               : 'bg-[#141414] border-[#00FF41]/40 text-[#F5F5F5]'
@@ -606,7 +609,8 @@ export const ResearchView: React.FC = () => {
             </div>
 
             <button
-              onClick={() => setShowDissertationModal(false)}
+              type="button"
+              onClick={closeDissertationModal}
               className={`w-full font-bold py-3 font-code text-xs uppercase tracking-widest transition-colors cursor-pointer ${
                 theme === 'light'
                   ? 'bg-[#008822] text-white hover:bg-slate-900'
@@ -629,7 +633,7 @@ export const ResearchView: React.FC = () => {
               <span className="material-symbols-outlined text-sm">north_east</span>
             </a>
           </div>
-        </div>
+        </dialog>
       )}
     </div>
   );
