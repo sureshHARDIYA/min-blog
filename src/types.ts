@@ -70,6 +70,14 @@ export interface PublishedBook {
   summary: string;
   topics: string[];
   url?: string;
+  /** Fields below come from the book's Google Books record. */
+  subtitle?: string;
+  authors?: string[];
+  publishedDate?: string;
+  cover?: string;
+  googleBooksUrl?: string;
+  previewUrl?: string;
+  playStoreUrl?: string;
 }
 
 export interface ResearchPaper {

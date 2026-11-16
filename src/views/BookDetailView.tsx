@@ -19,6 +19,14 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
 }) => {
   const { theme } = useTheme();
   const markdownContent = getBookMarkdown(book.id);
+  const publishedOn = book.publishedDate
+    ? new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(book.publishedDate))
+    : null;
+  const googleLinks = [
+    { label: 'Preview on Google Books', href: book.previewUrl },
+    { label: 'Google Books record', href: book.googleBooksUrl },
+    { label: 'Google Play Books', href: book.playStoreUrl },
+  ].filter((link): link is { label: string; href: string } => Boolean(link.href));
 
   const currentIndex = allBooks.findIndex((b) => b.id === book.id);
   const prevBook = currentIndex > 0 ? allBooks[currentIndex - 1] : null;
@@ -59,7 +67,18 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
           }`}></div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-            <div className="md:col-span-8 space-y-4">
+            {book.cover && (
+              <div className="md:col-span-3">
+                <img
+                  alt={`Cover of ${book.title}`}
+                  className="w-full max-w-[240px] border border-current/10 shadow-2xl"
+                  height={296}
+                  src={book.cover}
+                  width={240}
+                />
+              </div>
+            )}
+            <div className={`${book.cover ? 'md:col-span-5' : 'md:col-span-8'} space-y-4`}>
               <div className="flex flex-wrap items-center gap-3">
                 <span className={`font-code text-xs uppercase tracking-widest px-3 py-1 font-bold border ${
                   theme === 'light'
@@ -75,11 +94,27 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                 </span>
               </div>
 
-              <h1 className={`font-black text-3xl md:text-5xl tracking-tight uppercase leading-tight ${
+              <h1 className={`font-black text-3xl md:text-4xl tracking-tight leading-tight ${
                 theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'
               }`}>
                 {book.title}
               </h1>
+
+              {book.subtitle && (
+                <p className={`text-lg font-bold leading-snug ${
+                  theme === 'light' ? 'text-slate-700' : 'text-[#F5F5F5]/85'
+                }`}>
+                  {book.subtitle}
+                </p>
+              )}
+
+              {book.authors && (
+                <p className={`font-code text-xs ${
+                  theme === 'light' ? 'text-slate-600' : 'text-[#F5F5F5]/70'
+                }`}>
+                  By {book.authors.join(', ')}
+                </p>
+              )}
 
               <p className={`font-body-lg text-base max-w-2xl leading-relaxed font-light ${
                 theme === 'light' ? 'text-slate-700' : 'text-[#F5F5F5]/80'
@@ -114,6 +149,12 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                 }`}>
                   PUBLICATION DATA
                 </span>
+                {publishedOn && (
+                  <div className="flex justify-between">
+                    <span className={theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/50'}>Published:</span>
+                    <span className={`font-mono font-bold ${theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'}`}>{publishedOn}</span>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <span className={theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/50'}>ISBN:</span>
                   <span className={`font-mono font-bold ${theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'}`}>{book.isbn || 'N/A'}</span>
@@ -130,6 +171,25 @@ export const BookDetailView: React.FC<BookDetailViewProps> = ({
                   <span className={theme === 'light' ? 'text-slate-500' : 'text-[#F5F5F5]/50'}>Language:</span>
                   <span className={`font-mono font-bold ${theme === 'light' ? 'text-slate-900' : 'text-[#F5F5F5]'}`}>English</span>
                 </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {googleLinks.map((link) => (
+                  <a
+                    className={`w-full border px-4 py-2.5 font-code text-xs font-bold uppercase tracking-widest transition-colors inline-flex items-center justify-between gap-2 ${
+                      theme === 'light'
+                        ? 'border-slate-300 text-slate-800 hover:border-[#008822] hover:text-[#008822]'
+                        : 'border-white/20 text-[#F5F5F5] hover:border-[#00FF41] hover:text-[#00FF41]'
+                    }`}
+                    href={link.href}
+                    key={link.label}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <span>{link.label}</span>
+                    <span className="material-symbols-outlined text-sm">open_in_new</span>
+                  </a>
+                ))}
               </div>
 
               {book.url && (
