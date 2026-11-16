@@ -20,7 +20,7 @@ export function BlogPostCard({
   heading: Heading,
   featuredLabel,
   locale = 'en-GB',
-  readLabel = 'Read note'
+  readLabel = 'Read post'
 }: {
   post: BlogPostSummary
   heading: 'h2' | 'h3'

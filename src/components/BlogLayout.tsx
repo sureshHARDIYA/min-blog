@@ -1,14 +1,6 @@
-'use client'
-
 import type { ReactNode } from 'react'
-import { ThemeProvider } from '../context/ThemeContext'
-import { Header } from './Header'
+import { SiteChrome } from './SiteChrome'
 
 export default function BlogLayout({ children }: { children: ReactNode }) {
-  return (
-    <ThemeProvider>
-      <Header activeTab='blogs' />
-      {children}
-    </ThemeProvider>
-  )
+  return <SiteChrome active='blog'>{children}</SiteChrome>
 }

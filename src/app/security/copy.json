@@ -1,9 +1,5 @@
 {
   "en": {
-    "navLabel": "Security page navigation",
-    "security": "Security",
-    "blogs": "Blogs",
-    "contact": "Contact",
     "eyebrow": "Application security · Bergen, Norway",
     "title": "Application Security & Secure Software Architecture",
     "intro": "I help engineering teams design secure APIs, manage software-supply-chain risk, implement practical DevSecOps controls, and build secure cloud applications using Rust, Python, React and Azure.",
@@ -103,10 +99,6 @@
     }
   },
   "no": {
-    "navLabel": "Navigasjon for sikkerhetssiden",
-    "security": "Sikkerhet",
-    "blogs": "Blogg",
-    "contact": "Kontakt",
     "eyebrow": "Applikasjonssikkerhet · Bergen, Norge",
     "title": "Applikasjonssikkerhet og sikker programvarearkitektur",
     "intro": "Jeg hjelper utviklingsteam med å designe sikre API-er, håndtere risiko i programvareleverandørkjeden, innføre praktiske DevSecOps-kontroller og bygge sikre skyløsninger med Rust, Python, React og Azure.",

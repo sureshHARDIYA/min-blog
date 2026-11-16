@@ -6,7 +6,7 @@ export interface FooterLink {
 }
 
 /**
- * Links shown under the "Networks" heading in the site footer.
+ * Links shown under the "Elsewhere" heading in the site footer.
  * To add a link, append an entry here — order is display order.
  */
 export const FOOTER_LINKS: readonly FooterLink[] = [
@@ -20,6 +20,5 @@ export const FOOTER_LINKS: readonly FooterLink[] = [
   },
   { label: 'PhD Resources', href: 'https://github.com/sureshHARDIYA/phd-resources', isExternal: true },
   { label: 'Revios', href: 'https://revios.no/', isExternal: true },
-  { label: 'Vulnerability Intelligence', href: '/vulnerabilities', isExternal: false },
   { label: 'Security Notice Alert', href: 'https://sureshhardiya.github.io/vulnintel/', isExternal: true },
 ]

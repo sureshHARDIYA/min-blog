@@ -8,7 +8,6 @@ import {
   blogPostGridClassName,
   type BlogPostSummary
 } from '../../components/BlogPostCard'
-import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 import { useTheme } from '../../context/ThemeContext'
 import { useLanguage } from '../../i18n/LanguageContext'
 
@@ -22,7 +21,7 @@ const copy = {
     clear: 'Clear search',
     results: (count: number) => `${count} ${count === 1 ? 'post' : 'posts'}`,
     empty: 'No matching posts. Try a different search.',
-    read: 'Read note',
+    read: 'Read post',
     featured: 'Featured article',
     dateLocale: 'en-GB'
   },
@@ -92,12 +91,9 @@ export function BlogsContent({ posts }: { posts: BlogPostSummary[] }) {
         aria-labelledby='field-notes'
         className='mx-auto max-w-[1120px] px-6 pb-16 pt-10 sm:pt-16'
       >
-        <div className='flex flex-wrap items-start justify-between gap-x-8 gap-y-4'>
-          <h1 id='field-notes' className='font-display uppercase'>
-            {text.title}
-          </h1>
-          <LanguageSwitcher />
-        </div>
+        <h1 id='field-notes' className='font-display uppercase'>
+          {text.title}
+        </h1>
         <p className={`font-body-md mt-4 max-w-2xl ${muted}`}>{text.intro}</p>
 
         <div className='mb-6 mt-9 flex flex-wrap items-center justify-between gap-x-6 gap-y-3'>

@@ -1,17 +1,12 @@
 import React from 'react'
 
-import { useTheme } from '../context/ThemeContext'
 import { useLanguage } from '../i18n/LanguageContext'
 import type { Language } from '../i18n/translations'
-import type { NavTab } from '../types'
 import { FOOTER_LINKS } from './footerLinks'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { ThemeToggle } from './ThemeToggle'
 
 import '../views/home/home.css'
-
-interface FooterProps {
-  setActiveTab?: (tab: NavTab) => void
-}
 
 const CAREER_START_YEAR = 2010
 const CONTACT_EMAIL = 'itsmeskm99@gmail.com'
@@ -28,10 +23,11 @@ const COPY: Record<Language, Record<string, string>> = {
     role: 'Tech Lead, Lerøy Seafood Group',
     city: 'Bergen, Norway',
     site: 'Site',
-    writing: 'Writing',
+    blog: 'Blog',
+    vulnerabilities: 'Vulnerability Intelligence',
     security: 'Security',
     research: 'Research',
-    trajectory: 'Trajectory',
+    trajectory: 'Experience',
     stack: 'Stack',
     contact: 'Contact',
     elsewhere: 'Elsewhere',
@@ -41,8 +37,7 @@ const COPY: Record<Language, Record<string, string>> = {
     cv: 'Download CV',
     policy: 'Security policy',
     privacy: 'Privacy',
-    light: 'Light theme',
-    dark: 'Dark theme'
+    external: 'opens in a new tab'
   },
   no: {
     eyebrow: 'Står du foran en vanskelig sikkerhetsbeslutning?',
@@ -53,7 +48,8 @@ const COPY: Record<Language, Record<string, string>> = {
     role: 'Tech Lead, Lerøy Seafood Group',
     city: 'Bergen, Norge',
     site: 'Nettsted',
-    writing: 'Artikler',
+    blog: 'Blogg',
+    vulnerabilities: 'Sårbarhetsoversikt',
     security: 'Sikkerhet',
     research: 'Forskning',
     trajectory: 'Karriere',
@@ -66,14 +62,12 @@ const COPY: Record<Language, Record<string, string>> = {
     cv: 'Last ned CV',
     policy: 'Sikkerhetspolicy',
     privacy: 'Personvern',
-    light: 'Lyst tema',
-    dark: 'Mørkt tema'
+    external: 'åpnes i ny fane'
   }
 }
 
-export const Footer: React.FC<FooterProps> = () => {
+export function Footer() {
   const { language } = useLanguage()
-  const { theme, toggleTheme } = useTheme()
   const text = COPY[language] ?? COPY.en
   const year = new Date().getFullYear()
   const tagline = text.tagline
@@ -109,8 +103,9 @@ export const Footer: React.FC<FooterProps> = () => {
 
         <nav className='footer-column' aria-label={text.site}>
           <h3>{text.site}</h3>
-          <a href='/blogs'>{text.writing}</a>
+          <a href='/blogs'>{text.blog}</a>
           <a href='/security'>{text.security}</a>
+          <a href='/vulnerabilities'>{text.vulnerabilities}</a>
           <a href='/research'>{text.research}</a>
           <a href='/trajectory'>{text.trajectory}</a>
           <a href='/stack'>{text.stack}</a>
@@ -128,6 +123,13 @@ export const Footer: React.FC<FooterProps> = () => {
                 : {})}
             >
               {link.label}
+              {link.isExternal && (
+                <>
+                  {' '}
+                  <span aria-hidden='true'>↗</span>
+                  <span className='home-sr-only'> ({text.external})</span>
+                </>
+              )}
             </a>
           ))}
         </nav>
@@ -163,13 +165,7 @@ export const Footer: React.FC<FooterProps> = () => {
           </div>
           <div className='footer-bar-links'>
             <LanguageSwitcher />
-            <button
-              type='button'
-              className='border border-white/20 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white/65 transition-colors hover:border-white/50 hover:text-white'
-              onClick={toggleTheme}
-            >
-              {theme === 'dark' ? text.light : text.dark}
-            </button>
+            <ThemeToggle />
           </div>
         </div>
       </div>

@@ -133,12 +133,7 @@ html.light .home-button-secondary:hover {
   padding: 3rem 0 3.5rem;
 }
 
-/* Both carousel slides share a height so the controls below do not jump. */
-.home-slide {
-  min-height: 42rem;
-}
-
-.home-slide > section {
+.home-activity > section {
   padding-inline: 0;
 }
 
