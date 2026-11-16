@@ -1,0 +1,146 @@
+{
+  "en": {
+    "eyebrow": "Application security · Software architecture · Bergen, Norway",
+    "titleStart": "Software that",
+    "titleAccent": "holds up under attack.",
+    "lede": "Security architect and tech lead. 16 years, a PhD, four books.",
+    "ctaBrief": "Read the latest brief",
+    "ctaContact": "Discuss a security problem",
+    "role": "Tech Lead, Lerøy Seafood Group",
+    "panelLabel": "Live panel",
+    "tabActivity": "GitHub activity",
+    "tabBrief": "Latest brief",
+    "tabVerified": "Verified",
+    "live": "LIVE",
+    "activityTitle": "Commits, last 90 days",
+    "activityAlt": "Commits per week over the last 90 days",
+    "commits": "commits in 90 days",
+    "repositories": "repositories analysed",
+    "since": "on GitHub since",
+    "other": "Other",
+    "readBrief": "Read the brief",
+    "headers": "HTTP security headers",
+    "headersDetail": "Mozilla Observatory, {passed} of {total} tests",
+    "gate": "Code quality gate",
+    "gateDetail": "SonarCloud, every pull request",
+    "gatePassed": "Pass",
+    "gateFailed": "Fail",
+    "reporting": "Vulnerability reporting",
+    "reportingDetail": "security.txt and a published policy",
+    "reportingValue": "Open",
+    "ringsTitle": "Three boundaries I defend.",
+    "ringsLede": "Who is calling. What may run. What we ship.",
+    "rings": [
+      {
+        "question": "WHO IS CALLING?",
+        "verb": "VERIFY",
+        "noun": "Identity and access"
+      },
+      {
+        "question": "WHAT MAY RUN?",
+        "verb": "CONTAIN",
+        "noun": "Code and AI agents"
+      },
+      {
+        "question": "WHAT DO WE SHIP?",
+        "verb": "PROVE",
+        "noun": "The supply chain"
+      }
+    ],
+    "readNotes": "Read the notes",
+    "loop": "EVIDENCE, VERIFIED CONTINUOUSLY",
+    "writingTitle": "What I am writing about",
+    "writingAll": "All field notes",
+    "readArticle": "Read the article",
+    "briefList": "The weekly AppSec brief",
+    "workTitle": "Security close to the engineering work",
+    "work": [
+      {
+        "title": "Security architecture and threat modelling",
+        "text": "Zero trust, verifiable requirements."
+      },
+      {
+        "title": "Systems that scale and fail safely",
+        "text": "Python, Node.js, Rust, Java, PostgreSQL."
+      },
+      {
+        "title": "AI and agent engineering",
+        "text": "Agents with a human in charge."
+      }
+    ],
+    "subscribeTitle": "The AppSec Lead Brief, every Monday.",
+    "subscribeText": "Patch, watch or ignore. One email a week."
+  },
+  "no": {
+    "eyebrow": "Applikasjonssikkerhet · Programvarearkitektur · Bergen, Norge",
+    "titleStart": "Programvare som",
+    "titleAccent": "tåler angrep.",
+    "lede": "Sikkerhetsarkitekt og tech lead. 16 år, doktorgrad, fire bøker.",
+    "ctaBrief": "Les siste brief",
+    "ctaContact": "Diskuter et sikkerhetsproblem",
+    "role": "Tech Lead, Lerøy Seafood Group",
+    "panelLabel": "Direktepanel",
+    "tabActivity": "GitHub-aktivitet",
+    "tabBrief": "Siste brief",
+    "tabVerified": "Verifisert",
+    "live": "DIREKTE",
+    "activityTitle": "Commits, siste 90 dager",
+    "activityAlt": "Commits per uke de siste 90 dagene",
+    "commits": "commits på 90 dager",
+    "repositories": "repoer analysert",
+    "since": "på GitHub siden",
+    "other": "Annet",
+    "readBrief": "Les briefen",
+    "headers": "HTTP-sikkerhetshoder",
+    "headersDetail": "Mozilla Observatory, {passed} av {total} tester",
+    "gate": "Kvalitetsport for kode",
+    "gateDetail": "SonarCloud, hver pull request",
+    "gatePassed": "Bestått",
+    "gateFailed": "Ikke bestått",
+    "reporting": "Sårbarhetsrapportering",
+    "reportingDetail": "security.txt og en publisert retningslinje",
+    "reportingValue": "Åpen",
+    "ringsTitle": "Tre grenser jeg forsvarer.",
+    "ringsLede": "Hvem som kaller. Hva som får kjøre. Hva vi leverer.",
+    "rings": [
+      {
+        "question": "HVEM KALLER?",
+        "verb": "VERIFISER",
+        "noun": "Identitet og tilgang"
+      },
+      {
+        "question": "HVA FÅR KJØRE?",
+        "verb": "BEGRENS",
+        "noun": "Kode og KI-agenter"
+      },
+      {
+        "question": "HVA LEVERER VI?",
+        "verb": "DOKUMENTER",
+        "noun": "Leverandørkjeden"
+      }
+    ],
+    "readNotes": "Les notatene",
+    "loop": "BEVIS, VERIFISERT KONTINUERLIG",
+    "writingTitle": "Dette skriver jeg om",
+    "writingAll": "Alle feltnotater",
+    "readArticle": "Les artikkelen",
+    "briefList": "Ukentlig AppSec-brief",
+    "workTitle": "Sikkerhet tett på utviklingsarbeidet",
+    "work": [
+      {
+        "title": "Sikkerhetsarkitektur og trusselmodellering",
+        "text": "Zero trust, krav som kan verifiseres."
+      },
+      {
+        "title": "Systemer som skalerer og feiler trygt",
+        "text": "Python, Node.js, Rust, Java, PostgreSQL."
+      },
+      {
+        "title": "KI- og agentutvikling",
+        "text": "Agenter med et menneske ved roret."
+      }
+    ],
+    "subscribeTitle": "AppSec Lead Brief, hver mandag.",
+    "subscribeText": "Patch, følg med eller ignorer. Én e-post i uken."
+  }
+}
