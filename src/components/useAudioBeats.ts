@@ -81,7 +81,7 @@ export function useAudioSyncMode(
     probe.preload = 'metadata'
     probe.onloadedmetadata = () => settle('cors')
     probe.onerror = () => settle('plain')
-    probe.src = probeUrl
+    probe.src = `${probeUrl}?cors=1`
     return () => {
       probe.onloadedmetadata = null
       probe.onerror = null

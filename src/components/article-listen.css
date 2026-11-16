@@ -16,6 +16,11 @@
   box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--article-accent) 7%, transparent);
 }
 
+/* Leave room for the fixed header and mini player when a section is scrolled to. */
+.blog-prose > [id^='listen-section-'] {
+  scroll-margin-top: 9.5rem;
+}
+
 /* ---------- Full player ---------- */
 .article-listen {
   position: relative;

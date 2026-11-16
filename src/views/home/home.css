@@ -130,14 +130,30 @@ html.light .home-button-secondary:hover {
 
 /* ---------- Hero ---------- */
 .home-hero {
-  padding: 4.5rem 0 3rem;
+  padding: 3rem 0 3.5rem;
+}
+
+/* Both carousel slides share a height so the controls below do not jump. */
+.home-slide {
+  min-height: 42rem;
+}
+
+.home-slide > section {
+  padding-inline: 0;
+}
+
+.home-portrait {
+  height: 28.75rem;
+  overflow: hidden;
+  border: 1px solid var(--h-line);
+  background: var(--h-surface);
 }
 
 .home-hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   gap: 4rem;
-  align-items: end;
+  align-items: center;
 }
 
 .home-hero-copy {
@@ -152,13 +168,13 @@ html.light .home-button-secondary:hover {
   letter-spacing: 0.04em;
 }
 
-.home-hero h1 {
+.home-headline {
   font-size: clamp(2.5rem, 5.4vw, 4.6rem);
   line-height: 1.03;
   letter-spacing: -0.035em;
 }
 
-.home-hero h1 {
+.home-headline {
   min-height: 3.1em;
 }
 
@@ -173,62 +189,6 @@ html.light .home-button-secondary:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-}
-
-.home-hero-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.home-byline {
-  display: flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: 0.9rem;
-  font-size: 0.95rem;
-  line-height: 1.35;
-}
-
-.home-byline img {
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  object-fit: cover;
-  outline: 2px solid transparent;
-  outline-offset: 3px;
-  filter: grayscale(1) contrast(1.05);
-  transition:
-    filter 400ms ease,
-    outline-color 400ms ease,
-    transform 400ms var(--h-ease);
-}
-
-.home-byline span span {
-  color: var(--h-muted);
-  transition: color 400ms ease;
-}
-
-/* The portrait comes into full colour, with an accent ring, when hovered. */
-.home-byline:hover img {
-  outline-color: var(--h-accent);
-  filter: grayscale(0) contrast(1) saturate(1.1);
-  transform: scale(1.06);
-}
-
-.home-byline:hover span span {
-  color: var(--h-accent);
-}
-
-/* The GitHub activity block: profile, commit line and the three donut charts. */
-.home-hero-charts {
-  margin-top: 3.5rem;
-}
-
-.home-hero-charts > section {
-  padding-inline: 0;
-  border-top: 1px solid var(--h-line);
 }
 
 /* ---------- Shared small parts ---------- */
@@ -789,15 +749,6 @@ html.light .home-button-secondary:hover {
   animation: home-phrase-in 600ms var(--h-ease);
 }
 
-.home-hero-copy,
-.home-hero-side,
-.home-hero-charts {
-  animation: home-rise 700ms var(--h-ease) both;
-}
-
-.home-hero-side { animation-delay: 120ms; }
-.home-hero-charts { animation-delay: 240ms; }
-
 /* The commit line draws itself; each donut segment sweeps to its final size. */
 .gh-line-draw {
   stroke-dasharray: 3000;
@@ -908,15 +859,10 @@ html.light .home-button-secondary:hover {
   .ring-flow i,
   .live-dot,
   .home-phrase,
-  .home-hero-copy,
-  .home-hero-side,
-  .home-hero-charts,
   .gh-donut-segment,
   .loop-flow i { animation: none; }
   .loop-flow i { opacity: 0.7; }
   .gh-line-draw { animation: none; stroke-dashoffset: 0; }
   .ring-flow i { opacity: 0.7; }
-  .home-button,
-  .home-byline img { transition: none; }
-  .home-byline:hover img { transform: none; }
+  .home-button { transition: none; }
 }

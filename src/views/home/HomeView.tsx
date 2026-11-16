@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { AppSecSubscribeForm } from '../../components/AppSecSubscribeForm'
 import type { BlogPostSummary } from '../../components/BlogPostCard'
 import { GitHubTechnologyMap } from '../../components/GitHubTechnologyMap'
+import { HeroPlayer } from '../../components/HeroPlayer'
+import { SlowCarousel } from '../../components/SlowCarousel'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { BoundaryRings } from './BoundaryRings'
 import { HOME_COPY } from './copy'
@@ -28,7 +30,7 @@ interface HomeViewProps {
 }
 
 export function HomeView({ latestPosts }: Readonly<HomeViewProps>) {
-  const { language } = useLanguage()
+  const { language, t } = useLanguage()
   const text = HOME_COPY[language] ?? HOME_COPY.en
   const locale = language === 'no' ? 'nb-NO' : 'en-GB'
   const shortDate = new Intl.DateTimeFormat(locale, {
@@ -47,40 +49,64 @@ export function HomeView({ latestPosts }: Readonly<HomeViewProps>) {
   return (
     <div className='home'>
       <section className='home-hero'>
-        <div className='home-wrap home-hero-grid'>
-          <div className='home-hero-copy'>
-            <p className='home-eyebrow home-mono'>{text.eyebrow}</p>
-            <h1>
-              {text.titleStart} <RotatingPhrase phrases={text.titleAccents} />
-            </h1>
-          </div>
-          <div className='home-hero-side'>
-            <p className='home-lede'>{text.lede}</p>
-            <div className='home-actions'>
-              {latestBrief && (
-                <Link
-                  className='home-button home-button-primary'
-                  href={`/blog/${latestBrief.slug}`}
-                >
-                  {text.ctaBrief} <span aria-hidden='true'>→</span>
-                </Link>
-              )}
-              <a className='home-button home-button-secondary' href='/connect'>
-                {text.ctaContact}
-              </a>
-            </div>
-            <div className='home-byline'>
-              <img src='/suresh-portrait.png' alt='' width={56} height={56} />
-              <span>
-                <b>Suresh Kumar Mukhiya, PhD</b>
-                <br />
-                <span>Tech Lead, Lerøy Seafood Group</span>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className='home-wrap home-hero-charts'>
-          <GitHubTechnologyMap compact />
+        <div className='home-wrap'>
+          <h1 className='home-sr-only'>
+            Suresh Kumar Mukhiya, PhD: application security and software
+            architecture
+          </h1>
+          <SlowCarousel
+            ariaLabel='Introduction'
+            slides={[
+              {
+                id: 'github-activity',
+                label: 'GitHub engineering activity',
+                content: (
+                  <div className='home-slide'>
+                    <GitHubTechnologyMap compact />
+                  </div>
+                )
+              },
+              {
+                id: 'statement',
+                label: 'Introduction',
+                content: (
+                  <div className='home-slide home-hero-grid'>
+                    <div className='home-hero-copy'>
+                      <p className='home-eyebrow home-mono'>{text.eyebrow}</p>
+                      <h2 className='home-headline'>
+                        {text.titleStart}{' '}
+                        <RotatingPhrase phrases={text.titleAccents} />
+                      </h2>
+                      <p className='home-lede'>{text.lede}</p>
+                      <div className='home-actions'>
+                        {latestBrief && (
+                          <Link
+                            className='home-button home-button-primary'
+                            href={`/blog/${latestBrief.slug}`}
+                          >
+                            {text.ctaBrief} <span aria-hidden='true'>→</span>
+                          </Link>
+                        )}
+                        <a
+                          className='home-button home-button-secondary'
+                          href='/connect'
+                        >
+                          {text.ctaContact}
+                        </a>
+                      </div>
+                    </div>
+                    <div className='home-portrait'>
+                      <HeroPlayer
+                        nodeLabel={t.hero.nodeLabel}
+                        name='Suresh Kumar Mukhiya, PhD'
+                        title={t.hero.tag}
+                      />
+                    </div>
+                  </div>
+                )
+              }
+            ]}
+          />
         </div>
       </section>
 

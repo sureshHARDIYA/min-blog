@@ -52,6 +52,7 @@ type IconName =
 
 const RATES = [0.75, 1, 1.25, 1.5, 2]
 const SKIP_SECONDS = 15
+const CORS_QUERY = '?cors=1'
 const SAVE_INTERVAL_SECONDS = 5
 /** Start fetching the next section this long before the current one ends. */
 const PRELOAD_LEAD_SECONDS = 30
@@ -261,10 +262,9 @@ export function ArticleListen({
   const [error, setError] = useState('')
   // With durations in the manifest nothing is fetched until the reader shows intent.
   const hasDurations = segments.every((segment) => (segment.duration ?? 0) > 0)
-  const [isArmed, setIsArmed] = useState(!hasDurations)
   const hasStarted = useRef(false)
   const [useCors, setUseCors] = useState(false)
-  const syncMode = useAudioSyncMode(segments[0]?.url, isArmed)
+  const syncMode = useAudioSyncMode(segments[0]?.url, true)
   const { connect, isSynced } = useAudioBeats(audio, useCors, live, compact)
 
   // Switch to CORS loading only before playback starts: media already fetched
@@ -277,6 +277,10 @@ export function ArticleListen({
     if (isFirstCorsRender.current) isFirstCorsRender.current = false
     else audio.current?.load() // re-fetch with the new crossOrigin setting
   }, [useCors])
+
+  // CORS and plain requests use different URLs so a cached plain response is
+  // never reused for the analyser, which would silence it.
+  const sourceUrl = (url: string) => (useCors ? `${url}${CORS_QUERY}` : url)
 
   const tracks = useMemo(
     () => buildTracks(segments, titles),
@@ -320,11 +324,11 @@ export function ArticleListen({
     }
     const next = tracks[index + 1]
     const isNearEnd = el.duration - seconds < PRELOAD_LEAD_SECONDS
-    if (next && isNearEnd && warmed.current?.src !== next.url) {
+    if (next && isNearEnd && warmed.current?.src !== sourceUrl(next.url)) {
       const preload = new Audio()
       if (useCors) preload.crossOrigin = 'anonymous'
       preload.preload = 'auto'
-      preload.src = next.url
+      preload.src = sourceUrl(next.url)
       warmed.current = preload
     }
   }
@@ -368,11 +372,24 @@ export function ArticleListen({
     })
   }, [index])
 
+  // Highlight the section being narrated and, when narration moves on to a new
+  // section, bring that section into view. Pressing play never scrolls the page.
+  const lastNarratedId = useRef<string | null>(null)
   useEffect(() => {
     if (!playing || !active) return
     const el = document.getElementById(active.id)
     if (!el) return
     el.dataset.listenActive = 'true'
+    const hasMovedOn =
+      lastNarratedId.current !== null && lastNarratedId.current !== active.id
+    lastNarratedId.current = active.id
+    if (hasMovedOn) {
+      const isReduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+      el.scrollIntoView({
+        behavior: isReduced ? 'auto' : 'smooth',
+        block: 'start'
+      })
+    }
     return () => {
       delete el.dataset.listenActive
     }
@@ -511,16 +528,13 @@ export function ArticleListen({
     <>
       <section
         ref={playerSection}
-        onPointerEnter={() => setIsArmed(true)}
-        onFocusCapture={() => setIsArmed(true)}
-        onTouchStart={() => setIsArmed(true)}
         className='article-listen'
         data-playing={playing}
         aria-label='Listen to this article'
       >
         <audio
           ref={audio}
-          src={active.url}
+          src={sourceUrl(active.url)}
           crossOrigin={useCors ? 'anonymous' : undefined}
           preload={hasDurations ? 'none' : 'metadata'}
           onPlay={() => {
