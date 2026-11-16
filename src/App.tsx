@@ -7,7 +7,6 @@ import type { BlogPostSummary } from './components/BlogPostCard';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomeView } from './views/home/HomeView';
-import type { SecurityScores } from './lib/securityScores';
 import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
 import { StackView } from './views/StackView';
@@ -49,13 +48,11 @@ const queryClient = new QueryClient({
 interface AppProps {
   initialTab?: NavTab;
   latestPosts?: BlogPostSummary[];
-  scores?: SecurityScores | null;
 }
 
 const MainLayout: React.FC<AppProps> = ({
   initialTab = 'architecture',
   latestPosts = [],
-  scores = null,
 }) => {
   const [activeTab, setActiveTab] = useState<NavTab>(initialTab);
   const { theme } = useTheme();
@@ -83,7 +80,7 @@ const MainLayout: React.FC<AppProps> = ({
     switch (activeTab) {
       case 'architecture':
         return (
-<HomeView latestPosts={latestPosts} scores={scores} />
+<HomeView latestPosts={latestPosts} />
         );
       case 'trajectory':
         return <TrajectoryView />;
@@ -95,7 +92,7 @@ const MainLayout: React.FC<AppProps> = ({
         return <ConnectView />;
       default:
         return (
-<HomeView latestPosts={latestPosts} scores={scores} />
+<HomeView latestPosts={latestPosts} />
         );
     }
   };
@@ -118,7 +115,6 @@ const MainLayout: React.FC<AppProps> = ({
 export default function App({
   initialTab = 'architecture',
   latestPosts = [],
-  scores = null,
 }: AppProps) {
   return (
     <ThemeProvider>
@@ -126,7 +122,6 @@ export default function App({
         <MainLayout
           initialTab={initialTab}
           latestPosts={latestPosts}
-          scores={scores}
         />
       </QueryClientProvider>
     </ThemeProvider>

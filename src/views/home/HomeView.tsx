@@ -6,10 +6,9 @@ import { AppSecSubscribeForm } from '../../components/AppSecSubscribeForm'
 import type { BlogPostSummary } from '../../components/BlogPostCard'
 import { GitHubTechnologyMap } from '../../components/GitHubTechnologyMap'
 import { useLanguage } from '../../i18n/LanguageContext'
-import type { SecurityScores } from '../../lib/securityScores'
 import { BoundaryRings } from './BoundaryRings'
 import { HOME_COPY } from './copy'
-import { LivePanel } from './LivePanel'
+import { RotatingPhrase } from './RotatingPhrase'
 
 import './home.css'
 
@@ -26,10 +25,9 @@ function capitalize(value: string): string {
 
 interface HomeViewProps {
   latestPosts: BlogPostSummary[]
-  scores: SecurityScores | null
 }
 
-export function HomeView({ latestPosts, scores }: Readonly<HomeViewProps>) {
+export function HomeView({ latestPosts }: Readonly<HomeViewProps>) {
   const { language } = useLanguage()
   const text = HOME_COPY[language] ?? HOME_COPY.en
   const locale = language === 'no' ? 'nb-NO' : 'en-GB'
@@ -53,8 +51,10 @@ export function HomeView({ latestPosts, scores }: Readonly<HomeViewProps>) {
           <div className='home-hero-copy'>
             <p className='home-eyebrow home-mono'>{text.eyebrow}</p>
             <h1>
-              {text.titleStart} <span>{text.titleAccent}</span>
+              {text.titleStart} <RotatingPhrase phrases={text.titleAccents} />
             </h1>
+          </div>
+          <div className='home-hero-side'>
             <p className='home-lede'>{text.lede}</p>
             <div className='home-actions'>
               {latestBrief && (
@@ -74,16 +74,13 @@ export function HomeView({ latestPosts, scores }: Readonly<HomeViewProps>) {
               <span>
                 <b>Suresh Kumar Mukhiya, PhD</b>
                 <br />
-                <span>{text.role}</span>
+                <span>Tech Lead, Lerøy Seafood Group</span>
               </span>
             </div>
           </div>
-          <LivePanel
-            brief={latestBrief}
-            scores={scores}
-            text={text}
-            locale={locale}
-          />
+        </div>
+        <div className='home-wrap home-hero-charts'>
+          <GitHubTechnologyMap compact />
         </div>
       </section>
 
@@ -131,12 +128,6 @@ export function HomeView({ latestPosts, scores }: Readonly<HomeViewProps>) {
           </div>
         </section>
       )}
-
-      <div className='home-github'>
-        <div className='home-wrap'>
-          <GitHubTechnologyMap compact hideActivity />
-        </div>
-      </div>
 
       <section className='home-section' aria-labelledby='home-work-title'>
         <div className='home-wrap home-work'>

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 
 import App from '../App';
 import { getAllPosts } from '../lib/blog';
-import { getSecurityScores } from '../lib/securityScores';
 
 export const metadata: Metadata = {
   title: {
@@ -16,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const [posts, scores] = await Promise.all([getAllPosts(), getSecurityScores()]);
+  const posts = await getAllPosts();
   const latestPosts = posts.slice(0, 6).map(({ content: _content, ...post }) => post);
 
-  return <App latestPosts={latestPosts} scores={scores} />;
+  return <App latestPosts={latestPosts} />;
 }

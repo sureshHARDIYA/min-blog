@@ -2,32 +2,9 @@
   "en": {
     "eyebrow": "Application security · Software architecture · Bergen, Norway",
     "titleStart": "Software that",
-    "titleAccent": "holds up under attack.",
     "lede": "Security architect and tech lead. 16 years, a PhD, four books.",
     "ctaBrief": "Read the latest brief",
     "ctaContact": "Discuss a security problem",
-    "role": "Tech Lead, Lerøy Seafood Group",
-    "panelLabel": "Live panel",
-    "tabActivity": "GitHub activity",
-    "tabBrief": "Latest brief",
-    "tabVerified": "Verified",
-    "live": "LIVE",
-    "activityTitle": "Commits, last 90 days",
-    "activityAlt": "Commits per week over the last 90 days",
-    "commits": "commits in 90 days",
-    "repositories": "repositories analysed",
-    "since": "on GitHub since",
-    "other": "Other",
-    "readBrief": "Read the brief",
-    "headers": "HTTP security headers",
-    "headersDetail": "Mozilla Observatory, {passed} of {total} tests",
-    "gate": "Code quality gate",
-    "gateDetail": "SonarCloud, every pull request",
-    "gatePassed": "Pass",
-    "gateFailed": "Fail",
-    "reporting": "Vulnerability reporting",
-    "reportingDetail": "security.txt and a published policy",
-    "reportingValue": "Open",
     "ringsTitle": "Three boundaries I defend.",
     "ringsLede": "Who is calling. What may run. What we ship.",
     "rings": [
@@ -69,37 +46,20 @@
       }
     ],
     "subscribeTitle": "The AppSec Lead Brief, every Monday.",
-    "subscribeText": "Patch, watch or ignore. One email a week."
+    "subscribeText": "Patch, watch or ignore. One email a week.",
+    "titleAccents": [
+      "holds up under attack.",
+      "verifies who is calling.",
+      "contains what may run.",
+      "proves what it ships."
+    ]
   },
   "no": {
     "eyebrow": "Applikasjonssikkerhet · Programvarearkitektur · Bergen, Norge",
     "titleStart": "Programvare som",
-    "titleAccent": "tåler angrep.",
     "lede": "Sikkerhetsarkitekt og tech lead. 16 år, doktorgrad, fire bøker.",
     "ctaBrief": "Les siste brief",
     "ctaContact": "Diskuter et sikkerhetsproblem",
-    "role": "Tech Lead, Lerøy Seafood Group",
-    "panelLabel": "Direktepanel",
-    "tabActivity": "GitHub-aktivitet",
-    "tabBrief": "Siste brief",
-    "tabVerified": "Verifisert",
-    "live": "DIREKTE",
-    "activityTitle": "Commits, siste 90 dager",
-    "activityAlt": "Commits per uke de siste 90 dagene",
-    "commits": "commits på 90 dager",
-    "repositories": "repoer analysert",
-    "since": "på GitHub siden",
-    "other": "Annet",
-    "readBrief": "Les briefen",
-    "headers": "HTTP-sikkerhetshoder",
-    "headersDetail": "Mozilla Observatory, {passed} av {total} tester",
-    "gate": "Kvalitetsport for kode",
-    "gateDetail": "SonarCloud, hver pull request",
-    "gatePassed": "Bestått",
-    "gateFailed": "Ikke bestått",
-    "reporting": "Sårbarhetsrapportering",
-    "reportingDetail": "security.txt og en publisert retningslinje",
-    "reportingValue": "Åpen",
     "ringsTitle": "Tre grenser jeg forsvarer.",
     "ringsLede": "Hvem som kaller. Hva som får kjøre. Hva vi leverer.",
     "rings": [
@@ -141,6 +101,12 @@
       }
     ],
     "subscribeTitle": "AppSec Lead Brief, hver mandag.",
-    "subscribeText": "Patch, følg med eller ignorer. Én e-post i uken."
+    "subscribeText": "Patch, følg med eller ignorer. Én e-post i uken.",
+    "titleAccents": [
+      "tåler angrep.",
+      "verifiserer hvem som kaller.",
+      "begrenser hva som får kjøre.",
+      "dokumenterer hva den leverer."
+    ]
   }
 }

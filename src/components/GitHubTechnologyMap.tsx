@@ -37,7 +37,7 @@ function DonutChart({
             {segments.map((segment, index) => (
               <circle
                 aria-label={`${segment.label}: ${segment.value} ${valueSuffix}`}
-                className="cursor-help transition-[stroke-width,opacity] duration-200 hover:opacity-80 focus:opacity-80"
+                className="gh-donut-segment cursor-help transition-[stroke-width,opacity] duration-200 hover:opacity-80 focus:opacity-80"
                 cx="21"
                 cy="21"
                 fill="none"
@@ -50,6 +50,7 @@ function DonutChart({
                 r="15.9"
                 role="img"
                 stroke={segment.color}
+                style={{ animationDelay: `${index * 70}ms` }}
                 strokeDasharray={`${segment.percentage} ${100 - segment.percentage}`}
                 strokeDashoffset={-segment.offset}
                 strokeWidth={hoveredIndex === index ? 10 : 8}
@@ -133,6 +134,7 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
           />
         ))}
         <polyline
+          className="gh-line-draw"
           fill="none"
           points={points}
           stroke="#00FF41"
@@ -176,12 +178,10 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
 }
 
 interface GitHubTechnologyMapProps {
-  /** Hide the profile and commit line when another section already shows them. */
-  hideActivity?: boolean;
   compact?: boolean;
 }
 
-export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compact = false, hideActivity = false }) => {
+export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compact = false }) => {
   const { theme } = useTheme();
   const generatedDate = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'medium',
@@ -207,7 +207,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
       className={`${compact ? 'mb-0 p-5 md:p-6' : 'mb-14 p-6 md:p-8'} bg-transparent ${theme === 'light' ? '[--chart-center:#F4F6F8] text-slate-900' : '[--chart-center:#0C0C0C] text-[#F5F5F5]'}`}
     >
       <h2 className="sr-only" id="github-activity-title">GitHub engineering activity</h2>
-      {hideActivity ? null : <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
+      <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
         <div className="flex items-center gap-4">
           <img
             alt="Suresh Kumar Mukhiya"
@@ -230,7 +230,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
           </div>
         </div>
         <ActivityLine compact={compact} />
-      </header>}
+      </header>
 
       <div className={`grid gap-8 ${compact ? 'pt-7' : 'border-b border-current/10 py-8'} md:grid-cols-3`}>
         <DonutChart items={languageItems} title="Code by language" valueSuffix="%" />

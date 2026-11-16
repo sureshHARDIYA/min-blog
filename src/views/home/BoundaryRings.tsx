@@ -121,6 +121,16 @@ export function BoundaryRings({ text }: Readonly<{ text: HomeCopy }>) {
           })}
         </div>
         <div className='ring-loop'>
+          <div className='loop-flow' aria-hidden='true'>
+            {FLOW_STEPS.map((step) => (
+              <i key={step} />
+            ))}
+          </div>
+          <div className='loop-flow loop-flow-back' aria-hidden='true'>
+            {FLOW_STEPS.map((step) => (
+              <i key={step} />
+            ))}
+          </div>
           <p>
             <span className='live-dot' aria-hidden='true' />
             {text.loop}

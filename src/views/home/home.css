@@ -130,14 +130,14 @@ html.light .home-button-secondary:hover {
 
 /* ---------- Hero ---------- */
 .home-hero {
-  padding: 4.5rem 0 5rem;
+  padding: 4.5rem 0 3rem;
 }
 
 .home-hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
   gap: 4rem;
-  align-items: center;
+  align-items: end;
 }
 
 .home-hero-copy {
@@ -158,8 +158,8 @@ html.light .home-button-secondary:hover {
   letter-spacing: -0.035em;
 }
 
-.home-hero h1 span {
-  color: var(--h-accent);
+.home-hero h1 {
+  min-height: 3.1em;
 }
 
 .home-lede {
@@ -175,11 +175,18 @@ html.light .home-button-secondary:hover {
   gap: 0.75rem;
 }
 
+.home-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .home-byline {
   display: flex;
   align-items: center;
+  align-self: flex-start;
   gap: 0.9rem;
-  padding-top: 0.4rem;
   font-size: 0.95rem;
   line-height: 1.35;
 }
@@ -189,194 +196,48 @@ html.light .home-button-secondary:hover {
   height: 3.5rem;
   border-radius: 50%;
   object-fit: cover;
-  background: var(--h-line);
+  outline: 2px solid transparent;
+  outline-offset: 3px;
   filter: grayscale(1) contrast(1.05);
+  transition:
+    filter 400ms ease,
+    outline-color 400ms ease,
+    transform 400ms var(--h-ease);
 }
 
 .home-byline span span {
   color: var(--h-muted);
+  transition: color 400ms ease;
 }
 
-/* ---------- Live panel ---------- */
-.live-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 29rem;
-  border: 1px solid var(--h-line);
-  border-radius: 2px;
-  background: var(--h-surface);
+/* The portrait comes into full colour, with an accent ring, when hovered. */
+.home-byline:hover img {
+  outline-color: var(--h-accent);
+  filter: grayscale(0) contrast(1) saturate(1.1);
+  transform: scale(1.06);
 }
 
-.live-panel-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.4rem 1.4rem 0;
-  border-bottom: 1px solid var(--h-line);
-}
-
-.live-tabs {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.live-tab {
-  min-height: 2.75rem;
-  margin-right: 1.4rem;
-  padding: 0 0.25rem;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  color: var(--h-muted);
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color var(--h-fast) ease;
-}
-
-.live-tab:hover {
-  color: var(--h-ink);
-}
-
-.live-tab[aria-selected='true'] {
-  border-bottom-color: var(--h-accent);
-  color: var(--h-ink);
-}
-
-.live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+.home-byline:hover span span {
   color: var(--h-accent);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
 }
 
+/* The GitHub activity block: profile, commit line and the three donut charts. */
+.home-hero-charts {
+  margin-top: 3.5rem;
+}
+
+.home-hero-charts > section {
+  padding-inline: 0;
+  border-top: 1px solid var(--h-line);
+}
+
+/* ---------- Shared small parts ---------- */
 .live-dot {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
   background: var(--c-1);
   animation: home-pulse 2.4s ease-in-out infinite;
-}
-
-.live-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 1.1rem;
-  padding: 1.5rem 1.4rem 1.4rem;
-  animation: home-rise 450ms var(--h-ease);
-}
-
-.live-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem 0.75rem;
-}
-
-.live-row strong {
-  font-size: 0.95rem;
-}
-
-.live-row span {
-  color: var(--h-muted);
-  font-size: 0.75rem;
-}
-
-.live-chart {
-  display: block;
-  width: 100%;
-  height: 10.5rem;
-  overflow: visible;
-}
-
-.live-chart-grid {
-  fill: none;
-  stroke: var(--h-line);
-  stroke-width: 1;
-}
-
-.live-chart-area {
-  fill: var(--c-1);
-  opacity: 0;
-  animation: home-fade 900ms ease-out 1s forwards;
-}
-
-.live-chart-line {
-  fill: none;
-  stroke: var(--c-1);
-  stroke-width: 3.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1400;
-  stroke-dashoffset: 1400;
-  animation: home-draw 1.9s ease-out forwards;
-}
-
-.live-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1.5px solid var(--h-ink);
-}
-
-.live-stats div {
-  padding: 0.75rem 0.75rem 0;
-  border-left: 1px solid var(--h-line);
-}
-
-.live-stats div:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.live-stats strong {
-  display: block;
-  font-size: 1.9rem;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-.live-stats span {
-  color: var(--h-muted);
-  font-size: 0.8rem;
-  line-height: 1.35;
-}
-
-.live-bar {
-  display: flex;
-  gap: 2px;
-  height: 0.6rem;
-}
-
-.live-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-  margin: 0;
-  padding: 0;
-  color: var(--h-muted);
-  font-size: 0.8rem;
-  list-style: none;
-}
-
-.live-legend i {
-  display: inline-block;
-  width: 0.6rem;
-  height: 0.6rem;
-  margin-right: 0.4rem;
-}
-
-.live-legend b {
-  color: var(--h-ink);
-  font-weight: 600;
 }
 
 .live-tag {
@@ -393,57 +254,6 @@ html.light .home-button-secondary:hover {
   background: var(--h-button-bg);
   color: var(--h-button-ink);
   font-weight: 600;
-}
-
-.live-brief-title {
-  font-size: 2rem;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-
-.live-brief-text {
-  color: var(--h-ink-2);
-  font-size: 1.05rem;
-  line-height: 1.55;
-}
-
-.live-body .home-text-link {
-  margin-top: auto;
-}
-
-.live-score {
-  display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  gap: 1rem;
-  align-items: center;
-  padding: 1.1rem 0;
-  border-bottom: 1px solid var(--h-line);
-  color: inherit;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  text-decoration: none;
-}
-
-.live-score:last-of-type {
-  border-bottom: 0;
-}
-
-.live-score > strong {
-  color: var(--h-accent);
-  font-size: 2.3rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.live-score span span {
-  display: block;
-  color: var(--h-muted);
-}
-
-.live-score:hover b {
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 /* ---------- Boundary rings ---------- */
@@ -742,12 +552,6 @@ html.light .home-button-secondary:hover {
   color: var(--h-accent);
 }
 
-/* ---------- GitHub charts ---------- */
-.home-github {
-  margin-top: 6.5rem;
-  border-block: 1px solid var(--h-line);
-}
-
 /* ---------- Where I work ---------- */
 .home-work {
   display: grid;
@@ -968,6 +772,101 @@ html.light .home-button-secondary:hover {
   min-height: 2.25rem;
 }
 
+/* ---------- Hero and chart motion ---------- */
+.home-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.home-phrase {
+  display: inline-block;
+  color: var(--h-accent);
+  animation: home-phrase-in 600ms var(--h-ease);
+}
+
+.home-hero-copy,
+.home-hero-side,
+.home-hero-charts {
+  animation: home-rise 700ms var(--h-ease) both;
+}
+
+.home-hero-side { animation-delay: 120ms; }
+.home-hero-charts { animation-delay: 240ms; }
+
+/* The commit line draws itself; each donut segment sweeps to its final size. */
+.gh-line-draw {
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  animation: home-draw 2.2s ease-out 400ms forwards;
+}
+
+.gh-donut-segment {
+  animation: home-sweep 1.1s var(--h-ease) backwards;
+}
+
+/* Arrows travelling along the loop under the rings. */
+.loop-flow {
+  position: absolute;
+  bottom: -7px;
+  left: 18%;
+  display: flex;
+  gap: 9px;
+  padding: 0 0.75rem;
+  background: var(--h-band);
+}
+
+.loop-flow-back {
+  right: 18%;
+  left: auto;
+}
+
+.loop-flow i {
+  display: block;
+  width: 10px;
+  height: 12px;
+  background: var(--c-3);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  opacity: 0.18;
+  animation: home-flow 1.6s ease-in-out infinite;
+}
+
+.loop-flow-back i {
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.loop-flow i:nth-child(2) { animation-delay: 0.2s; }
+.loop-flow i:nth-child(3) { animation-delay: 0.4s; }
+.loop-flow i:nth-child(4) { animation-delay: 0.6s; }
+.loop-flow i:nth-child(5) { animation-delay: 0.8s; }
+.loop-flow-back i:nth-child(1) { animation-delay: 0.8s; }
+.loop-flow-back i:nth-child(2) { animation-delay: 0.6s; }
+.loop-flow-back i:nth-child(3) { animation-delay: 0.4s; }
+.loop-flow-back i:nth-child(4) { animation-delay: 0.2s; }
+.loop-flow-back i:nth-child(5) { animation-delay: 0s; }
+
+@keyframes home-phrase-in {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes home-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes home-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes home-sweep {
+  from { stroke-dasharray: 0 100; }
+}
+
 /* ---------- Motion ---------- */
 @keyframes home-spin {
   to { transform: rotate(360deg); }
@@ -981,19 +880,6 @@ html.light .home-button-secondary:hover {
 @keyframes home-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
-}
-
-@keyframes home-draw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes home-fade {
-  to { opacity: 0.16; }
-}
-
-@keyframes home-rise {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -1012,7 +898,6 @@ html.light .home-button-secondary:hover {
   .ring-flow { flex: none; flex-direction: row; gap: 1.1rem; padding: 0; transform: rotate(90deg); }
   .ring-loop { display: none; }
   .home-lead { padding: 1.5rem; }
-  .home-github,
   .home-brief { margin-top: 4.5rem; }
   .footer-cta { padding-block: 4rem 3rem; }
 }
@@ -1022,9 +907,16 @@ html.light .home-button-secondary:hover {
   .ring-orbit,
   .ring-flow i,
   .live-dot,
-  .live-body { animation: none; }
+  .home-phrase,
+  .home-hero-copy,
+  .home-hero-side,
+  .home-hero-charts,
+  .gh-donut-segment,
+  .loop-flow i { animation: none; }
+  .loop-flow i { opacity: 0.7; }
+  .gh-line-draw { animation: none; stroke-dashoffset: 0; }
   .ring-flow i { opacity: 0.7; }
-  .live-chart-line { animation: none; stroke-dashoffset: 0; }
-  .live-chart-area { animation: none; opacity: 0.16; }
-  .home-button { transition: none; }
+  .home-button,
+  .home-byline img { transition: none; }
+  .home-byline:hover img { transform: none; }
 }
