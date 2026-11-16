@@ -17,17 +17,18 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [theme, setThemeState] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
     // The inline script in the root layout has already applied the saved choice,
     // or the device preference on a first visit, as the `html.light` class.
     const isLight = document.documentElement.classList.contains('light')
-    setThemeState(isLight ? 'light' : 'dark')
+    setTheme(isLight ? 'light' : 'dark')
   }, [])
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme)
+  /** Sets the theme, applies it to the page and remembers the choice. */
+  const applyTheme = (newTheme: Theme) => {
+    setTheme(newTheme)
     document.documentElement.classList.toggle('light', newTheme === 'light')
     try {
       localStorage.setItem(STORAGE_KEY, newTheme)
@@ -37,11 +38,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
+    applyTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme: applyTheme }}>
       {children}
     </ThemeContext.Provider>
   )

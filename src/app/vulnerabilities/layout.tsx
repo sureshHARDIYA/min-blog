@@ -3,8 +3,6 @@ import { SiteChrome } from '../../components/SiteChrome'
 
 export default function VulnerabilitiesLayout({
   children
-}: {
-  children: ReactNode
-}) {
+}: Readonly<{ children: ReactNode }>) {
   return <SiteChrome active={null}>{children}</SiteChrome>
 }
