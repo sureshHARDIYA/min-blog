@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { NAV_TAB_PATHS, NavTab } from '../types'
 import { useLanguage } from '../i18n/LanguageContext'
 import { useTheme } from '../context/ThemeContext'
+import { LanguageSwitcher } from './LanguageSwitcher'
 import { EASE_OUT_EXPO } from './motion-primitives'
 
 interface HeaderProps {
@@ -29,6 +30,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const isBlogPage = activeTab === 'blogs'
   const activePageLinkClass =
     theme === 'light' ? 'font-bold text-[#008822]' : 'font-bold text-[#00FF41]'
+
+  /** Translations store nav labels in capitals; the header sets them in sentence case. */
+  const sentenceCase = (label: string) =>
+    label.charAt(0) + label.slice(1).toLowerCase()
+  const themeLabel = sentenceCase(
+    theme === 'dark' ? t.nav.themeLight : t.nav.themeDark
+  )
 
   const navItems: { id: NavTab; label: string }[] = [
     { id: 'architecture', label: t.nav.architecture },
@@ -84,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         <Link
           href='/'
           onClick={(event) => handleNavClick(event, 'architecture')}
-          className={`font-headline-md uppercase text-left transition-colors cursor-pointer flex min-w-0 flex-col items-start lg:shrink-0 ${
+          className={`font-headline-md text-left transition-colors cursor-pointer flex min-w-0 flex-col items-start lg:shrink-0 ${
             theme === 'light'
               ? 'text-slate-900 hover:text-[#008822]'
               : 'text-[#F5F5F5] hover:text-[#00FF41]'
@@ -114,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         <div className='hidden lg:flex items-center gap-6'>
           <nav
             aria-label='Main navigation'
-            className='flex gap-4 font-code xl:gap-5 text-[11px] uppercase tracking-[0.15em]'
+            className='flex gap-5 text-[14px] font-medium xl:gap-6'
           >
             {navItems.map((item, index) => {
               const isActive = activeTab === item.id
@@ -140,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                         : 'text-[#F5F5F5]/60 hover:text-[#F5F5F5]'
                   }`}
                 >
-                  {item.label}
+                  {sentenceCase(item.label)}
                   {isActive && (
                     <motion.span
                       layoutId='nav-underline'
@@ -179,18 +187,20 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             )}
           </nav>
 
-          {/* System Button - Toggles Light & Dark Theme */}
+          <LanguageSwitcher />
+
+          {/* Toggles light and dark theme */}
           <button
             onClick={toggleTheme}
             title={`Toggle Theme`}
-            className={`flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest border px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer select-none font-bold ${
+            className={`flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-wider border px-2.5 py-1 transition-all duration-300 cursor-pointer select-none font-bold ${
               theme === 'light'
                 ? 'border-[#008822]/40 bg-[#008822]/10 text-[#007A1E] hover:bg-[#008822]/20 hover:border-[#008822]'
                 : 'border-[#00FF41]/40 bg-[#00FF41]/10 text-[#00FF41] hover:bg-[#00FF41]/20 hover:border-[#00FF41]'
             }`}
             aria-label='Toggle Theme'
           >
-            <span>System</span>
+            <span>{themeLabel}</span>
             <span className='material-symbols-outlined text-xs'>
               {theme === 'dark' ? 'light_mode' : 'dark_mode'}
             </span>
@@ -245,7 +255,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             <div className='px-6 py-4'>
               <nav
                 aria-label='Mobile navigation'
-                className='flex flex-col gap-3 font-code text-xs uppercase tracking-widest mb-4'
+                className='flex flex-col gap-3 text-sm font-medium mb-4'
               >
                 {navItems.map((item) => {
                   const isActive = activeTab === item.id
@@ -264,7 +274,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                             : 'text-[#F5F5F5]/70 hover:bg-white/5 hover:text-[#F5F5F5]'
                       }`}
                     >
-                      <span>{item.label}</span>
+                      <span>{sentenceCase(item.label)}</span>
                       {isActive && (
                         <span className='material-symbols-outlined text-sm'>
                           chevron_right
@@ -306,6 +316,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               </nav>
 
               <div className='pt-3 border-t border-white/10 space-y-3 font-mono text-xs'>
+                <LanguageSwitcher />
                 {/* System Theme Toggle in Mobile Menu */}
                 <button
                   onClick={() => {

@@ -176,10 +176,12 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
 }
 
 interface GitHubTechnologyMapProps {
+  /** Hide the profile and commit line when another section already shows them. */
+  hideActivity?: boolean;
   compact?: boolean;
 }
 
-export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compact = false }) => {
+export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compact = false, hideActivity = false }) => {
   const { theme } = useTheme();
   const generatedDate = new Intl.DateTimeFormat('en-GB', {
     dateStyle: 'medium',
@@ -205,7 +207,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
       className={`${compact ? 'mb-0 p-5 md:p-6' : 'mb-14 p-6 md:p-8'} bg-transparent ${theme === 'light' ? '[--chart-center:#F4F6F8] text-slate-900' : '[--chart-center:#0C0C0C] text-[#F5F5F5]'}`}
     >
       <h2 className="sr-only" id="github-activity-title">GitHub engineering activity</h2>
-      <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
+      {hideActivity ? null : <header className="grid gap-8 border-b border-current/10 pb-8 lg:grid-cols-[260px_1fr] lg:items-center">
         <div className="flex items-center gap-4">
           <img
             alt="Suresh Kumar Mukhiya"
@@ -228,7 +230,7 @@ export const GitHubTechnologyMap: React.FC<GitHubTechnologyMapProps> = ({ compac
           </div>
         </div>
         <ActivityLine compact={compact} />
-      </header>
+      </header>}
 
       <div className={`grid gap-8 ${compact ? 'pt-7' : 'border-b border-current/10 py-8'} md:grid-cols-3`}>
         <DonutChart items={languageItems} title="Code by language" valueSuffix="%" />

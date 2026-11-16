@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import App from '../../App';
+import { getAllPosts } from '../../lib/blog';
+import { getSecurityScores } from '../../lib/securityScores';
 import { getNavTabFromPath, isKnownAppPath } from '../../types';
 
 const routeMeta: Record<string, { title: string; description: string }> = {
@@ -52,5 +54,15 @@ export default async function CatchAllPage({
     notFound();
   }
 
-  return <App initialTab={getNavTabFromPath(`/${slug[0] || ''}`)} />;
+  // The home tab can be opened client-side from any of these pages, so it needs its data too.
+  const [posts, scores] = await Promise.all([getAllPosts(), getSecurityScores()]);
+  const latestPosts = posts.slice(0, 6).map(({ content: _content, ...post }) => post);
+
+  return (
+    <App
+      initialTab={getNavTabFromPath(`/${slug[0] || ''}`)}
+      latestPosts={latestPosts}
+      scores={scores}
+    />
+  );
 }
