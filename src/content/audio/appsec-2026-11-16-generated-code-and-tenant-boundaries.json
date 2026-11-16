@@ -1,0 +1,99 @@
+{
+  "version": 3,
+  "contentHash": "85b19beb7924ac2e66e5a6ced72ea56bbfff6ccb3da160be0d8c1510b4c1281a",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "part": 0,
+      "text": "Executive summary The most important decision this week is whether generated code, cached server out",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/353381fbf0000977fae1.mp3",
+      "duration": 43.704
+    },
+    {
+      "id": "listen-section-1",
+      "part": 0,
+      "text": "Risk at a glance - Act now if exposed \u2014 React Server Components RCE: react-server-dom-webpack, react",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/031c82feb7db802ab1f4.mp3",
+      "duration": 163.176
+    },
+    {
+      "id": "listen-section-2",
+      "part": 0,
+      "text": "React Server Components: patch the rare path before proving reachability What changed. GitHub materi",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/05e4c21665bcf0236ca5.mp3",
+      "duration": 189.768
+    },
+    {
+      "id": "listen-section-3",
+      "part": 0,
+      "text": "PostgreSQL: a minor-version update is a tenant-isolation release What changed. PostgreSQL published ",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/43c397e7a37a8ee08a28.mp3",
+      "duration": 158.496
+    },
+    {
+      "id": "listen-section-4",
+      "part": 0,
+      "text": "FastAPI code generation: OpenAPI is input, not inert documentation What changed. GitHub reviewed thr",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/d9e721abc821f34702d1.mp3",
+      "duration": 151.296
+    },
+    {
+      "id": "listen-section-5",
+      "part": 0,
+      "text": "Rust sandbox and supply-chain watch RUSTSEC-2026-0482 affects cap-primitives before 3.4.6 and versio",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/18065ff26433d8712dea.mp3",
+      "duration": 147.336
+    },
+    {
+      "id": "listen-section-6",
+      "part": 0,
+      "text": "Microsoft endpoint watch Microsoft released CVE-2026-124194 on 10 November and marks exploitation as",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/3a19b155ca12af743d95.mp3",
+      "duration": 46.464
+    },
+    {
+      "id": "listen-section-7",
+      "part": 0,
+      "text": "AI-assisted development watch Coding agents increase the number of artifacts that can cross from dat",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/e6c0ed6eb6819c2ce131.mp3",
+      "duration": 50.544
+    },
+    {
+      "id": "listen-section-8",
+      "part": 0,
+      "text": "Developer checklist Today - [ ] React/Next.js: resolve React, react-server-dom- and Next.js from loc",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/ecf1fce2b96fb6f2474d.mp3",
+      "duration": 149.664
+    },
+    {
+      "id": "listen-section-9",
+      "part": 0,
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/b1696f943b98a66fb87b.mp3",
+      "duration": 7.536
+    },
+    {
+      "id": "listen-section-10",
+      "part": 0,
+      "text": "Monday action plan 1. React platform lead: patch the RSC and Next.js dependency chain; complete with",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/14e526f7a855cf30b792.mp3",
+      "duration": 67.176
+    },
+    {
+      "id": "listen-section-11",
+      "part": 0,
+      "text": "References - GitHub Advisory Database \u2014 CVE-2026-126187 / GHSA-xqc2-xf4c-x3h3, materially updated 10",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/0b858808a851524319ed.mp3",
+      "duration": 119.064
+    }
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-16-generated-code-and-tenant-boundaries/episode-a0a34a501e198fdf5a76.mp3",
+    "bytes": 5176896,
+    "duration": 1294.224
+  }
+}
