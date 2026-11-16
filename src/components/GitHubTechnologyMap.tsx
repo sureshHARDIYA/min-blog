@@ -37,7 +37,7 @@ function DonutChart({
             {segments.map((segment, index) => (
               <circle
                 aria-label={`${segment.label}: ${segment.value} ${valueSuffix}`}
-                className="cursor-help transition-[stroke-width,opacity] duration-200 hover:opacity-80 focus:opacity-80"
+                className="gh-donut-segment cursor-help transition-[stroke-width,opacity] duration-200 hover:opacity-80 focus:opacity-80"
                 cx="21"
                 cy="21"
                 fill="none"
@@ -50,6 +50,7 @@ function DonutChart({
                 r="15.9"
                 role="img"
                 stroke={segment.color}
+                style={{ animationDelay: `${index * 70}ms` }}
                 strokeDasharray={`${segment.percentage} ${100 - segment.percentage}`}
                 strokeDashoffset={-segment.offset}
                 strokeWidth={hoveredIndex === index ? 10 : 8}
@@ -133,6 +134,7 @@ function ActivityLine({ compact = false }: Readonly<{ compact?: boolean }>) {
           />
         ))}
         <polyline
+          className="gh-line-draw"
           fill="none"
           points={points}
           stroke="#00FF41"

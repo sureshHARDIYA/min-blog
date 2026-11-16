@@ -6,7 +6,7 @@ import { getNavTabFromPath, NavTab } from './types';
 import type { BlogPostSummary } from './components/BlogPostCard';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { ArchitectureView } from './views/ArchitectureView';
+import { HomeView } from './views/home/HomeView';
 import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
 import { StackView } from './views/StackView';
@@ -80,10 +80,7 @@ const MainLayout: React.FC<AppProps> = ({
     switch (activeTab) {
       case 'architecture':
         return (
-          <ArchitectureView
-            latestPosts={latestPosts}
-            setActiveTab={setActiveTab}
-          />
+<HomeView latestPosts={latestPosts} />
         );
       case 'trajectory':
         return <TrajectoryView />;
@@ -95,10 +92,7 @@ const MainLayout: React.FC<AppProps> = ({
         return <ConnectView />;
       default:
         return (
-          <ArchitectureView
-            latestPosts={latestPosts}
-            setActiveTab={setActiveTab}
-          />
+<HomeView latestPosts={latestPosts} />
         );
     }
   };

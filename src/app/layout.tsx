@@ -1,10 +1,24 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { IBM_Plex_Mono, Schibsted_Grotesk } from 'next/font/google'
 import { headers } from 'next/headers'
 import Script from 'next/script'
 import { AnalyticsConsent } from '../components/AnalyticsConsent'
 import { LanguageProvider } from '../i18n/LanguageContext'
 import './globals.css'
+
+// Self-hosted at build time, so the strict font-src 'self' policy still holds.
+const schibstedGrotesk = Schibsted_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-schibsted'
+})
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-plex-mono'
+})
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 const siteUrl = 'https://www.skmukhiya.com.np'
@@ -134,7 +148,11 @@ export default async function RootLayout({
   const nonce = requestHeaders.get('x-nonce') ?? undefined
 
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html
+      className={`${schibstedGrotesk.variable} ${plexMono.variable}`}
+      lang='en'
+      suppressHydrationWarning
+    >
       <head>
         <link rel='alternate' type='application/rss+xml' title='Blog feed' href='/rss.xml' />
         <link rel='alternate' type='application/rss+xml' title='Narrated articles (podcast)' href='/podcast.xml' />

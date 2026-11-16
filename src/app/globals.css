@@ -3,8 +3,9 @@
 
 :root {
   
-  --font-heading: 'Century Gothic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-schibsted), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body: var(--font-schibsted), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-code: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --text-on-dark: #fff;
   --text-on-dark-muted: #ffffffb8;
   --text-on-light: #000;
@@ -63,8 +64,7 @@
 }
 
 .font-code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family: var(--font-code);
 }
 
 .font-body-md {

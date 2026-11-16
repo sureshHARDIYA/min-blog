@@ -18,7 +18,7 @@ const MOCK_TRAJECTORY: TrajectoryItem[] = [
     period: '2026 (Jan) — Current',
     role: 'Tech Lead',
     description: 'Leading the design and development of internal digital solutions across frontend, backend, cloud, and AI-driven systems. Defining technical architecture, guiding developers, improving code quality, managing Azure-based infrastructure, and ensuring secure, scalable, and maintainable solutions across the organization.',
-    tags: ['ReactJS', 'Tailwind', 'TypeScript', 'Azure', 'Azure SQL', 'FastAPI', 'SonarQube', 'FE Security', 'CI/CD', 'TDD', 'Agentic AI', 'Microfrontend architecture', 'Python'],
+    tags: ['ReactJS', 'Tailwind', 'TypeScript', 'Azure', 'Azure SQL', 'FastAPI', 'SonarQube', 'FE Security', 'CI/CD', 'TDD', 'Agentic AI', 'Microfrontend architecture', 'Python', 'Rust'],
   },
   {
     id: 'tryg-2',
