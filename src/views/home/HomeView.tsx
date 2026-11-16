@@ -6,7 +6,6 @@ import { AppSecSubscribeForm } from '../../components/AppSecSubscribeForm'
 import type { BlogPostSummary } from '../../components/BlogPostCard'
 import { GitHubTechnologyMap } from '../../components/GitHubTechnologyMap'
 import { HeroPlayer } from '../../components/HeroPlayer'
-import { SlowCarousel } from '../../components/SlowCarousel'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { BoundaryRings } from './BoundaryRings'
 import { HOME_COPY } from './copy'
@@ -54,59 +53,39 @@ export function HomeView({ latestPosts }: Readonly<HomeViewProps>) {
             Suresh Kumar Mukhiya, PhD: application security and software
             architecture
           </h1>
-          <SlowCarousel
-            ariaLabel='Introduction'
-            slides={[
-              {
-                id: 'github-activity',
-                label: 'GitHub engineering activity',
-                content: (
-                  <div className='home-slide'>
-                    <GitHubTechnologyMap compact />
-                  </div>
-                )
-              },
-              {
-                id: 'statement',
-                label: 'Introduction',
-                content: (
-                  <div className='home-slide home-hero-grid'>
-                    <div className='home-hero-copy'>
-                      <p className='home-eyebrow home-mono'>{text.eyebrow}</p>
-                      <h2 className='home-headline'>
-                        {text.titleStart}{' '}
-                        <RotatingPhrase phrases={text.titleAccents} />
-                      </h2>
-                      <p className='home-lede'>{text.lede}</p>
-                      <div className='home-actions'>
-                        {latestBrief && (
-                          <Link
-                            className='home-button home-button-primary'
-                            href={`/blog/${latestBrief.slug}`}
-                          >
-                            {text.ctaBrief} <span aria-hidden='true'>→</span>
-                          </Link>
-                        )}
-                        <a
-                          className='home-button home-button-secondary'
-                          href='/connect'
-                        >
-                          {text.ctaContact}
-                        </a>
-                      </div>
-                    </div>
-                    <div className='home-portrait'>
-                      <HeroPlayer
-                        nodeLabel={t.hero.nodeLabel}
-                        name='Suresh Kumar Mukhiya, PhD'
-                        title={t.hero.tag}
-                      />
-                    </div>
-                  </div>
-                )
-              }
-            ]}
-          />
+          <div className='home-hero-grid'>
+            <div className='home-hero-copy'>
+              <p className='home-eyebrow home-mono'>{text.eyebrow}</p>
+              <h2 className='home-headline'>
+                {text.titleStart}{' '}
+                <RotatingPhrase phrases={text.titleAccents} />
+              </h2>
+              <p className='home-lede'>{text.lede}</p>
+              <div className='home-actions'>
+                {latestBrief && (
+                  <Link
+                    className='home-button home-button-primary'
+                    href={`/blog/${latestBrief.slug}`}
+                  >
+                    {text.ctaBrief} <span aria-hidden='true'>→</span>
+                  </Link>
+                )}
+                <a
+                  className='home-button home-button-secondary'
+                  href='/connect'
+                >
+                  {text.ctaContact}
+                </a>
+              </div>
+            </div>
+            <div className='home-portrait'>
+              <HeroPlayer
+                nodeLabel={t.hero.nodeLabel}
+                name='Suresh Kumar Mukhiya, PhD'
+                title={t.hero.tag}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -173,6 +152,13 @@ export function HomeView({ latestPosts }: Readonly<HomeViewProps>) {
           </div>
         </div>
       </section>
+
+      {/* The map renders its own labelled section and heading. */}
+      <div className='home-section'>
+        <div className='home-wrap home-activity'>
+          <GitHubTechnologyMap compact />
+        </div>
+      </div>
 
       <section className='home-brief' aria-labelledby='home-brief-title'>
         <div className='home-wrap home-brief-grid'>

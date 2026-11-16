@@ -4,6 +4,7 @@ import { IBM_Plex_Mono, Schibsted_Grotesk } from 'next/font/google'
 import { headers } from 'next/headers'
 import Script from 'next/script'
 import { AnalyticsConsent } from '../components/AnalyticsConsent'
+import { ThemeProvider } from '../context/ThemeContext'
 import { LanguageProvider } from '../i18n/LanguageContext'
 import './globals.css'
 
@@ -156,12 +157,14 @@ export default async function RootLayout({
       <head>
         <link rel='alternate' type='application/rss+xml' title='Blog feed' href='/rss.xml' />
         <link rel='alternate' type='application/rss+xml' title='Narrated articles (podcast)' href='/podcast.xml' />
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('app_theme')==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('app_theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';if(t==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
       </head>
       <body className='bg-[#0C0C0C] text-white antialiased'>
         <LanguageProvider>
-          {children}
-          <AnalyticsConsent />
+          <ThemeProvider>
+            {children}
+            <AnalyticsConsent />
+          </ThemeProvider>
         </LanguageProvider>
         <Script
           id='person-json-ld'

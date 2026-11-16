@@ -15,14 +15,14 @@ export const LANGUAGES: LanguageOption[] = [
 export const translations = {
   en: {
     nav: {
-      architecture: 'ARCHITECTURE',
-      trajectory: 'TRAJECTORY',
+      blog: 'BLOG',
+      security: 'SECURITY',
+      trajectory: 'EXPERIENCE',
       research: 'RESEARCH',
-      connect: 'CONNECT',
+      connect: 'CONTACT',
       stack: 'STACK',
-      systemLive: 'System',
-      themeDark: 'DARK',
-      themeLight: 'LIGHT',
+      switchToLight: 'Switch to light theme',
+      switchToDark: 'Switch to dark theme',
       subtitle: 'PhD • Adaptive & Secured Systems Architect',
     },
     hero: {
@@ -87,8 +87,8 @@ export const translations = {
       cultureDesc: 'Engineering excellence is a cultural byproduct. Building high-performing teams through continuous learning, code reviews, and psychological safety.',
       readyTitle: 'Ready for Strategic Collaboration?',
       readyDesc: 'Let\'s discuss how architectural foresight can accelerate your technical roadmap and de-risk your scaling efforts.',
-      initiateBtn: 'Initiate Contact',
-      directEmail: 'Direct Email',
+      initiateBtn: 'Send a message',
+      directEmail: 'Email me',
       location: 'LOCATION',
       locationVal: 'Bergen, Norway',
       directLine: 'DIRECT LINE',
@@ -124,14 +124,14 @@ export const translations = {
   },
   no: {
     nav: {
-      architecture: 'ARKITEKTUR',
+      blog: 'BLOGG',
+      security: 'SIKKERHET',
       trajectory: 'KARRIERE',
       research: 'FORSKNING',
       connect: 'KONTAKT',
       stack: 'TEKNOLOGI',
-      systemLive: 'System',
-      themeDark: 'MØRK',
-      themeLight: 'LYS',
+      switchToLight: 'Bytt til lyst tema',
+      switchToDark: 'Bytt til mørkt tema',
       subtitle: 'PhD • Adaptiv & Sikker Systemarkitekt',
     },
     hero: {

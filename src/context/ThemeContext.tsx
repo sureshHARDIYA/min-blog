@@ -1,53 +1,56 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+'use client'
 
-type Theme = 'dark' | 'light';
+import React, { createContext, useContext, useState, useEffect } from 'react'
+
+type Theme = 'dark' | 'light'
 
 interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  theme: Theme
+  toggleTheme: () => void
+  setTheme: (theme: Theme) => void
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const STORAGE_KEY = 'app_theme'
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>('dark');
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children
+}) => {
+  const [theme, setThemeState] = useState<Theme>('dark')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('app_theme') as Theme | null;
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      setThemeState(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
-    }
-  }, []);
-
+    // The inline script in the root layout has already applied the saved choice,
+    // or the device preference on a first visit, as the `html.light` class.
+    const isLight = document.documentElement.classList.contains('light')
+    setThemeState(isLight ? 'light' : 'dark')
+  }, [])
 
   const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem('app_theme', newTheme);
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('light');
-    } else {
-      document.documentElement.classList.remove('light');
+    setThemeState(newTheme)
+    document.documentElement.classList.toggle('light', newTheme === 'light')
+    try {
+      localStorage.setItem(STORAGE_KEY, newTheme)
+    } catch {
+      // Storage blocked: the theme still changes for this page view.
     }
-  };
+  }
 
   const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-  };
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
-  );
-};
+  )
+}
 
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
+  const context = useContext(ThemeContext)
   if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
+    throw new Error('useTheme must be used within a ThemeProvider')
   }
-  return context;
-};
+  return context
+}

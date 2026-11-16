@@ -11,7 +11,7 @@ import { TrajectoryView } from './views/TrajectoryView';
 import { ResearchView } from './views/ResearchView';
 import { StackView } from './views/StackView';
 import { ConnectView } from './views/ConnectView';
-import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { useTheme } from './context/ThemeContext';
 
 const TAB_META: Record<NavTab, { title: string; description: string }> = {
   architecture: {
@@ -107,7 +107,7 @@ const MainLayout: React.FC<AppProps> = ({
       <main className="flex-grow pt-16 md:pt-20">
         {renderCurrentView()}
       </main>
-      <Footer setActiveTab={setActiveTab} />
+      <Footer />
     </div>
   );
 };
@@ -117,13 +117,11 @@ export default function App({
   latestPosts = [],
 }: AppProps) {
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <MainLayout
-          initialTab={initialTab}
-          latestPosts={latestPosts}
-        />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <MainLayout
+        initialTab={initialTab}
+        latestPosts={latestPosts}
+      />
+    </QueryClientProvider>
   );
 }

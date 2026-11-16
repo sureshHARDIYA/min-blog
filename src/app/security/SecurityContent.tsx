@@ -1,10 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 import { useLanguage } from '../../i18n/LanguageContext'
 import copy from './copy.json'
-import { ThemeToggle } from '../../components/ThemeToggle'
 
 import './security.css'
 import { SecurityScorecard } from './SecurityScorecard'
@@ -16,23 +14,7 @@ export function SecurityContent({ scores }: Readonly<{ scores: SecurityScores }>
   const text = copy[language]
 
   return (
-    <main className='security-page min-h-screen bg-[var(--s-bg)] text-[var(--s-ink)]'>
-      <nav aria-label={text.navLabel} className='sticky top-0 z-50 border-b border-[var(--s-ink)]/10 bg-[var(--s-bg)]/95 backdrop-blur-md'>
-        <div className='mx-auto flex max-w-[1120px] items-center justify-between gap-4 px-6 py-4'>
-          <Link className='font-black uppercase tracking-tighter' href='/'>Suresh K. Mukhiya <span className='font-mono text-xs text-[var(--s-accent)]'>.PhD</span></Link>
-          <div className='flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.15em]'>
-            <span className='hidden border-b-2 border-[var(--s-accent)] pb-1 font-bold text-[var(--s-accent)] md:inline'>{text.security}</span>
-            <Link className='hidden text-[var(--s-ink)]/65 hover:text-[var(--s-ink)] sm:inline' href='/blogs'>{text.blogs}</Link>
-            <Link className='hidden text-[var(--s-ink)]/65 hover:text-[var(--s-ink)] sm:inline' href='/connect'>{text.contact}</Link>
-            <LanguageSwitcher />
-            <ThemeToggle
-              lightLabel={language === 'no' ? 'Lyst' : 'Light'}
-              darkLabel={language === 'no' ? 'Mørkt' : 'Dark'}
-            />
-          </div>
-        </div>
-      </nav>
-
+    <main className='security-page min-h-screen bg-[var(--s-bg)] pt-16 text-[var(--s-ink)] md:pt-20'>
       <section className='border-b border-[var(--s-ink)]/10 px-6 py-20 md:py-28'><div className='mx-auto max-w-[1120px]'>
         <p className='font-mono text-xs font-bold uppercase tracking-[0.3em] text-[var(--s-accent)]'>{text.eyebrow}</p>
         <h1 className='mt-6 max-w-5xl text-5xl font-black leading-[0.95] tracking-tighter md:text-7xl'>{text.title}</h1>

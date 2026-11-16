@@ -1,6 +1,10 @@
 import type { ReactNode } from 'react'
-import { ContentPageHeader } from '../../components/ContentPageHeader'
+import { SiteChrome } from '../../components/SiteChrome'
 
-export default function VulnerabilitiesLayout({ children }: { children: ReactNode }) {
-  return <><ContentPageHeader />{children}</>
+export default function VulnerabilitiesLayout({
+  children
+}: {
+  children: ReactNode
+}) {
+  return <SiteChrome active={null}>{children}</SiteChrome>
 }

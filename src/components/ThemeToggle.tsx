@@ -1,38 +1,35 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Moon, Sun } from 'lucide-react'
 
-const STORAGE_KEY = 'app_theme'
+import { useTheme } from '../context/ThemeContext'
+import { useLanguage } from '../i18n/LanguageContext'
+
+const ICON_SIZE = 16
 
 /**
- * Light/dark switch for pages that are not wrapped in the app's ThemeProvider.
- * It uses the same `html.light` class and storage key, so the choice carries across the site.
+ * The site's only light/dark switch. The icon shows the theme a click switches to,
+ * and the accessible name says so in words.
  */
-export function ThemeToggle({ lightLabel, darkLabel }: Readonly<{ lightLabel: string; darkLabel: string }>) {
-  const [isLight, setIsLight] = useState(false)
-
-  useEffect(() => {
-    setIsLight(document.documentElement.classList.contains('light'))
-  }, [])
-
-  const toggle = () => {
-    const next = !isLight
-    setIsLight(next)
-    document.documentElement.classList.toggle('light', next)
-    try {
-      localStorage.setItem(STORAGE_KEY, next ? 'light' : 'dark')
-    } catch {
-      // Storage blocked: the theme still changes for this page view.
-    }
-  }
+export function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme()
+  const { t } = useLanguage()
+  const isDark = theme === 'dark'
+  const label = isDark ? t.nav.switchToLight : t.nav.switchToDark
 
   return (
     <button
-      className='border border-[var(--s-ink)]/20 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--s-ink)]/65 transition-colors hover:border-[var(--s-ink)]/50 hover:text-[var(--s-ink)]'
-      onClick={toggle}
       type='button'
+      aria-label={label}
+      title={label}
+      onClick={toggleTheme}
+      className='grid size-11 shrink-0 cursor-pointer place-items-center opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-current lg:size-9 lg:border lg:border-current/25'
     >
-      {isLight ? darkLabel : lightLabel}
+      {isDark ? (
+        <Sun aria-hidden='true' size={ICON_SIZE} />
+      ) : (
+        <Moon aria-hidden='true' size={ICON_SIZE} />
+      )}
     </button>
   )
 }

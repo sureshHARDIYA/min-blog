@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBooks, fetchResearchPapers } from '../services/api';
 import { getBookIdFromSlug, getBookSlug, PublishedBook, ResearchPaper } from '../types';
 import { BookDetailView } from './BookDetailView';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
+import { useEscapeKey } from '../components/useEscapeKey';
 
 export const ResearchView: React.FC = () => {
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'all' | 'books' | 'papers'>('all');
   const [showDissertationModal, setShowDissertationModal] = useState(false);
+  const closeDissertationModal = useCallback(() => setShowDissertationModal(false), []);
+  useEscapeKey(closeDissertationModal, showDissertationModal);
   const [expandedPaperId, setExpandedPaperId] = useState<string | null>(null);
 
   const { t } = useLanguage();
@@ -51,6 +54,13 @@ export const ResearchView: React.FC = () => {
       window.removeEventListener('popstate', handleBookRouteChange);
     };
   }, []);
+
+  /** Plain clicks switch in place; modified clicks fall through to the link's own address. */
+  const handleBookLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, bookId: string) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    openBookPage(bookId);
+  };
 
   const openBookPage = (bookId: string) => {
     setSelectedBookId(bookId);
@@ -254,11 +264,10 @@ export const ResearchView: React.FC = () => {
                 {books?.map((book) => (
                   <article
                     key={book.id}
-                    onClick={() => openBookPage(book.id)}
-                    className={`border p-6 transition-all duration-300 flex flex-col justify-between group cursor-pointer shadow-lg relative overflow-hidden ${
+                    className={`border p-6 transition-all duration-300 flex flex-col justify-between group shadow-lg relative overflow-hidden ${
                       theme === 'light'
-                        ? 'bg-white border-slate-200 hover:border-[#008822]'
-                        : 'bg-[#141414] border-white/10 hover:border-[#00FF41]'
+                        ? 'bg-white border-slate-200 hover:border-[#008822] focus-within:border-[#008822]'
+                        : 'bg-[#141414] border-white/10 hover:border-[#00FF41] focus-within:border-[#00FF41]'
                     }`}
                   >
                     <div className={`absolute top-0 left-0 w-1 h-full transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ${
@@ -297,7 +306,14 @@ export const ResearchView: React.FC = () => {
                           ? 'text-slate-900 group-hover:text-[#008822]'
                           : 'text-[#F5F5F5] group-hover:text-[#00FF41]'
                       }`}>
-                        {book.title}
+                        {/* The link stretches over the whole card, as on the blog cards. */}
+                        <a
+                          href={`/research/book/${getBookSlug(book.id)}`}
+                          onClick={(event) => handleBookLinkClick(event, book.id)}
+                          className="after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-current"
+                        >
+                          {book.title}
+                        </a>
                       </h3>
 
                       <p className={`font-body-md text-xs leading-relaxed line-clamp-3 mb-4 font-light ${
@@ -518,14 +534,26 @@ export const ResearchView: React.FC = () => {
 
       {/* Dissertation Modal */}
       {showDissertationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
-          <div className={`border w-full max-w-xl p-6 md:p-8 relative shadow-2xl ${
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeDissertationModal();
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="PhD dissertation"
+            className={`border w-full max-w-xl p-6 md:p-8 relative shadow-2xl ${
             theme === 'light'
               ? 'bg-white border-slate-300 text-slate-900'
               : 'bg-[#141414] border-[#00FF41]/40 text-[#F5F5F5]'
           }`}>
             <button
-              onClick={() => setShowDissertationModal(false)}
+              type="button"
+              autoFocus
+              aria-label="Close"
+              onClick={closeDissertationModal}
               className={`absolute top-4 right-4 p-1 cursor-pointer ${
                 theme === 'light' ? 'text-slate-500 hover:text-[#008822]' : 'text-[#F5F5F5]/60 hover:text-[#00FF41]'
               }`}
