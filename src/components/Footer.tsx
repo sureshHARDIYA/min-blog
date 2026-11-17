@@ -1,4 +1,5 @@
 import React from 'react'
+import { ExternalLink } from 'lucide-react'
 
 import { useLanguage } from '../i18n/LanguageContext'
 import type { Language } from '../i18n/translations'
@@ -126,7 +127,7 @@ export function Footer() {
               {link.isExternal && (
                 <>
                   {' '}
-                  <span aria-hidden='true'>↗</span>
+                  <ExternalLink aria-hidden='true' size={14} strokeWidth={1.75} className='ml-1 inline-block shrink-0' />
                   <span className='home-sr-only'> ({text.external})</span>
                 </>
               )}
