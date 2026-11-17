@@ -1,11 +1,17 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { IBM_Plex_Mono, Schibsted_Grotesk } from 'next/font/google'
-import { headers } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import Script from 'next/script'
 import { AnalyticsConsent } from '../components/AnalyticsConsent'
 import { ThemeProvider } from '../context/ThemeContext'
 import { LanguageProvider } from '../i18n/LanguageContext'
+import {
+  DEFAULT_THEME,
+  isTheme,
+  THEME_BOOT_SCRIPT,
+  THEME_KEY
+} from '../lib/theme'
 import './globals.css'
 
 // Self-hosted at build time, so the strict font-src 'self' policy still holds.
@@ -148,20 +154,25 @@ export default async function RootLayout({
   const requestHeaders = await headers()
   const nonce = requestHeaders.get('x-nonce') ?? undefined
 
+  // Rendering with the visitor's saved theme means the first paint is already correct,
+  // instead of a dark page that switches to light once the scripts have loaded.
+  const savedTheme = (await cookies()).get(THEME_KEY)?.value
+  const initialTheme = isTheme(savedTheme) ? savedTheme : DEFAULT_THEME
+
   return (
     <html
-      className={`${schibstedGrotesk.variable} ${plexMono.variable}`}
+      className={`${schibstedGrotesk.variable} ${plexMono.variable}${initialTheme === 'light' ? ' light' : ''}`}
       lang='en'
       suppressHydrationWarning
     >
       <head>
         <link rel='alternate' type='application/rss+xml' title='Blog feed' href='/rss.xml' />
         <link rel='alternate' type='application/rss+xml' title='Narrated articles (podcast)' href='/podcast.xml' />
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: "try{var t=localStorage.getItem('app_theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';if(t==='light')document.documentElement.classList.add('light')}catch(e){}" }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       </head>
       <body className='bg-[#0C0C0C] text-white antialiased'>
         <LanguageProvider>
-          <ThemeProvider>
+          <ThemeProvider initialTheme={initialTheme}>
             {children}
             <AnalyticsConsent />
           </ThemeProvider>
