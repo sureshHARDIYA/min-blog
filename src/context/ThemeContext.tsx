@@ -2,7 +2,13 @@
 
 import React, { createContext, useContext, useState, useLayoutEffect } from 'react'
 
-type Theme = 'dark' | 'light'
+import {
+  DEFAULT_THEME,
+  THEME_COOKIE_ATTRIBUTES,
+  THEME_KEY,
+  THEME_SYNC_CLASS,
+  type Theme
+} from '../lib/theme'
 
 interface ThemeContextType {
   theme: Theme
@@ -10,32 +16,50 @@ interface ThemeContextType {
   setTheme: (theme: Theme) => void
 }
 
-const STORAGE_KEY = 'app_theme'
+interface ThemeProviderProps {
+  children: React.ReactNode
+  /** The theme the server rendered with, read from the visitor's cookie. */
+  initialTheme?: Theme
+}
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children
-}) => {
-  const [theme, setTheme] = useState<Theme>('dark')
+/** Remembers the theme in the browser and in a cookie the server reads on the next request. */
+function persistTheme(theme: Theme): void {
+  try {
+    localStorage.setItem(THEME_KEY, theme)
+  } catch {
+    // Storage blocked: the cookie below still carries the choice.
+  }
+  const secure = window.location.protocol === 'https:' ? ';secure' : ''
+  document.cookie = `${THEME_KEY}=${theme};${THEME_COOKIE_ATTRIBUTES}${secure}`
+}
+
+export function ThemeProvider({
+  children,
+  initialTheme = DEFAULT_THEME
+}: Readonly<ThemeProviderProps>) {
+  const [theme, setTheme] = useState<Theme>(initialTheme)
 
   useLayoutEffect(() => {
-    // Synchronize before the browser paints, preventing a dark flash on navigation.
-    // The inline script in the root layout has already applied the saved choice,
-    // or the device preference on a first visit, as the `html.light` class.
-    const isLight = document.documentElement.classList.contains('light')
-    setTheme(isLight ? 'light' : 'dark')
+    // Normally the server already rendered the right theme from the cookie. On a first
+    // visit, or when the cookie is missing, the inline script in the root layout has
+    // corrected `html.light` instead, so follow it before the browser paints again.
+    const root = document.documentElement
+    setTheme(root.classList.contains('light') ? 'light' : 'dark')
+
+    // Let that correction paint without a colour fade, then allow transitions again.
+    const frame = requestAnimationFrame(() =>
+      requestAnimationFrame(() => root.classList.remove(THEME_SYNC_CLASS))
+    )
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   /** Sets the theme, applies it to the page and remembers the choice. */
   const applyTheme = (newTheme: Theme) => {
     setTheme(newTheme)
     document.documentElement.classList.toggle('light', newTheme === 'light')
-    try {
-      localStorage.setItem(STORAGE_KEY, newTheme)
-    } catch {
-      // Storage blocked: the theme still changes for this page view.
-    }
+    persistTheme(newTheme)
   }
 
   const toggleTheme = () => {

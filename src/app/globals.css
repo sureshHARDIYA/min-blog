@@ -538,3 +538,10 @@ html.light .agentbaiting-table-scroll { border-color: #cbd5e1; }
 html.light .agentbaiting-data-table th { background: #e2e8f0; color: #0f172a; }
 html.light .agentbaiting-data-table th, html.light .agentbaiting-data-table td { border-color: #cbd5e1; }
 
+
+/* Set by the theme boot script when it has to correct the server-rendered theme. */
+html.theme-sync *,
+html.theme-sync *::before,
+html.theme-sync *::after {
+  transition: none !important;
+}
