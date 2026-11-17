@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useLayoutEffect } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -19,7 +19,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [theme, setTheme] = useState<Theme>('dark')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // Synchronize before the browser paints, preventing a dark flash on navigation.
     // The inline script in the root layout has already applied the saved choice,
     // or the device preference on a first visit, as the `html.light` class.
     const isLight = document.documentElement.classList.contains('light')
