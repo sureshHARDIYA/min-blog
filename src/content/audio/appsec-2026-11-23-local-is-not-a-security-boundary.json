@@ -1,0 +1,99 @@
+{
+  "version": 3,
+  "contentHash": "ede977876325d715f79011df9e2d1645655984e06c4005e3a8f8584b3a1dcffa",
+  "voice": "en-US-Chirp3-HD-Leda",
+  "language": "en",
+  "storage": "r2",
+  "publicBaseUrl": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev",
+  "segments": [
+    {
+      "id": "listen-section-0",
+      "part": 0,
+      "text": "Executive summary The engineering decision this week is whether \u201clocal\u201d, \u201cinternal\u201d or \u201cbehind a pro",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/fcae1f8852ea1919ce0e.mp3",
+      "duration": 46.824
+    },
+    {
+      "id": "listen-section-1",
+      "part": 0,
+      "text": "Risk at a glance - Act now if used \u2014 Todoist MCP HTTP transport: @doist/todoist-mcp 10.3.2 and earli",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/72abc5347ae1f14e0917.mp3",
+      "duration": 163.776
+    },
+    {
+      "id": "listen-section-2",
+      "part": 0,
+      "text": "Local MCP servers need caller authentication What changed. GitHub reviewed CVE-2026-76807 / GHSA-833",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/2ed55506a2e21fff4428.mp3",
+      "duration": 163.464
+    },
+    {
+      "id": "listen-section-3",
+      "part": 0,
+      "text": "HTTP framing must agree across every hop What changed. RustSec issued RUSTSEC-2026-0553 for actix-ht",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/8474fb64d97bb084a531.mp3",
+      "duration": 141.288
+    },
+    {
+      "id": "listen-section-4",
+      "part": 0,
+      "text": "Windows WASI paths can cross a preopened directory What changed. RustSec issued RUSTSEC-2026-0587 on",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/92a8a25c5633bfcbaffc.mp3",
+      "duration": 130.344
+    },
+    {
+      "id": "listen-section-5",
+      "part": 0,
+      "text": "Next.js forwarding and cache boundaries GitHub published CVE-2026-119348 / GHSA-pc58-hwjq-p385 to th",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/9ba5593665cbe4b52edc.mp3",
+      "duration": 81.864
+    },
+    {
+      "id": "listen-section-6",
+      "part": 0,
+      "text": "Supply-chain watch GitHub published a malware advisory for render-keepalive on 23 November. The prim",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/10c6f85bed9ca039b0c2.mp3",
+      "duration": 95.136
+    },
+    {
+      "id": "listen-section-7",
+      "part": 0,
+      "text": "AI-assisted development watch The Todoist advisory is a useful model for agentic systems: the agent'",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/76067cd8d0a4134ec72b.mp3",
+      "duration": 52.608
+    },
+    {
+      "id": "listen-section-8",
+      "part": 0,
+      "text": "Developer checklist Today - [ ] MCP: resolve @doist/todoist-mcp and inspect launch configuration; ev",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/bf11c1c9e4b5a57752ec.mp3",
+      "duration": 137.856
+    },
+    {
+      "id": "listen-section-9",
+      "part": 0,
+      "text": "Copy this prompt This section contains a code example. Refer to the written article for the implemen",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/b1696f943b98a66fb87b.mp3",
+      "duration": 6.744
+    },
+    {
+      "id": "listen-section-10",
+      "part": 0,
+      "text": "Monday action plan 1. AI/agent platform lead: inventory HTTP MCP servers and patch Todoist MCP; comp",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/79d040e25b83ccd963a4.mp3",
+      "duration": 68.976
+    },
+    {
+      "id": "listen-section-11",
+      "part": 0,
+      "text": "References - GitHub Advisory Database \u2014 CVE-2026-76807 / GHSA-833v-v58w-294h, reviewed 19 November 2",
+      "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/9a4fdf9422c5b13d2094.mp3",
+      "duration": 67.128
+    }
+  ],
+  "episode": {
+    "url": "https://pub-f80efacb39074f8597b4cc46baea34da.r2.dev/articles/appsec-2026-11-23-local-is-not-a-security-boundary/episode-45e0b32b678481c1f28c.mp3",
+    "bytes": 4624032,
+    "duration": 1156.008
+  }
+}
